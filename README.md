@@ -1,5 +1,13 @@
 # AveriasPR
 
+## Enter Python Environment
+
+To enter run 
+`source env/bin/activate`
+
+To exit run 
+'deactivate'
+
 ## Setup Docker Container
 
 First run
