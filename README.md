@@ -3,7 +3,9 @@
 ## Setting Up
 
 ### Create Docker Container 
-First, generate Docker container by running the following command `python3 main.py` from the repository's main directory. 
+First things first, make sure to [Download Docker](https://docs.docker.com/get-docker/?_gl=1*155k8vt*_ga*MTc1ODU3ODIwMC4xNzA4NTQ0NjQw*_ga_XJWPQMJYHQ*MTcwODU1NDM4Ny4yLjEuMTcwODU1NDM5OC40OS4wLjA.).
+
+Generate the Docker container by running the main python script using `python3 main.py` from the repository's main directory. 
 
 ### Python Environment
 
