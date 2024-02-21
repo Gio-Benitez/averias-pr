@@ -1,19 +1,11 @@
 # AveriasPR
 
-## Enter Python Environment
+## Setting Up
 
-To enter run 
-`source env/bin/activate`
+### Create Docker Container 
+First, generate Docker container by running the following command `python3 main.py` from the repository's main directory. 
 
-To exit run 
-'deactivate'
+### Enter Python Environment
+To enter run the python environment, run the following command `source env/bin/activate`.
 
-## Setup Docker Container
-
-First run
-`bash db_setup/bash.sh`
-
-Then run
-`bash db_setup/deploy.sh`
-
-Finally your docker container has been created
+To exit run 'deactivate'
