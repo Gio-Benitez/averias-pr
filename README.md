@@ -1,11 +1,11 @@
 # AveriasPR
 
-Database Setup
+## Setup Docker Container
 
 First run
-bash db_setup/bash.sh
+`bash db_setup/bash.sh`
 
 Then run
-bash db_setup/deploy.sh
+`bash db_setup/deploy.sh`
 
 Finally your docker container has been created
