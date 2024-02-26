@@ -17,4 +17,4 @@ sleep 1
 
 msg2="$ms Creating container"
 echo "$msg2"
-docker run -itd -e POSTGRES_USER=root -e POSTGRES_PASSWORD=password -e POSTGRES_DB=AVERIASPR_DATABASE -p 5444:5432 --name averiaspr_database averiaspr_database
+docker run --name averiaspr_database -e POSTGRES_USER=root -e POSTGRES_PASSWORD=password -e POSTGRES_DB=AVERIASPR_DATABASE -p 5432:5432 -d postgres
