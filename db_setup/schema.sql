@@ -1,6 +1,9 @@
-CREATE SCHEMA AVERIASPR_DATABASE;
-GRANT USAGE ON SCHEMA AVERIASPR_DATABASE TO root;
-SET search_path = AVERIASPR_DATABASE;
+-- CREATE SCHEMA AVERIASPR_DATABASE;
+-- GRANT USAGE ON SCHEMA AVERIASPR_DATABASE TO root;
+-- SET search_path = AVERIASPR_DATABASE;
+-- CREATE USER root;
+-- CREATE DATABASE averiaspr_database;
+-- GRANT ALL PRIVILEGES ON DATABASE averiaspr_database TO root;
 
 CREATE TABLE user (
     id SERIAL PRIMARY KEY,
@@ -10,10 +13,10 @@ CREATE TABLE user (
     -- password VARCHAR(100) NOT NULL,
 );
 
-INSERT INTO user (fname, lname) VALUES
-  ('Mkyong', 'Asshole'),
-  ('Ali', 'Asshole'),
-  ('Teoh', 'Asshole');
+-- INSERT INTO user (fname, lname) VALUES
+--   ('Mkyong', 'Asshole'),
+--   ('Ali', 'Asshole'),
+--   ('Teoh', 'Asshole');
 
 -- CREATE TABLE report (
 --     id SERIAL PRIMARY KEY,
