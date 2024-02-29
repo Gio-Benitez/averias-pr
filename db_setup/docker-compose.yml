@@ -14,10 +14,11 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=AVERIASPR_DB
-      - APP_DB_USER=docker
-      - APP_DB_PASS=docker
-      - APP_DB_NAME=docker
-    volumes:
-      - ./db:/docker-entrypoint-initdb.d/
+      - APP_DB_USER=appuser
+      - APP_DB_PASS=appass
+      - APP_DB_NAME=appname
+    build:
+      context: ./
+      dockerfile: Dockerfile
     ports:
       - 5432:5432

@@ -1,11 +1,13 @@
+docker-compose down --volumes
 msg1='$'
 ms=":"
 msg2="$ms Building docker image..."
 echo "$msg2"
-#docker build -t averiaspr_database .
-#sleep 1
-#msg2="$ms Docker image has been built."
-#echo "$msg2"
+# docker build -t averiaspr_database .
+docker-compose build
+sleep 1
+msg2="$ms Docker image has been built."
+echo "$msg2"
 
 #msg2="$ms Removing any duplicate containers if necessary"
 #echo "$msg2"
