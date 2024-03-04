@@ -12,9 +12,6 @@ services:
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=password
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
     volumes:
       - ./init-schema.sql:/docker-entrypoint-initdb.d/init-db-01.sql
       - ./postgres-data:/var/lib/postgresql/data
