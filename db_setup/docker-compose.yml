@@ -1,9 +1,8 @@
 version: '3'
 
 services:
-  postgres:
+  averiaspr_db:
     image: postgres:13.1
-    container_name: averiaspr_database
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
       timeout: 45s
@@ -13,12 +12,13 @@ services:
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=AVERIASPR_DB
-      - APP_DB_USER=appuser
-      - APP_DB_PASS=appass
-      - APP_DB_NAME=appname
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    volumes:
+      - ./init-schema.sql:/docker-entrypoint-initdb.d/init-db-01.sql
+      - ./postgres-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+volumes:
+  postgres-data:
