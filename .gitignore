@@ -1,2 +1,2 @@
-./db_setup/postgres-data/
-./db_setup/env/
+db_setup/postgres-data/
+db_setup/env/
