@@ -9,10 +9,6 @@ Generate the Docker container by running the main python script using `python3 m
 
 ### Python Environment
 
-***To install the current Python dependencies***
-
-Run the following command `pip install -r requirement.txt`.
-
 ***To install new python packages and dependencies***
 
 Please enter the environment first, by running the following command `source env/bin/activate`. Now, you can install any necessary python packages. 
