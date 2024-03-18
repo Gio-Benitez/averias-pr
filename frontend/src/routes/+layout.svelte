@@ -4,6 +4,7 @@
   import { onMount } from 'svelte';
   import { themeChange } from 'theme-change';
   import '../app.postcss';
+  import { AppShell } from '@skeletonlabs/skeleton';
 
   // initialize theme change
   onMount(() => {
@@ -11,8 +12,15 @@
   });
 </script>
 
-<NavBar />
+<AppShell>
+  <svelte:fragment slot="header"><NavBar /></svelte:fragment>
+	<!-- svelte:fragment slot="sidebarLeft">Sidebar Left</svelte:fragment -->
+	<!-- (sidebarRight) -->
+	<!-- (pageHeader) -->
+	<!-- Router Slot -->
+	<slot />
+	<!-- ---- / ---- -->
+	<svelte:fragment slot="footer"><Footer /></svelte:fragment>
+	<!-- (footer) -->
+</AppShell>
 
-<slot />
-
-<Footer />
