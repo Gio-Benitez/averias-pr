@@ -1,21 +1,37 @@
 version: '3'
 
 services:
+  flask_app:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - averiaspr_db
+    environment:
+      DB_HOST: averiaspr_db
+      DB_PORT: 5432
+      DB_NAME: averiaspr_db
+      DB_USER: root
+      DB_PASSWORD: password
+    volumes:
+      - ./app:/app
+
+
   averiaspr_db:
     image: postgres:13.1
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
-      timeout: 45s
-      interval: 10s
-      retries: 10
-    restart: always
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=password
+      POSTGRES_DB: averiaspr_db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+
     volumes:
       - ./init-schema.sql:/docker-entrypoint-initdb.d/init-db-01.sql
       - ./postgres-data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - "5432:5432"
 volumes:
   postgres-data:
+
+
+
+
