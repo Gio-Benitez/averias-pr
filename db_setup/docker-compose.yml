@@ -2,9 +2,7 @@ version: '3'
 
 services:
   flask_app:
-    build:
-      #create image in the current file
-      context: .
+    build: .
     ports:
       - "5000:5000"
     depends_on:
@@ -21,12 +19,6 @@ services:
 
   averiaspr_db:
     image: postgres:13.1
-#    healthcheck:
-#      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
-#      timeout: 45s
-#      interval: 10s
-#      retries: 10
-#    restart: always
     environment:
       POSTGRES_DB: averiaspr_db
       POSTGRES_USER: root
