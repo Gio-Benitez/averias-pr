@@ -3,7 +3,7 @@
     import NavBar from '$components/NavBar.svelte';
     import { onMount } from 'svelte';
     import { themeChange } from 'theme-change';
-    import '../app.postcss';
+    import '../../app.postcss';
   
     // initialize theme change
     onMount(() => {
