@@ -16,7 +16,7 @@
   <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
     <a href="/report" style="text-align: center;">
       <!-- <button class="btn" style="border-radius: 22px; padding: 10px 30px; color: #c6cbcd; font-weight: bold; font-size: 55px; cursor: pointer; background-color: #1f7a8c;">Create a Report</button> -->
-      <button class="btn w-64 rounded-full btn-secondary btn-wide" style="white-space: nowrap; font-weight: bold; font-size: 30px; ">Create a Report</button>
+      <button class="btn w-64 rounded-full btn-active btn-wide btn-primary" style="white-space: nowrap; font-weight: bold; font-size: 30px; ">Create a Report</button>
     </a>
   </div>
 
