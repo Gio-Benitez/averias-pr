@@ -15,7 +15,7 @@
 
   <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
     <a href="/report" style="text-align: center;">
-      <button style="border-radius: 22px; padding: 10px 30px; color: white; font-weight: bold; font-size: 55px; cursor: pointer; background-color: blue;">Create a Report</button>
+      <button style="border-radius: 22px; padding: 10px 30px; color: #c6cbcd; font-weight: bold; font-size: 55px; cursor: pointer; background-color: #1f7a8c;">Create a Report</button>
     </a>
   </div>
 
