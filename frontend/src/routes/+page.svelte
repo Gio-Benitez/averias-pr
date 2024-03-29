@@ -2,6 +2,7 @@
   import { Fa } from '$lib';
   import SvelteKitLogo from '$svg/svelte-kit.svg?component';
   import { faPlus } from '@fortawesome/free-solid-svg-icons';
+  import CreateReportCondensed from '$components/CreateReportCondensed.svelte';
 </script>
 
 <main class="flex h-full flex-col gap-8 pb-8 text-center">
@@ -13,26 +14,8 @@
     </div> -->
   </div>
 
-  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-    <a href="/report" style="text-align: center;">
-      <!-- <button class="btn" style="border-radius: 22px; padding: 10px 30px; color: #c6cbcd; font-weight: bold; font-size: 55px; cursor: pointer; background-color: #1f7a8c;">Create a Report</button> -->
-      <button class="btn w-64 rounded-full btn-active btn-wide btn-primary" style="white-space: nowrap; font-weight: bold; font-size: 30px; ">Create a Report</button>
-    </a>
-  </div>
-
-  <!-- <aside>
-    Get started by editing
-    <div class="mockup-code mx-auto w-min bg-secondary text-secondary-content lg:mx-0">
-      <pre data-prefix="∟" class="whitespace-nowrap">
-                <code>src/routes/+page.svelte</code>
-      </pre>
-    </div>
-    <div class="mockup-code mx-auto w-min bg-secondary text-secondary-content lg:mx-0">
-      <pre data-prefix="∟" class="whitespace-nowrap">
-                <code>src/routes/map/+page.svelte</code>
-      </pre>
-    </div>
-  </aside> -->
+  <CreateReportCondensed/>
+  
 </main>
 
 <style lang="postcss">
