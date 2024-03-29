@@ -42,3 +42,9 @@ let isModalOpen = false
         <button on:click={()=>isModalOpen = false}>close</button>
     </form>
 </dialog>
+
+<style>
+    button:hover{
+        color: white; /* Change text color on hover */
+    }
+</style>

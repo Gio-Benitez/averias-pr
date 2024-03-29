@@ -47,6 +47,9 @@ let isModalOpen = false
   </nav>
 
   <style>
+    a:hover {
+      color: white; /* Change background color on hover */
+    }
     .navbar{
       display: flex;
       justify-content: space-between;
