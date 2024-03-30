@@ -17,7 +17,8 @@
 
 <style>
   :global(.map) {
-    height: 500px;
+    height: 800px;
+    width: 75%;
   }
 </style>
 
