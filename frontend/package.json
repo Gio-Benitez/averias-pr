@@ -53,6 +53,7 @@
     "@sveltejs/adapter-vercel": "^5.1.1",
     "@vercel/postgres": "^0.7.2",
     "maplibre-gl": "^4.1.0",
+    "svelte-legos": "^0.2.2",
     "svelte-maplibre": "^0.8.2"
   }
 }
