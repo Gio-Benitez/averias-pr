@@ -1,13 +1,13 @@
-<script>
-import { onMount } from 'svelte';
-import { themeChange } from 'theme-change';
-import { signedIn } from '$lib/signinGlobalVars';
-import SignIn from '$components/SignIn.svelte';
-// initialize theme change
-onMount(() => {
-  themeChange(false);
-});
-let isModalOpen = false
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { themeChange } from 'theme-change';
+  import SignIn from '$components/SignIn.svelte'; 
+  //import { signedIn } from '$lib/signinGlobalVars'; // Keep signedIn as false for now
+  let signedIn = false;
+  // initialize theme change
+  onMount(() => {
+    themeChange(false);
+  });
 </script>
 
 <!-- Navigation Bar Svelte Component -->
@@ -39,7 +39,7 @@ let isModalOpen = false
       </section>
     </section>
     <!-- If signed in, show Account hyperlink. If not, show Sign In modal-->
-    {#if $signedIn} 
+    {#if signedIn} 
       <a href="/account" class="flex items-center bg-slate mr-5">Account</a>
     {:else}
       <SignIn />
