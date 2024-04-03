@@ -1,9 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { themeChange } from 'theme-change';
-  import SignIn from '$components/SignIn.svelte'; 
-  //import { signedIn } from '$lib/signinGlobalVars'; // Keep signedIn as false for now
-  let signedIn = false;
   // initialize theme change
   onMount(() => {
     themeChange(false);
@@ -13,7 +10,7 @@
 <!-- Navigation Bar Svelte Component -->
   <nav class="navbar">
     <!-- Section containing the -->
-    <section class="grid-cols-6 flex items-center">
+    <section class="grid-cols-5 flex items-center">
       <a href="/" class="flex items-center bg-slate ml-8 mr-2">AveriasPR</a>
       <a href="/map" class="flex items-center bg-slate ml-8 mr-2">Map</a>
       <a href="/dashboard" class="flex items-center bg-slate ml-8 mr-2">Dashboard</a>
@@ -38,12 +35,7 @@
         </ul>
       </section>
     </section>
-    <!-- If signed in, show Account hyperlink. If not, show Sign In modal-->
-    {#if signedIn} 
-      <a href="/account" class="flex items-center bg-slate mr-5">Account</a>
-    {:else}
-      <SignIn />
-    {/if}
+    
   </nav>
 
   <style>
