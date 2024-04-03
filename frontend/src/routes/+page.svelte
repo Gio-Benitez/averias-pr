@@ -1,6 +1,6 @@
 <script>
   import CreateReportCondensed from '$components/CreateReportCondensed.svelte';
-  import { invalidAuth, isModalOpen, signedIn } from '$lib/stores';
+  import { invalidAuth, isSignInModalOpen, isForgotPasswordModalOpen, isCreateAccountModalOpen, signedIn } from '$lib/stores';
 
   /** @type {import('./$types').PageData} */
 	export let data;
@@ -9,8 +9,18 @@
     signedIn.set(true)
   }
   else if (data.failedAuth) {
-    isModalOpen.set(true);
-    invalidAuth.set(true);
+    if (data.failedPath === "forgot") {
+      isForgotPasswordModalOpen.set(true);
+      invalidAuth.set(true);
+    }
+    else if (data.failedPath === "create") {
+      isCreateAccountModalOpen.set(true);
+      invalidAuth.set(true);
+    }
+    else {
+      isSignInModalOpen.set(true);
+      invalidAuth.set(true);
+    }
   }
 
 </script>
