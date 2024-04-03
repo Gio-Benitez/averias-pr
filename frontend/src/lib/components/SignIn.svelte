@@ -37,10 +37,10 @@
                         <span class="label-text">Password</span>
                     </label>
                     <input type="password" name= "password" placeholder="password" class="input input-bordered" required />
-                    <label class="label">
+                    <form method="dialog">
                         <!-- <a href="#" class="label-text-alt link link-hover">Forgot password?</a> -->
                         <button class="label-text-alt link link-hover" on:click={openForgotModal}>Forgot password?</button>
-                    </label>
+                    </form>
                 </div>
                 {#if $invalidAuth}
                     <p class="text-error font-semibold ml-2 mt-2">Email or password is not valid</p>
@@ -48,9 +48,9 @@
                 <div class="form-control mt-6">
                     <button class="btn btn-primary" type = "submit">Login</button>
                 </div>
-                <div style="display: flex; justify-content: center;">
+                <form method="dialog" style="display: flex; justify-content: center;">
                     <button class="label-text-alt link link-hover" on:click={openSecondModal}>Create an account</button>
-                </div>
+                </form>
             </form>
         </div>
     </div>
