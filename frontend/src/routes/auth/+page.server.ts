@@ -11,13 +11,13 @@ export const actions = {
         // Dummy frontend authentication (This should be done by backend with db.getUser(email))
         if (email === "a@gmail.com" && password === "pass"){
             cookies.set("access", "true",{path:"/",sameSite:"strict",httpOnly:true});
+            cookies.delete("failedAuth",{path:"/",sameSite:"strict",httpOnly:true});
             //Redirect user to home page
             throw redirect(302,"/")
         }
-        return {
-            success: false,
-            email,
-            message: "Email or password is not valid",
-        };
+        else {
+            cookies.set("failedAuth", "true",{path:"/",sameSite:"strict",httpOnly:true});
+            throw redirect(302,"/")
+        }
     },
 };

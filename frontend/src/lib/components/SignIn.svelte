@@ -1,5 +1,5 @@
 <script>
-    import { isModalOpen } from "$lib/stores";
+    import { invalidAuth, isModalOpen } from "$lib/stores";
 </script>
 
 <!--Initially just the Sign In button-->
@@ -32,6 +32,9 @@
                         <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
                     </label>
                 </div>
+                {#if $invalidAuth}
+                    <p class="text-error font-semibold ml-2 mt-2">Email or password is not valid</p>
+                {/if}
                 <div class="form-control mt-6">
                     <button class="btn btn-primary" type = "submit">Login</button>
                 </div>
