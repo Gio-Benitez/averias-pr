@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { themeChange } from 'theme-change';
-  import SignIn from '$components/SignIn.svelte'; 
   import { signedIn } from '$lib/stores';
+  import Authenticator from './Authenticator.svelte';
   // let signedIn = false;
   // initialize theme change
   onMount(() => {
@@ -42,7 +42,7 @@
     {#if $signedIn} 
       <a href="/account" class="flex items-center bg-slate mr-5">Account</a>
     {:else}
-      <SignIn />
+      <Authenticator />
     {/if}
   </nav>
 
