@@ -1,13 +1,11 @@
 <script>
-    //import { isModalOpen } from "$lib/signinGlobalVars";
-    let isModalOpen=false;
-    // export let form
+    import { invalidAuth, isModalOpen } from "$lib/stores";
 </script>
 
 <!--Initially just the Sign In button-->
-<button class="btn mr-8 modal-button" on:click={()=>isModalOpen =true}>Sign In</button>
+<button class="btn mr-8 modal-button" on:click={()=>$isModalOpen =true}>Sign In</button>
 <!--If Sign In button is pressed, open modal-->
-<dialog id="my_modal_2" class="modal" class:modal-open={isModalOpen}>
+<dialog id="my_modal_2" class="modal" class:modal-open={$isModalOpen}>
     <!-- {#if form?.message}
         <p style="bg-error">{form.message}</p>
     {/if} -->
@@ -15,9 +13,9 @@
         <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <!--This form allows you to close modal by clicking x-->
             <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" on:click={()=>isModalOpen = false}>✕</button>
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" on:click={()=>$isModalOpen = false}>✕</button>
             </form>
-            <form class="card-body" method="post" action="/?/login">
+            <form class="card-body" method="post" action="auth/?/login">
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Email</span>
@@ -34,6 +32,9 @@
                         <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
                     </label>
                 </div>
+                {#if $invalidAuth}
+                    <p class="text-error font-semibold ml-2 mt-2">Email or password is not valid</p>
+                {/if}
                 <div class="form-control mt-6">
                     <button class="btn btn-primary" type = "submit">Login</button>
                 </div>
@@ -45,7 +46,7 @@
     </div>
     <!--This form allows you to close modal by clicking outside of it-->
     <form method="dialog" class="modal-backdrop">
-        <button on:click={()=>isModalOpen = false}></button>
+        <button on:click={()=>$isModalOpen = false}></button>
     </form>
 </dialog>
 
