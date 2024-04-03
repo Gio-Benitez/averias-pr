@@ -13,6 +13,16 @@
         $isSignInModalOpen = false; 
         $isForgotPasswordModalOpen = true;
     }
+    function handleCreatetoSignIn (){
+        $isCreateAccountModalOpen = false;
+        $isSignInModalOpen = true;
+    }
+
+    function handleForgottoSignIn (){
+        $isForgotPasswordModalOpen = false;
+        $isSignInModalOpen = true;
+    }
+
   </script>
   <main>
   {#if showSignIn}
@@ -20,10 +30,10 @@
   {/if}
   
   {#if $isCreateAccountModalOpen}
-    <CreateAccount />
+    <CreateAccount on:handleCreatetoSignIn={handleCreatetoSignIn}/>
   {/if}
 
   {#if $isForgotPasswordModalOpen}
-    <ForgotPassword />
+    <ForgotPassword on:handleForgottoSignIn={handleForgottoSignIn}/>
   {/if}
   </main>

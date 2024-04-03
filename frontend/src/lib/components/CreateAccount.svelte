@@ -1,5 +1,12 @@
 <script>
     import { isCreateAccountModalOpen } from "$lib/stores";
+    import { createEventDispatcher } from "svelte";
+    
+    const dispatch = createEventDispatcher();
+
+    function returntoSignIn() {
+        dispatch('handleCreatetoSignIn');
+    }
 </script>
 
 <dialog id="my_modal_2" class="modal" class:modal-open={$isCreateAccountModalOpen}>
@@ -7,7 +14,7 @@
         <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <!--This form allows you to close modal by clicking x-->
             <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" on:click={()=>$isCreateAccountModalOpen = false}>✕</button>
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" on:click={returntoSignIn}>✕</button>
                 <!-- <button class="label-text-alt link link-hover" on:click={openSecondModal}>Create an account</button> -->
             </form>
             <form class="card-body" method="post" action="auth/?/createAccount">
