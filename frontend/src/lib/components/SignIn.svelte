@@ -10,6 +10,12 @@
   function openForgotModal() {
     dispatch('handleOpenForgotModal');
   }
+
+  function close() {
+    $isSignInModalOpen = false;
+    $invalidAuth = false;
+  }
+
 </script>
 
 <!--Initially just the Sign In button-->
@@ -23,7 +29,7 @@
         <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <!--This form allows you to close modal by clicking x-->
             <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" on:click={()=>$isSignInModalOpen = false}>✕</button>
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" on:click={close}>✕</button>
             </form>
             <form class="card-body" method="post" action="auth/?/login">
                 <div class="form-control">
@@ -56,7 +62,7 @@
     </div>
     <!--This form allows you to close modal by clicking outside of it-->
     <form method="dialog" class="modal-backdrop">
-        <button on:click={()=>$isSignInModalOpen = false}></button>
+        <button on:click={close}></button>
     </form>
 </dialog>
 

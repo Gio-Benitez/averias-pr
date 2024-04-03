@@ -1,26 +1,30 @@
 <script>
     import SignIn from './SignIn.svelte';
     import CreateAccount from './CreateAccount.svelte';
-    import { isSignInModalOpen, isCreateAccountModalOpen, isForgotPasswordModalOpen } from '$lib/stores';
+    import { isSignInModalOpen, isCreateAccountModalOpen, isForgotPasswordModalOpen, invalidAuth} from '$lib/stores';
     import ForgotPassword from './ForgotPassword.svelte';
   
     let showSignIn = true;
     function handleOpenSecondModal() {
       $isSignInModalOpen = false;
       $isCreateAccountModalOpen = true;
+      $invalidAuth = false;
     }
     function handleOpenForgotModal (){
         $isSignInModalOpen = false; 
         $isForgotPasswordModalOpen = true;
+        $invalidAuth = false;
     }
     function handleCreatetoSignIn (){
         $isCreateAccountModalOpen = false;
         $isSignInModalOpen = true;
+        $invalidAuth = false;
     }
 
     function handleForgottoSignIn (){
         $isForgotPasswordModalOpen = false;
         $isSignInModalOpen = true;
+        $invalidAuth = false;
     }
 
   </script>

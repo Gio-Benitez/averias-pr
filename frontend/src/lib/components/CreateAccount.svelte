@@ -1,6 +1,7 @@
 <script>
     import { isCreateAccountModalOpen } from "$lib/stores";
     import { createEventDispatcher } from "svelte";
+    import { invalidAuth } from "$lib/stores";
     
     const dispatch = createEventDispatcher();
 
@@ -34,6 +35,9 @@
                     </label>
                     <input type="password" name= "password-confirmation" placeholder="Confirm password" class="input input-bordered" required />
                 </div>
+                {#if $invalidAuth}
+                    <p class="text-error font-semibold ml-2 mt-2">Passwords do not match</p>
+                {/if}
                 <div class="form-control mt-6">
                     <button class="btn btn-primary" type = "submit">Create Account</button>
                 </div>

@@ -7,9 +7,13 @@ export function load({ cookies }) {
         }
     }
     else if (cookies.get("failedAuth")==="true") {
+        cookies.delete("failedAuth",{path:"/",sameSite:"strict",httpOnly:true});
+        const path = cookies.get("failedAuthPath")
+        cookies.delete("failedAuthPath",{path:"/",sameSite:"strict",httpOnly:true});
         return {
             access: false,
-            failedAuth: true
+            failedAuth: true,
+            failedPath: path
         }
     }
     else {
