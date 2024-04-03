@@ -1,5 +1,5 @@
 <script>
-    import { isModalOpen } from "$lib/signinGlobalVars";
+    import { isModalOpen } from "$lib/stores";
 </script>
 
 <!--Initially just the Sign In button-->
@@ -15,7 +15,7 @@
             <form method="dialog">
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" on:click={()=>$isModalOpen = false}>✕</button>
             </form>
-            <form class="card-body" method="post" action="/?/login">
+            <form class="card-body" method="post" action="auth/?/login">
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Email</span>

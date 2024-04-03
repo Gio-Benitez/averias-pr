@@ -1,7 +1,13 @@
-<script lang>
+<script>
   import CreateReportCondensed from '$components/CreateReportCondensed.svelte';
-  import { signedIn, isModalOpen } from '$lib/signinGlobalVars';
-  export let form;
+  import { signedIn } from '$lib/stores';
+
+  /** @type {import('./$types').PageData} */
+	export let data;
+
+  if (data.access) {
+    signedIn.set(true)
+  }
 </script>
 
 <main class="flex h-full flex-col gap-8 pb-8 text-center">
@@ -10,14 +16,6 @@
     Welcome to AveriasPR
   </div>
   
-  {#if form?.success}
-    {signedIn.set(true)}
-  {:else}
-    {#if form?.message}
-          {isModalOpen.set(true)}
-          <p class="text-red-500 font-semibold">{form.message}</p>
-    {/if}
-  {/if}
   <CreateReportCondensed/>
   
 </main>

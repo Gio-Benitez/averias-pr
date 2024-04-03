@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { themeChange } from 'theme-change';
   import SignIn from '$components/SignIn.svelte'; 
-  import { signedIn } from '$lib/signinGlobalVars'; // Keep signedIn as false for now
+  import { signedIn } from '$lib/stores';
   // let signedIn = false;
   // initialize theme change
   onMount(() => {
