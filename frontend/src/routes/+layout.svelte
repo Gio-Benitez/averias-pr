@@ -26,3 +26,7 @@
 	<!-- (footer) -->
 </AppShell>
 
+<slot />
+
+
+<Footer />

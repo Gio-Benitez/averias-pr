@@ -1,2 +1,5 @@
 db_setup/postgres-data/
 db_setup/env/
+.idea/
+env/
+node_modules

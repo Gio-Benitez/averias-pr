@@ -45,6 +45,13 @@ const config = {
       'cupcake',
       'retro',
       'business',
+      'cyberpunk',
+      'aqua',
+      'valentine',
+      'coffee',
+      'forest',
+      'night',
+      'autumn',
       'corporate'
     ]
   },
