@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import CreateReportCondensed from '$components/CreateReportCondensed.svelte';
   import { invalidAuth, isSignInModalOpen, isForgotPasswordModalOpen, isCreateAccountModalOpen, signedIn } from '$lib/stores';
 
