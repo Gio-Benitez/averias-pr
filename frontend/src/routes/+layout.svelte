@@ -13,18 +13,7 @@
   });
 </script>
 
-<AppShell>
-  <svelte:fragment slot="header"><NavBar /></svelte:fragment>
-	<svelte:fragment slot="sidebarLeft"></svelte:fragment>
-	<!-- (sidebarRight) -->
-	<!-- (pageHeader) -->
-	<!-- Router Slot -->
-	<slot />
-	<!-- ---- / ---- -->
-	<svelte:fragment slot="footer"><Footer /></svelte:fragment>
-  
-	<!-- (footer) -->
-</AppShell>
+<NavBar />
 
 <slot />
 
