@@ -1,10 +1,12 @@
 import forms from '@tailwindcss/forms';
 import daisyui from 'daisyui';
 import type { Config } from 'tailwindcss';
+import { skeleton } from '@skeletonlabs/tw-plugin';
 
 /** @type {import('tailwindcss').Config}*/
 const config = {
-  content: ['./src/**/*.{html,js,svelte,ts}'],
+  content: [
+    './src/**/*.{html,js,svelte,ts}'],
   theme: {
     extend: {
       fontFamily: {
@@ -53,7 +55,7 @@ const config = {
       'corporate'
     ]
   },
-  plugins: [forms, daisyui]
+  plugins: [forms, daisyui, skeleton]
 } satisfies Config;
 
 export default config;
