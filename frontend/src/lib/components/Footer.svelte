@@ -1,7 +1,7 @@
 <script>
 </script>
 
-<footer class="footer footer-center p-10 bg-base-200 text-base-content rounded">
+<footer class="footers footer footer-center p-10 bg-base-200 text-base-content rounded">
   <nav class="grid grid-flow-col gap-4">
     <a href="/aboutus" class="link link-hover">About us</a>
   </nav> 
@@ -16,3 +16,12 @@
     <p>Copyright © 2024 - All right reserved by ASSClapping Industries LTD</p>
   </aside>
 </footer>
+
+<style>
+.footers {
+  position: fixed; /* Fixed position to stick to the bottom */
+  left: 0;
+  bottom: 0;
+  width: 100%; /* Full width of the viewport */
+}
+</style>

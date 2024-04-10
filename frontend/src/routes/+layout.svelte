@@ -15,7 +15,7 @@
 
 <slot class="slot-content"/>
 
-<Footer />
+<Footer/>
 
 
 <style>
