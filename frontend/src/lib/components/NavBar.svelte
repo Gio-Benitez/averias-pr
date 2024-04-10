@@ -14,12 +14,12 @@
   <nav class="navbar">
     <!-- Section containing the -->
     <section class="grid-cols-6 flex items-center">
-      <a href="/" class="flex items-center bg-slate ml-8 mr-2">AveriasPR</a>
-      <a href="/map" class="flex items-center bg-slate ml-8 mr-2">Map</a>
+      <a href="/" class="ml-16 btn btn-ghost text-xl">AveriasPR</a>
+      <!-- <a href="/map" class="flex items-center bg-slate ml-8 mr-2">Map</a>
       <a href="/dashboard" class="flex items-center bg-slate ml-8 mr-2">Dashboard</a>
-      <a href="/report" class="flex items-center bg-slate ml-8 mr-2" style="white-space: nowrap;"> Create a Report</a>
+      <a href="/report" class="flex items-center bg-slate ml-8 mr-2" style="white-space: nowrap;"> Create a Report</a> -->
     </section>
-    <section class="flex items-center pr-16 py-1">
+    <section class="flex items-center mr-16 py-1">
       <section class="dropdown dropdown-left ml-8 mr-2">
         <!-- <button class="btn btn-outline btn-primary">Theme</button> -->
         <div tabindex="0" role="button" class="btn btn-xm btn-ghost m-1 btn-circle ">

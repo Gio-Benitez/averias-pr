@@ -14,7 +14,7 @@
         <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <!--This form allows you to close modal by clicking x-->
             <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" on:click={()=>$isForgotPasswordModalOpen = false}>✕</button>
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" on:click={returntoSignIn}>✕</button>
             </form>
             <form class="card-body" method="post" action="auth/?/forgotPassword">
                 <div class="form-control">

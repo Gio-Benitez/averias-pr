@@ -11,6 +11,12 @@
         $invalidAuth = false;
     }
 
+    function handleForgottoSignIn (){
+        $isForgotPasswordModalOpen = false;
+        $isSignInModalOpen = true;
+        $invalidAuth = false;
+    }
+
 </script>
 
 {#if $isCreateAccountModalOpen}
@@ -22,7 +28,7 @@
 {/if}
 
 {#if $isForgotPasswordModalOpen}
-    <ForgotPassword />
+    <ForgotPassword on:handleForgottoSignIn={handleForgottoSignIn}/>
 {/if}
 
 <div class="dropdown dropdown-end">
