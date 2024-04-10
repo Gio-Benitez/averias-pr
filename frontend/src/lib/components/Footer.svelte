@@ -1,7 +1,7 @@
 <script>
 </script>
 
-<footer class="footer footer-center p-10 bg-base-200 text-base-content rounded" style=" position: sticky; top: 100vh;">
+<footer class="footer footer-center p-10 bg-base-200 text-base-content rounded">
   <nav class="grid grid-flow-col gap-4">
     <a href="/aboutus" class="link link-hover">About us</a>
   </nav> 

@@ -13,7 +13,7 @@
 
 <NavBar />
 
-<slot class="main"/>
+<slot/>
 
 <Footer/>
 
