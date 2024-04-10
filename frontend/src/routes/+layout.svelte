@@ -13,7 +13,7 @@
 
 <NavBar />
 
-<slot class="slot-content"/>
+<slot class="main"/>
 
 <Footer/>
 
@@ -21,6 +21,12 @@
 <style>
   .slot-content {
     overflow-y: auto; /* Add scrollbar if content exceeds height */
+  }
+  :root {
+  --global-footer-height: 2rem;
+  }
+  .main {
+    min-height: 100vh;
   }
 </style>
 

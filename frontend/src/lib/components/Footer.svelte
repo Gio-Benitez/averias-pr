@@ -1,7 +1,7 @@
 <script>
 </script>
 
-<footer class="footers footer footer-center p-10 bg-base-200 text-base-content rounded">
+<footer class="footer footer-center p-10 bg-base-200 text-base-content rounded" style=" position: sticky; top: 100vh;">
   <nav class="grid grid-flow-col gap-4">
     <a href="/aboutus" class="link link-hover">About us</a>
   </nav> 
@@ -18,10 +18,7 @@
 </footer>
 
 <style>
-.footers {
-  position: fixed; /* Fixed position to stick to the bottom */
-  left: 0;
-  bottom: 0;
-  width: 100%; /* Full width of the viewport */
-}
+  .footers {
+    height: var(--global-footer-height);
+  }
 </style>
