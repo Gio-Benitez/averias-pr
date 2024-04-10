@@ -53,9 +53,11 @@ const config = {
       'night',
       'autumn',
       'corporate'
-    ]
+    ],
+    styled: true,
+    utils: true,
   },
-  plugins: [forms, skeleton, daisyui]
+  plugins: [forms, daisyui]
 } satisfies Config;
 
 export default config;

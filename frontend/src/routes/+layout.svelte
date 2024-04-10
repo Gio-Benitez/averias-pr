@@ -13,5 +13,14 @@
 
 <NavBar />
 
-<slot />
+<slot class="slot-content"/>
+
 <Footer />
+
+
+<style>
+  .slot-content {
+    overflow-y: auto; /* Add scrollbar if content exceeds height */
+  }
+</style>
+
