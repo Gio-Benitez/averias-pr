@@ -14,6 +14,4 @@
 <NavBar />
 
 <slot />
-
-
 <Footer />

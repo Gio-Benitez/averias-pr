@@ -55,7 +55,7 @@ const config = {
       'corporate'
     ]
   },
-  plugins: [forms, daisyui, skeleton]
+  plugins: [forms, skeleton, daisyui]
 } satisfies Config;
 
 export default config;
