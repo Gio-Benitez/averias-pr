@@ -3,6 +3,7 @@
   import { themeChange } from 'theme-change';
   import AccountBubble from './AccountBubble.svelte';
   import theme_icon from '$lib/images/theme_icon.png';
+  import { page } from '$app/stores';
   // let signedIn = false;
   // initialize theme change
   onMount(() => {
@@ -13,11 +14,16 @@
 <!-- Navigation Bar Svelte Component -->
   <nav class="navbar">
     <!-- Section containing the -->
-    <section class="grid-cols-6 flex items-center">
+    <section class="flex items-center">
       <a href="/" class="ml-16 btn btn-ghost" style="font-size: 1.50rem;">AveriasPR</a>
       <!-- <a href="/map" class="flex items-center bg-slate ml-8 mr-2">Map</a>
       <a href="/dashboard" class="flex items-center bg-slate ml-8 mr-2">Dashboard</a>
       <a href="/report" class="flex items-center bg-slate ml-8 mr-2" style="white-space: nowrap;"> Create a Report</a> -->
+    </section>
+    <section>
+      <a href="/" class="ml-16 btn btn-ghost btn-xs {$page.url.pathname==='/' ? 'btn-active' : ''}" style="font-size: 0.85rem;" class:active={$page.url.pathname==='/map'}>Dashboard</a>
+      <div class="divider divider-horizontal"></div>
+      <a href="/map" class="btn btn-ghost btn-xs {$page.url.pathname==='/map' ? 'btn-active' : ''}" style="font-size: 0.85rem;" class:active={$page.url.pathname==='/'}>Map</a>
     </section>
     <section class="flex items-center mr-16 py-1">
       <section class="dropdown dropdown-left ml-8 mr-1">
