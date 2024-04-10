@@ -1,39 +1,56 @@
+<script>
+  let steps_counter = 1;
+</script>
+<div>
+  <!-- If steps_counter > 0, display steps -->
+  {#if steps_counter>0}
+    <ul class="steps sm:steps-vertical lg:steps-horizontal">
+      {#if steps_counter===1}
+        <li class="step step-primary text-sm">Detect Location</li>
+        <li class="step text-sm">Select Category</li>
+        <li class="step text-sm">Upload Photo</li>
+        <li class="step text-sm">Create Report</li>
+      {/if}
+      
+      {#if steps_counter===2}
+        <li class="step step-primary text-sm">Detect Location</li>
+        <li class="step step-primary text-sm">Select Category</li>
+        <li class="step text-sm">Upload Photo</li>
+        <li class="step text-sm">Create Report</li>
+      {/if}
 
-<div class="join" style="display: flex; justify-content: center; align-items: center; ">
-    <!--Location Text Input **Change later to detect location button-->
-    <input type="text" placeholder="Location" class="input input-bordered input-md w-1/8 max-w-xs" required />
-    <!--Separator-->
-    <div class="divider divider-horizontal">*</div>
-    <!--Category Drop down-->
-    <select class="select select-bordered w-1/8 max-w-xs">
-      <option disabled selected>Category</option>
-      <option>Pothole</option>
-      <option>Lightpost</option>
-      <option>Landslide/Potential Landslide</option>
-      <option>Water Issues</option>
-      <option>Electrical Service Issues</option>
-    </select>
-    <!--Separator-->
-    <div class="divider divider-horizontal">*</div>
-    <!--Image input-->
-    <label class="form-control w-1/8 max-w-xs">
-        <div class="label">
-          <span class="label-text">Upload Image</span>
-        </div>
-        <input type="file" class="file-input file-input-bordered file-input-primary w-7/8 max-w-xs file-input-sm mb-9"/>
-      </label>
-    <!--Separator-->
-    <div class="divider divider-horizontal">*</div>
-    <!--Additional Notes Area-->
-    <textarea class="textarea textarea-bordered w-1/8" placeholder="Additional Notes"></textarea>
-    <!--Separator-->
-    <div class="divider divider-horizontal">*</div>
-    <!--Create Report Button-->
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <a href="/report" style="text-align: center;">
-          <button class="btn rounded-full btn-outline btn-success ml-15" style="white-space: nowrap; font-weight: bold;">Create Report</button>
-        </a>
-      </div>
+      {#if steps_counter===3}
+        <li class="step step-primary text-sm">Detect Location</li>
+        <li class="step step-primary text-sm">Select Category</li>
+        <li class="step step-primary text-sm">Upload Photo</li>
+        <li class="step text-sm">Create Report</li>
+      {/if}
+      {#if steps_counter>=4}
+        <li class="step step-primary text-sm">Detect Location</li>
+        <li class="step step-primary text-sm">Select Category</li>
+        <li class="step step-primary text-sm">Upload Photo</li>
+        <li class="step step-success text-sm text-success">Create Report</li>
+      {/if}
+    </ul>
+  {/if}
+  <!-- Steps Buttons -->
+  <div>
+    {#if steps_counter===0}
+      <button class="btn" on:click={()=>steps_counter+=1}>Create Report</button>
+    {:else if steps_counter ===1}
+      <button class="btn" on:click={()=>steps_counter = 0}>Cancel</button>
+      <button class="btn" on:click={()=>steps_counter += 1}>Next</button>
+    {:else if steps_counter<4}
+      <button class="btn" on:click={()=>steps_counter = 0}>Cancel</button>
+      <button class="btn" on:click={()=>steps_counter -= 1}>Back</button>
+      <button class="btn" on:click={()=>steps_counter += 1}>Next</button>
+    {:else}
+      <button class="btn" on:click={()=>steps_counter = 0}>Cancel</button>
+      <button class="btn" on:click={()=>steps_counter -= 1}>Back</button>
+      <button class="btn">Submit</button>
+    {/if}
   </div>
+</div>
+
 
   
