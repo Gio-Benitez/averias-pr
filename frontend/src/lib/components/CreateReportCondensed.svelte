@@ -52,16 +52,16 @@
     {#if steps_counter===0}
       <button class="btn btn-success btn-outline" on:click={()=>steps_counter+=1}>Create Report +</button>
     {:else if steps_counter ===1}
-      <button class="btn" on:click={()=>steps_counter = 0}>Cancel</button>
-      <button class="btn" on:click={()=>steps_counter += 1}>Next</button>
+      <button class="btn btn-sm" on:click={()=>steps_counter = 0}>Cancel</button>
+      <button class="btn btn-sm" on:click={()=>steps_counter += 1}>Next</button>
     {:else if steps_counter<4}
-      <button class="btn" on:click={()=>steps_counter = 0}>Cancel</button>
-      <button class="btn" on:click={()=>steps_counter -= 1}>Back</button>
-      <button class="btn" on:click={()=>steps_counter += 1}>Next</button>
+      <button class="btn btn-sm" on:click={()=>steps_counter = 0}>Cancel</button>
+      <button class="btn btn-sm" on:click={()=>steps_counter -= 1}>Back</button>
+      <button class="btn btn-sm" on:click={()=>steps_counter += 1}>Next</button>
     {:else}
-      <button class="btn" on:click={()=>steps_counter = 0}>Cancel</button>
-      <button class="btn" on:click={()=>steps_counter -= 1}>Back</button>
-      <button class="btn">Submit</button>
+      <button class="btn btn-sm" on:click={()=>steps_counter = 0}>Cancel</button>
+      <button class="btn btn-sm" on:click={()=>steps_counter -= 1}>Back</button>
+      <button class="btn btn-success">Submit</button>
     {/if}
   </div>
 </div>
