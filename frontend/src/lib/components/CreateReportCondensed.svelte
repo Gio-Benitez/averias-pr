@@ -76,29 +76,35 @@
       {/if}
       
       {#if steps_counter===2}
-          <ul class="steps sm:steps-vertical lg:steps-horizontal" style="z-index:-1;">
+        <div class="flex justify-center w-full">
+          <ul class="steps sm:steps-vertical lg:steps-horizontal w-full" style="z-index:-1;">
             <li class="step step-primary text-sm">Detect Location</li>
             <li class="step step-primary text-sm">Select Category</li>
             <li class="step text-sm">Upload Photo</li>
             <li class="step text-sm">Create Report</li>
           </ul>
+        </div>
       {/if}
 
       {#if steps_counter===3}
-          <ul class="steps sm:steps-vertical lg:steps-horizontal" style="z-index:-1;">
+        <div class="flex justify-center w-full">
+          <ul class="steps sm:steps-vertical lg:steps-horizontal w-full" style="z-index:-1;">
             <li class="step step-primary text-sm">Detect Location</li>
             <li class="step step-primary text-sm">Select Category</li>
             <li class="step step-primary text-sm">Upload Photo</li>
             <li class="step text-sm">Create Report</li>
           </ul>
+        </div>
       {/if}
       {#if steps_counter>=4}
-          <ul class="steps sm:steps-vertical lg:steps-horizontal" style="z-index:-1;">
+        <div class="flex justify-center w-full">
+          <ul class="steps sm:steps-vertical lg:steps-horizontal w-full" style="z-index:-1;">
             <li class="step step-primary text-sm">Detect Location</li>
             <li class="step step-primary text-sm">Select Category</li>
             <li class="step step-primary text-sm">Upload Photo</li>
             <li class="step step-success text-sm text-success">Create Report</li>
           </ul>
+        </div>
       {/if}
     <!-- </div> -->
   {/if}
