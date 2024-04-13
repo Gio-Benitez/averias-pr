@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { MapLibre } from 'svelte-maplibre'
+    import { MapLibre} from 'svelte-maplibre'
     import { GeoJSON, FillExtrusionLayer, Popup } from 'svelte-maplibre'
 </script>
 
