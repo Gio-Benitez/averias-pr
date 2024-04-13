@@ -21,9 +21,9 @@
       <a href="/report" class="flex items-center bg-slate ml-8 mr-2" style="white-space: nowrap;"> Create a Report</a> -->
     </section>
     <section>
-      <a href="/" class="ml-16 btn btn-ghost btn-xs {$page.url.pathname==='/' ? 'btn-active' : ''}" style="font-size: 0.85rem;" class:active={$page.url.pathname==='/map'}>Dashboard</a>
+      <a href="/" class="ml-16 {$page.url.pathname==='/map' ? 'btn btn-ghost btn-md font-normal' : 'font-semibold'}" style="font-size: 1.15rem;" class:active={$page.url.pathname==='/map'}>Dashboard</a>
       <div class="divider divider-horizontal"></div>
-      <a href="/map" class="btn btn-ghost btn-xs {$page.url.pathname==='/map' ? 'btn-active' : ''}" style="font-size: 0.85rem;" class:active={$page.url.pathname==='/'}>Map</a>
+      <a href="/map" class="{$page.url.pathname==='/' ? 'btn btn-ghost btn-md font-normal' : 'font-semibold'}" style="font-size: 1.15rem;" class:active={$page.url.pathname==='/'}>Map</a>
     </section>
     <section class="flex items-center mr-16 py-1">
       <section class="dropdown dropdown-left ml-8 mr-1">

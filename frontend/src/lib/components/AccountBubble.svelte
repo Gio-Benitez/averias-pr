@@ -35,7 +35,7 @@
         <div class="flex-none">
             <button tabindex="0" class="btn btn-md flex items-center rounded-full px-2">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-4 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-              <div class="avatar">
+              <div class="avatar {$signedIn ? 'online' : 'offline'}">
                 <div class="w-8 h-8 rounded-full overflow-hidden">
                     <img alt="Avatar Icon" src="{avatar_icon}" />
                 </div>
