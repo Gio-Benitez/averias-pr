@@ -31,7 +31,7 @@
   <CreateReportCondensed/> 
 
   <!-- Horizontal Line -->
-  <hr class="horizontal-line">
+  <hr class="horizontal-line mt-24">
 
   <!-- Stats -->
   <div class="stats shadow mt-15" style="min-height: 116px; min-width: auto;">
@@ -119,7 +119,7 @@
   </div>
   
   <!-- Horizontal Line -->
-  <hr class="horizontal-line">
+  <hr class="horizontal-line mt-56">
 
   <!-- Phone Mockup -->
   <div class="try-app w-full pl-48">
@@ -147,11 +147,8 @@
 
 <style>
   .horizontal-line {
-    border: none; /* Remove default border */
-    height: 1px; /* Set the height of the line */
-    background-color: oklch(var(--b2)); /* Set the color of the line */
-    margin: 20px 0; /* Add margin for spacing */
-    border-width: 0 0 1px; /* Set border width to create a 1px bottom border */
+    border: none;
+    border-bottom: 1px solid oklch(var(--b2));  
   }
   .reports-table-container {
     position: relative;
@@ -161,7 +158,6 @@
     display: flex;
     justify-content: flex-start;
     position: sticky;
-    margin-top: 200px;
   }
   .overlay-button {
     position: absolute;

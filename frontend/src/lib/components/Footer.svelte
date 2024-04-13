@@ -13,12 +13,6 @@
     </div>
   </nav> 
   <aside>
-    <p>Copyright © 2024 - All right reserved by ASSClapping Industries LTD</p>
+    <p>Copyright © 2024 - All right reserved by Clapping Industries LTD</p>
   </aside>
 </footer>
-
-<style>
-  .footers {
-    height: var(--global-footer-height);
-  }
-</style>
