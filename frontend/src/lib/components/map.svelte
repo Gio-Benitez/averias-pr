@@ -8,7 +8,7 @@
 <MapLibre 
   center={[-66.41, 18.24]}
   zoom={6.5}
-  class="map"
+  class="relative aspect-[9/16] max-h-[70vh] w-[80vw]"
   standardControls
   style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json" 
   maxBounds={[-67.5, 17.8, -65.1, 18.6]}

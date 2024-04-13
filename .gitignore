@@ -3,3 +3,25 @@ db_setup/env/
 .idea/
 env/
 node_modules
+frontend/node_modules
+frontend/!.env.example
+frontend/.DS_Store
+frontend/.env
+frontend/.env.*
+frontend/.vercel
+frontend/.output
+frontend/vite.config.js.timestamp-*
+frontend/vite.config.ts.timestamp-*
+
+frontend/# folders
+frontend/.firebase
+frontend/.svelte-kit
+frontend/build
+frontend/node_modules
+frontend/package
+
+frontend/# lock files
+frontend/package-lock.json
+frontend/pnpm-lock.yaml
+frontend/yarn.lock
+frontend/bun.lockb

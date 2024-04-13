@@ -1,4 +1,4 @@
-<script lang>
+<script lang="ts">
   import CreateReportCondensed from '$components/CreateReportCondensed.svelte';
   export let form;
 </script>

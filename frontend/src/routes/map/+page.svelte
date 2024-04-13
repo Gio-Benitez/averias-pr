@@ -7,10 +7,18 @@
   </script>
 <main class="flex h-full flex-col gap-8 pb-8 text-center">
 
-    Interactive Map
-    <div class="flex items-center justify-center">
+    <h1>Interactive Map</h1>
+    <div id="map" class="flex items-center justify-center">
         <Map />
     </div>
 
 </main>
-    
+
+<style>
+    aside{
+        @apply my-auto grid grid-cols-1 content-start items-center gap-8 text-center text-2xl;
+        @screen lg {
+            @apply flex w-full items-center justify-center;
+        }
+    }
+</style>
