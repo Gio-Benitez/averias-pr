@@ -3,6 +3,7 @@
   import { invalidAuth, isSignInModalOpen, isForgotPasswordModalOpen, isCreateAccountModalOpen, signedIn } from '$lib/stores';
   import avatar_icon from '$lib/images/avatar_icon.png';
   import target_icon from '$lib/images/target_icon.png';
+  import PrettyMap from '$components/PrettyMap.svelte';
 
   /** @type {import('./$types').PageData} */
 	export let data;
@@ -32,6 +33,8 @@
 
   <!-- Horizontal Line -->
   <hr class="horizontal-line mt-24">
+
+  <!-- <PrettyMap/> -->
 
   <!-- Stats -->
   <div class="stats shadow mt-15" style="min-height: 116px; min-width: auto;">
@@ -127,11 +130,11 @@
       <div class="camera"></div> 
       <div class="display min-w-full">
         <div class="artboard artboard-demo phone-1 min-w-full">
-          <button class="btn btn-lg btn-square btn-primary">
+          <button class="btn btn-lg btn-square btn-primary btn-disabled">
             <div class="w-20 h-20 overflow-hidden">
               <img alt="Theme Icon" src="{target_icon}" />              
             </div>
-            Press to detect location
+            <!-- <h1 class="text-info">Press to detect location</h1> -->
           </button>
         </div>
       </div>
