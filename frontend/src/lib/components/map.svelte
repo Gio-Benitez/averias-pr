@@ -1,6 +1,8 @@
 <script lang="ts">
-    import { MapLibre } from 'svelte-maplibre'
-    import { GeoJSON, FillExtrusionLayer, Popup } from 'svelte-maplibre'
+    import { MapLibre, GeoJSON, FillExtrusionLayer } from 'svelte-maplibre';
+    import type { Feature } from 'geojson';
+    import municipios from '$lib/data/municipios.json';
+
 </script>
 
 
