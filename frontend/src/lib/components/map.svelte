@@ -38,8 +38,9 @@
   style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
   class={mapClasses}
   standardControls
-  center={[-98.137, 40.137]}
+  center={[-66.41, 18.24]}
   zoom={4}
+  maxBounds={[-67.5, 17.8, -65.1, 18.6]}
 >
   <GeoJSON id="municipios" data= { municipios } promoteId="STATEFP">
     {#if showFill}
