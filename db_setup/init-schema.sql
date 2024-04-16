@@ -1,7 +1,7 @@
 -- CREATE USER appuser WITH PASSWORD 'appass';
 -- CREATE DATABASE averiaspr_db;
 -- GRANT ALL PRIVILEGES ON DATABASE averiaspr_db TO appuser;
---
+
 -- \c averiaspr_db;
 
 -- CREATE TABLE IF NOT EXISTS my_table (
@@ -11,7 +11,7 @@
 --
 
 -- Create the user table
-CREATE TABLE "user" (
+CREATE TABLE if not exists "user" (
     user_id SERIAL PRIMARY KEY,
     user_email VARCHAR(255) UNIQUE NOT NULL,
     user_pass_hash VARCHAR(255) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE "user" (
 );
 
 -- Create the municipalities table
-CREATE TABLE municipalities (
+CREATE TABLE if not exists municipalities (
     mun_id SERIAL PRIMARY KEY,
     mun_name VARCHAR(255) NOT NULL,
     mun_population INT,
@@ -30,7 +30,7 @@ CREATE TABLE municipalities (
 );
 
 -- Create the report_data table
-CREATE TABLE report_data (
+CREATE TABLE if not exists report_data (
     data_id SERIAL PRIMARY KEY,
     user_id INT REFERENCES "user"(user_id),
     mun_id INT REFERENCES municipalities(mun_id),
@@ -45,11 +45,14 @@ CREATE TABLE report_data (
 );
 
 -- Create the report table
-CREATE TABLE report (
+CREATE TABLE if not exists report (
     report_id SERIAL PRIMARY KEY,
+    data_id INT REFERENCES report_data(data_id),
+
     report_date DATE NOT NULL,
     report_email VARCHAR(255) NOT NULL,
     report_status VARCHAR(20) NOT NULL,
     CONSTRAINT fk_report_data FOREIGN KEY (report_id) REFERENCES report_data(data_id) ON DELETE CASCADE
 );
+
 
