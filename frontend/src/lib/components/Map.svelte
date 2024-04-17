@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { MapLibre, GeoJSON, FillLayer, LineLayer, hoverStateFilter } from 'svelte-maplibre';
+    import { MapLibre, GeoJSON, FillLayer, LineLayer, hoverStateFilter, MarkerLayer, Popup } from 'svelte-maplibre';
     import type { Feature } from 'geojson';
     import municipios from '$lib/data/municipios.json';
     import { contrastingColor } from '$lib/site/colors';
@@ -9,9 +9,9 @@
     let showFill = true;
     let fillColor = '#006600';
     let borderColor = '#003300';
-    const mapClasses = 'relative w-full aspect-[9/16] max-h-[70vh] sm:max-h-full sm:aspect-video';
+    const mapClasses = 'w-full aspect-[9/16] max-h-[70vh] sm:max-h-full sm:aspect-video';
 
-    // START EXTRACT
+  
   let map: maplibregl.Map | undefined;
   let loaded: boolean;
   let textLayers: maplibregl.LayerSpecification[] = [];
@@ -28,8 +28,11 @@
   }
 
   let filterStates = false;
+  
   $: filter = filterStates ? ['==', 'T', ['slice', ['get', 'NAME'], 0, 1]] : undefined;
-  // END EXTRACT
+
+  export let clickedFeature: Record<string, any> | null = null;
+
 </script>
 
 
@@ -43,16 +46,19 @@
   zoom={4}
   maxBounds={[-67.5, 17.8, -65.1, 18.6]}
 >
-  <GeoJSON id="municipios" data= { municipios } promoteId="STATEFP">
+  <GeoJSON id="municipios" data= { municipios } promoteId="NAME">
     {#if showFill}
       <FillLayer
+        type="background"
+        hoverCursor="pointer"
         paint={{
           'fill-color': hoverStateFilter(fillColor, colors.hoverBgColor),
-          'fill-opacity': 0.5,
+          'fill-opacity': 0.5
         }}
         {filter}
         beforeLayerType="symbol"
         manageHoverState
+        on:click={(data) => (clickedFeature = data.detail.features?.[0]?.properties)}
       />
     {/if}
     {#if showBorder}
@@ -62,14 +68,34 @@
         beforeLayerType="symbol"
       />
     {/if}
+    <!--
+    <MarkerLayer interactive let:feature>
+      {#if feature && feature.properties}
+      <div class="rounded-full bg-gray-200 p-2 shadow">
+          <div class="text-sm text-black font-bold">{feature.properties.NAME}</div>
+      </div>
+        <Popup openOn="hover">
+          {feature.properties.NAME} 
+        </Popup>
+      
+      <Popup openOn="hover">
+        {feature.properties.NAME} 
+      </Popup>
+      {/if}
+    </MarkerLayer>
+    -->
   </GeoJSON>
 </MapLibre>
 
+{#if clickedFeature}
+  <div class="relative top-0 right-0 p-4 bg-white shadow-lg">
+    <div class="text-lg text-black font-bold">{clickedFeature.NAME}</div>
+    <div class="text-sm text-black">{clickedFeature.STATE}</div>
+  </div>
+{/if}
+
 <style>
-  :global(.map) {
-    height: 600px;
-    width: 90%;
-  }
+
 </style>
 
 
