@@ -48,7 +48,6 @@ CREATE TABLE if not exists report_data (
 CREATE TABLE if not exists report (
     report_id SERIAL PRIMARY KEY,
     data_id INT REFERENCES report_data(data_id),
-
     report_date DATE NOT NULL,
     report_email VARCHAR(255) NOT NULL,
     report_status VARCHAR(20) NOT NULL,
