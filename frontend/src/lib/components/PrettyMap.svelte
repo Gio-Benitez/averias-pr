@@ -1,9 +1,9 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte'
-    import maplibregl, { Map } from 'maplibre-gl';
+    import maplibregl from 'maplibre-gl';
     import 'maplibre-gl/dist/maplibre-gl.css';
 
-    let map: Map | undefined;
+    let map: maplibregl.Map | undefined;
     let mapContainer: HTMLElement | null;
 
     const apiKey = "N6k7AWVqyqCyOnsm59er";
