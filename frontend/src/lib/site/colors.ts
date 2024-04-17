@@ -6,8 +6,10 @@ export function contrastingColor(color: string) {
   const MIN_DIFF = 50;
   const MAX_DIFF = 90;
 
+  // eslint-disable-next-line prefer-const
   let l = colorLab.l;
   let output = 100 - l;
+  // eslint-disable-next-line prefer-const
   let contrast = Math.abs(l - output);
   let textColor: LabColor;
   let hoverBgColor: LabColor;
