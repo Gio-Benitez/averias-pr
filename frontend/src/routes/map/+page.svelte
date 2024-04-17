@@ -6,17 +6,15 @@
     <!--- To-Do -->
 </svelte:head>
 <!--Interactive Map Segment-->
-<main class="flex h-full  flex-col gap-8 pb-8 text-center">
+<main class="flex h-full flex-col gap-8 pb-8 text-center object-center">
 
-    Interactive Map
-    <div class="grid grid-cols-1 place-content-center">
-        <div class="flex justify-center">
-            <Map />
-        </div>
-    </div>
-    <div>
-
+    <h1>Interactive Map</h1>
+    <div id="map" class="flex  h-2/3 w-3/4 justify-center content-center">
+        <Map />
     </div>
 
 </main>
+
+<style>
     
+</style>

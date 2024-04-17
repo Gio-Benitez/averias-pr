@@ -4,6 +4,7 @@ import type { Config } from 'tailwindcss';
 import { skeleton } from '@skeletonlabs/tw-plugin';
 import typography from '@tailwindcss/typography';
 
+
 /** @type {import('tailwindcss').Config}*/
 const config = {
   content: [
@@ -58,7 +59,9 @@ const config = {
     styled: true,
     utils: true,
   },
+
   plugins: [forms, typography, daisyui]
+
 } satisfies Config;
 
 export default config;
