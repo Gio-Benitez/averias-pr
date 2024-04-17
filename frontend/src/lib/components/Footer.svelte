@@ -1,24 +1,9 @@
 <script>
-  import SvelteLogo from '$svg/svelte.svg?component';
 </script>
-
-<!-- <footer class="border-t-[3px] border-base-content py-8">
-  <a
-    href="https://kit.svelte.dev/"
-    target="_blank"
-    rel="noopener noreferrer"
-    class=" flex flex-grow items-center justify-center">
-    Powered by
-    <SvelteLogo class="ml-2 h-8 w-8 text-2xl text-accent" />
-  </a>
-</footer> -->
 
 <footer class="footer footer-center p-10 bg-base-200 text-base-content rounded">
   <nav class="grid grid-flow-col gap-4">
-    <a href="" class="link link-hover">About us</a>
-    <a href="" class="link link-hover">Contact</a>
-    <a href="" class="link link-hover">Jobs</a>
-    <a href="" class="link link-hover">Press kit</a>
+    <a href="/aboutus" class="link link-hover">About us</a>
   </nav> 
   <nav>
     <div class="grid grid-flow-col gap-4">
@@ -28,6 +13,6 @@
     </div>
   </nav> 
   <aside>
-    <p>Copyright © 2024 - All right reserved by ASSClapping Industries LTD</p>
+    <p>Copyright © 2024 - All right reserved by Clapping Industries LTD</p>
   </aside>
 </footer>

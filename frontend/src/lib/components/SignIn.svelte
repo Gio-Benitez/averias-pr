@@ -4,9 +4,6 @@
 
   const dispatch = createEventDispatcher();
 
-  function openSecondModal() {
-    dispatch('handleOpenSecondModal');
-  }
   function openForgotModal() {
     dispatch('handleOpenForgotModal');
   }
@@ -19,7 +16,7 @@
 </script>
 
 <!--Initially just the Sign In button-->
-<button class="btn mr-8 modal-button" on:click={()=>$isSignInModalOpen =true}>Sign In</button>
+<!-- <button class="btn mr-8 modal-button" on:click={()=>$isSignInModalOpen =true}>Sign In</button> -->
 <!--If Sign In button is pressed, open modal-->
 <dialog id="signInModal" class="modal" class:modal-open={$isSignInModalOpen}>
     <!-- {#if form?.message}
@@ -54,9 +51,6 @@
                 <div class="form-control mt-6">
                     <button class="btn btn-primary" type = "submit">Login</button>
                 </div>
-                <form method="dialog" style="display: flex; justify-content: center;">
-                    <button class="label-text-alt link link-hover" on:click={openSecondModal}>Create an account</button>
-                </form>
             </form>
         </div>
     </div>
