@@ -3,12 +3,13 @@
     import type { Feature } from 'geojson';
     import municipios from '$lib/data/municipios.json';
     import { contrastingColor } from '$lib/site/colors';
-    import { mapClasses } from '$lib/styles';
+    //import { mapClasses } from '$lib/styles';
 
     let showBorder = true;
     let showFill = true;
     let fillColor = '#006600';
     let borderColor = '#003300';
+    const mapClasses = 'relative w-full aspect-[9/16] max-h-[70vh] sm:max-h-full sm:aspect-video';
 
     // START EXTRACT
   let map: maplibregl.Map | undefined;
