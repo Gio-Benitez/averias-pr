@@ -6,20 +6,15 @@
     <!--- To-Do -->
 </svelte:head>
 <!--Interactive Map Segment-->
-<main class="flex h-full  flex-col gap-8 pb-8 text-center">
+<main class="flex h-full flex-col gap-8 pb-8 text-center object-center">
 
     <h1>Interactive Map</h1>
-    <div id="map" class="flex items-center justify-center">
+    <div id="map" class="flex  h-2/3 w-3/4 justify-center content-center">
         <Map />
     </div>
 
 </main>
 
 <style>
-    aside{
-        @apply my-auto grid grid-cols-1 content-start items-center gap-8 text-center text-2xl;
-        @screen lg {
-            @apply flex w-full items-center justify-center;
-        }
-    }
+    
 </style>
