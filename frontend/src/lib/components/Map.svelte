@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { MapLibre, GeoJSON, FillLayer, LineLayer, hoverStateFilter, MarkerLayer, Popup } from 'svelte-maplibre';
-    import type { Feature } from 'geojson';
-    import municipios from '$lib/data/municipios.json';
-    import { contrastingColor } from '$lib/site/colors';
-    //import { mapClasses } from '$lib/styles';
-
-    let showBorder = true;
-    let showFill = true;
-    let fillColor = '#006600';
-    let borderColor = '#003300';
-    const mapClasses = 'w-full aspect-[9/16] max-h-[70vh] sm:max-h-full sm:aspect-video';
-
+  import { MapLibre, GeoJSON, FillLayer, LineLayer, hoverStateFilter, MarkerLayer, Popup } from 'svelte-maplibre';
+  import type { Feature } from 'geojson';
+  import municipios from '$lib/data/municipios.json';
+  import { contrastingColor } from '$lib/site/colors';
+  import mapDataStore from '$lib/stores';
   
+
+  let showBorder = true;
+  let showFill = true;
+  let fillColor = '#006600';
+  let borderColor = '#003300';
+  const mapClasses = 'rounded-lg aspect-auto w-full h-full';
+
   let map: maplibregl.Map | undefined;
   let loaded: boolean;
   let textLayers: maplibregl.LayerSpecification[] = [];
@@ -31,8 +31,12 @@
   
   $: filter = filterStates ? ['==', 'T', ['slice', ['get', 'NAME'], 0, 1]] : undefined;
 
+  
+  // Values for populating Map Data Panel
   export let clickedFeature: Record<string, any> | null = null;
-
+  function updateDataPanel(clickedFeature) {
+    $mapDataStore.dataRegion = clickedFeature?.NAME;
+  }
 </script>
 
 
@@ -40,7 +44,7 @@
   bind:map
   bind:loaded
   style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-  class={mapClasses}
+  class= {mapClasses}
   standardControls
   center={[-66.41, 18.24]}
   zoom={4}
@@ -58,8 +62,8 @@
         {filter}
         beforeLayerType="symbol"
         manageHoverState
-        on:click={(data) => (clickedFeature = data.detail.features?.[0]?.properties)}
-      />
+        on:click={ (data) => (clickedFeature = data.detail.features?.[0]?.properties) }
+    />
     {/if}
     {#if showBorder}
       <LineLayer
@@ -68,33 +72,15 @@
         beforeLayerType="symbol"
       />
     {/if}
-    <!--
-    <MarkerLayer interactive let:feature>
-      {#if feature && feature.properties}
-      <div class="rounded-full bg-gray-200 p-2 shadow">
-          <div class="text-sm text-black font-bold">{feature.properties.NAME}</div>
-      </div>
-        <Popup openOn="hover">
-          {feature.properties.NAME} 
-        </Popup>
-      
-      <Popup openOn="hover">
-        {feature.properties.NAME} 
-      </Popup>
-      {/if}
-    </MarkerLayer>
-    -->
+
   </GeoJSON>
 </MapLibre>
 
 {#if clickedFeature}
-  <div class="relative top-0 right-0 p-4 bg-white shadow-lg">
-    <div class="text-lg text-black font-bold">{clickedFeature.NAME}</div>
-    <div class="text-sm text-black">{clickedFeature.STATE}</div>
-  </div>
+  {updateDataPanel(clickedFeature)}
 {/if}
 
-<style>
+<style lang="postcss">
 
 </style>
 
