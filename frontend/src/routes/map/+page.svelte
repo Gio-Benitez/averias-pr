@@ -58,7 +58,7 @@
 </main>
 
 <style lang="postcss">
-    h1 {
+    button {
         @apply font-black text-3xl text-left;
     }
 
