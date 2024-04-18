@@ -4,17 +4,30 @@
     import Map from '$components/Map.svelte';
     import mapDataStore from '$lib/stores';
 
-    export let data: PageData;
-    $mapDataStore.populationData = data.item[1][1];
+    //export let data: PageData;
+    //$mapDataStore.populationData = data.item[1][1];
+
 
   </script>
 <svelte:head>
     <!--- To-Do -->
 </svelte:head>
-<!--Interactive Map Segment-->
-<main class="grid grid-rows-9 grid-cols-10 grid-flow-auto h-full gap-8 pb-8">
 
-    <h1 class="col-span-1 row-span-1 col-start-5 col-end-6 row-start-1">Interactive Map</h1>
+
+<main class="grid grid-rows-9 grid-cols-10 grid-flow-auto h-full gap-8 pb-8">
+<!--Tab Implementation to switch between Map and Dashboard Segments-->
+    
+    <!--Interactive Map Segment-->
+    <div class="flex pt-12 pl-0 space-x-2 col-span-3 row-span-1 col-start-2 row-start-1 ">
+        <div class="flex shrink-0 h-full">
+            <div class="tabs-lifted tabs-lg w-full h-full ">
+                <h1 class="tab tab-active">Interactive Map</h1>
+                <h1 class="tab">Dashboard</h1>
+            </div>
+        </div>
+        
+        
+    </div>
     <div id="map" class="col-start-2 col-end-8 row-start-2 row-end-9">
         <Map />
     </div>
@@ -24,6 +37,9 @@
 
 </main>
 
-<style>
-    
+<style lang="postcss">
+    h1 {
+        @apply font-black text-3xl text-left;
+    }
+
 </style>
