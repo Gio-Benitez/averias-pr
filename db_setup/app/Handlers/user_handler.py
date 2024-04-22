@@ -4,7 +4,8 @@ from config.dbconfig import get_connection
 
 user_handler = Blueprint('user_handler', __name__)
 
-@user_handler.route('/', methods = ['POST'])
+
+@user_handler.route('/', methods=['POST'])
 def create_users():
     data = request.get_json()
     user_email = data.get('Email')
@@ -19,6 +20,8 @@ def create_users():
 
     try:
         # TODO may help to create a validator function to check if the email is valid
+        if user_dao.get_user_by_email(user_email) is not None:
+            return jsonify(error='Email already in use'), 400
         user_id = user_dao.create_user(user_email, user_pass_hash, user_salt, user_fname, user_lname, admin_id)
         response = {
             'message': 'User created successfully',
@@ -30,7 +33,31 @@ def create_users():
         error_message = str(e)
         return jsonify(error=error_message), 500
 
-@user_handler.route('/<int:user_id>', methods = ['GET'])
+
+# @user_handler.route('/', methods=['GET'])
+# def get_users():
+#     dao_factory = DAOFactory(get_connection())
+#     user_dao = dao_factory.get_user_dao()
+#
+#     try:
+#         users = user_dao.get_users()
+#         response = []
+#         for user in users:
+#             response.append({
+#                 'UserID': user[0],
+#                 'Email': user[1],
+#                 'FirstName': user[2],
+#                 'LastName': user[3],
+#                 'AdminID': user[4]
+#             })
+#         return jsonify(response), 200
+#
+#     except Exception as e:
+#         error_message = str(e)
+#         return jsonify(error=error_message), 500
+
+
+@user_handler.route('/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     dao_factory = DAOFactory(get_connection())
     user_dao = dao_factory.get_user_dao()
@@ -42,7 +69,6 @@ def get_user(user_id):
             'Email': user[1],
             'FirstName': user[2],
             'LastName': user[3],
-            'AdminID': user[4]
         }
         return jsonify(response), 200
 
@@ -50,7 +76,8 @@ def get_user(user_id):
         error_message = str(e)
         return jsonify(error=error_message), 500
 
-@user_handler.route('/<int:user_id>', methods = ['PUT'])
+
+@user_handler.route('/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     data = request.get_json()
     user_email = data.get('Email')
@@ -63,8 +90,10 @@ def update_user(user_id):
     dao_factory = DAOFactory(get_connection())
     user_dao = dao_factory.get_user_dao()
 
-#
+    #
     try:
+        if user_dao.get_user_by_email(user_email) is not None:
+            return jsonify(error='Email already in use'), 400
         user_dao.update_user(user_id, user_email, user_pass_hash, user_salt, user_fname, user_lname, admin_id)
         response = {
             'message': 'User updated successfully'
@@ -75,14 +104,15 @@ def update_user(user_id):
         return jsonify(error=error_message), 500
 
 
-@user_handler.route('/<int:user_id>', methods = ['DELETE'])
+@user_handler.route('/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     dao_factory = DAOFactory(get_connection())
     user_dao = dao_factory.get_user_dao()
 
     try:
-        user_dao.delete_user(user_id)
+        deleted_user = user_dao.delete_user(user_id)
         response = {
+
             'message': 'User deleted successfully'
         }
         return jsonify(response), 200
@@ -90,7 +120,8 @@ def delete_user(user_id):
         error_message = str(e)
         return jsonify(error=error_message), 500
 
-@user_handler.route('/all', methods = ['GET'])
+
+@user_handler.route('/all', methods=['GET'])
 def get_all_users():
     dao_factory = DAOFactory(get_connection())
     user_dao = dao_factory.get_user_dao()
@@ -112,7 +143,29 @@ def get_all_users():
         error_message = str(e)
         return jsonify(error=error_message), 500
 
-@user_handler.route('/login', methods = ['POST'])
+
+@user_handler.route('/<int:user_id>/', methods=['GET'])
+def get_user_by_id(user_id):
+    dao_factory = DAOFactory(get_connection())
+    user_dao = dao_factory.get_user_dao()
+
+    try:
+        user = user_dao.get_user(user_id)
+        response = {
+            'UserID': user[0],
+            'Email': user[1],
+            'FirstName': user[2],
+            'LastName': user[3]
+        }
+        return jsonify(response), 200
+
+    except Exception as e:
+        error_message = str(e)
+        print(e)
+        return jsonify(error=error_message), 500
+
+
+@user_handler.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     user_email = data.get('Email')
@@ -125,14 +178,14 @@ def login():
         user = user_dao.get_user_by_email(user_email)
         if user is None:
             return jsonify(error='User not found'), 404
-        if user[2] != user_pass_hash:
-            return jsonify(error='Incorrect password'), 401
+        if user[2] != str(user_pass_hash):
+            return jsonify(error=f"Incorrect password"), 401
         response = {
             'UserID': user[0],
-            'Email': user[1],
-            'FirstName': user[3],
-            'LastName': user[4],
-            'AdminID': user[5]
+            # 'Email': user[1],
+            # 'FirstName': user[3],
+            # 'LastName': user[4],
+            # 'AdminID': user[5]
         }
         return jsonify(response), 200
 
@@ -140,7 +193,8 @@ def login():
         error_message = str(e)
         return jsonify(error=error_message), 500
 
-@user_handler.route('/<int:user_id>/reports', methods = ['GET'])
+
+@user_handler.route('/<int:user_id>/reports', methods=['GET'])
 def get_user_reports(user_id):
     dao_factory = DAOFactory(get_connection())
     user_dao = dao_factory.get_user_dao()
@@ -160,6 +214,3 @@ def get_user_reports(user_id):
     except Exception as e:
         error_message = str(e)
         return jsonify(error=error_message), 500
-
-
-
