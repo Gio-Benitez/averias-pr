@@ -9,7 +9,7 @@ export let invalidAuth = writable(false);
 
 // Interactive Map Stores
 // Initialize Map data panel with default values (Stats for all of Puerto Rico)
-let mapDataStore = writable({
+export let mapDataStore = writable({
     dataRegion: 'Puerto Rico',
     numOfReports: 100,
     populationData: 0,
@@ -17,4 +17,13 @@ let mapDataStore = writable({
     stat2: 0
 });
 
-export default mapDataStore;
+
+// Dashboard Stores
+export let dashboardStore = writable({
+    chartType: '',
+    xaxis: 100,
+    yaxis: 0,
+    filter1: 0,
+    filter2: 0
+});
+
