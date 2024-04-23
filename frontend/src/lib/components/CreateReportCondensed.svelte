@@ -5,7 +5,7 @@
   import { fade } from 'svelte/transition';
   import { municipalities } from '$lib/stores';
   import { onMount } from 'svelte';
-  import { DefaultMarker, MapLibre, Popup } from 'svelte-maplibre'
+  import CategoryIconCloud from './CategoryIconCloud.svelte';
 
   let municipalityNames: string[] = [];
   let next = false;
@@ -113,7 +113,8 @@
           <li class="step text-sm">Create Report</li>
         </ul>
       </div>
-      <div>
+      <div class="mb-40 mt-20">
+        <CategoryIconCloud />
       </div>
     {/if}
 
