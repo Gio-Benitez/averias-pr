@@ -2,7 +2,9 @@
 	import type { PageData } from './$types';
 	import MapDataPane from '$components/MapDataPane.svelte';
     import Map from '$components/Map.svelte';
-    import mapDataStore from '$lib/stores';
+    import DashboardPanel from '$components/DashboardPanel.svelte';
+    import DashboardDataPanel from '$components/DashboardDataPanel.svelte';
+    import { mapDataStore } from '$lib/stores';
 
     //export let data: PageData;
     //$mapDataStore.populationData = data.item[1][1];
@@ -20,10 +22,10 @@
 </svelte:head>
 
 
-<main class="grid grid-rows-9 grid-cols-10 grid-flow-auto h-full gap-8 pb-8">
+<main class="grid grid-rows-10 grid-cols-10 h-full w-full gap-8 pb-8">
 <!--Tab Implementation to switch between Map and Dashboard Segments-->
     {#if selectedTab === 'map'}
-        <!--Interactive Map Segment-->
+        <!--Map and Dashboard Nav Buttons-->
         <div class="flex pt-12 pl-0 space-x-2 col-span-3 row-span-1 col-start-2 row-start-1 ">
             <div class="flex shrink-0 h-full">
                 <div class="tabs-lifted tabs-lg w-full h-full" >
@@ -32,14 +34,16 @@
                 </div>
             </div>
         </div>
-        <div id="map" class="col-start-2 col-end-8 row-start-2 row-end-9">
+        <!--Map Component Segment-->
+        <div id="map" class="col-start-2 col-end-8 row-start-2 row-end-10">
             <Map />
         </div>
-        <div id="dataPane" class="flex aspect-auto col-span-2 col-start-8 row-start-2 row-end-9">
+        <!--Map Data Panel Segment-->
+        <div id="dataPane" class="min-w-72 col-start-8 col-end-10 row-start-2 row-end-10">
             <MapDataPane />
         </div>
     {:else if selectedTab === 'dashboard'}
-        <!--Interactive Map Segment-->
+        <!--Map and Dashboard Nav Buttons-->
         <div class="flex pt-12 pl-0 space-x-2 col-span-3 row-span-1 col-start-2 row-start-1 ">
             <div class="flex shrink-0 h-full">
                 <div class="tabs-lifted tabs-lg w-full h-full ">
@@ -48,11 +52,13 @@
                 </div>
             </div>
         </div>
-        <div id="map" class="col-start-2 col-end-8 row-start-2 row-end-9">
-            <Map />
+        <!--Dashboard Component Segment-->
+        <div id="dashboard" class="col-start-2 col-end-8 row-start-2 row-end-10">
+            <DashboardPanel />
         </div>
-        <div id="dataPane" class="flex aspect-auto col-span-2 col-start-8 row-start-2 row-end-9">
-            <MapDataPane />
+        <!--Dashboard Data Panel Segement-->
+        <div id="dataPanelSlot" class="min-w-72 min-h-fit col-start-8 col-end-10 row-start-2 row-end-10">
+            <DashboardDataPanel />
         </div>
     {/if}
 </main>
