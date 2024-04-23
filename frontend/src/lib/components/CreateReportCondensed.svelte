@@ -3,12 +3,11 @@
   import check_mark from '$lib/images/green_checkmark.png';
   import { getUserLocation } from "$lib/geolocation";
   import { fade } from 'svelte/transition';
-  import { municipalities } from '$lib/stores';
+  import { municipalities, buttonNext } from '$lib/stores';
   import { onMount } from 'svelte';
   import CategoryIconCloud from './CategoryIconCloud.svelte';
 
   let municipalityNames: string[] = [];
-  let next = false;
   let selectedMunicipality = '¿En qué municipio se encuentra?';
   let userLocation: GeoJSONPoint | null = null;
   let errorMessage: string | null = null;  
@@ -22,20 +21,20 @@
 
   function reset() {
     steps_counter = 0;
-    next = false;
+    $buttonNext = false;
     userLocation = null;
   }
 
   // Handler for when you press next button
   function forward() {
     steps_counter += 1;
-    next = false;
+    $buttonNext = false;
   }
 
   // Handler for when you press back button
   function backward() {
     steps_counter -= 1;
-    next = true;
+    $buttonNext = true;
   }
 
   onMount(() => {
@@ -60,8 +59,9 @@
   }
   // $: console.log("selectedMunicipality:", selectedMunicipality);
   $: if (selectedMunicipality != '¿En qué municipio se encuentra?') {
-    next = true;
+    $buttonNext = true;
   }
+
 </script>
 
 <div class="pt-6 ml-12">
@@ -146,11 +146,11 @@
       <button class="btn btn-success btn-outline" on:click={()=>steps_counter+=1}>Crear Reporte +</button>
     {:else if steps_counter ===1}
       <button class="btn btn-sm" on:click={reset}>Cancel</button>
-      <button class="btn btn-sm {next ? '' : 'btn-disabled'}" on:click={forward}>Next</button>
+      <button class="btn btn-sm {$buttonNext ? '' : 'btn-disabled'}" on:click={forward}>Next</button>
     {:else if steps_counter<4}
       <button class="btn btn-sm" on:click={()=>steps_counter = 0}>Cancel</button>
       <button class="btn btn-sm" on:click={backward}>Back</button>
-      <button class="btn btn-sm {next ? '' : 'btn-disabled'}" on:click={forward}>Next</button>
+      <button class="btn btn-sm {$buttonNext ? '' : 'btn-disabled'}" on:click={forward}>Next</button>
     {:else}
       <button class="btn btn-sm" on:click={()=>steps_counter = 0}>Cancel</button>
       <button class="btn btn-sm" on:click={backward}>Back</button>

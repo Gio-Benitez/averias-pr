@@ -6,6 +6,7 @@ export let isSignInModalOpen = writable(false);
 export let isCreateAccountModalOpen = writable(false);
 export let isForgotPasswordModalOpen = writable(false);
 export let invalidAuth = writable(false);
+export let buttonNext = writable(false);
 
 const municipalityNames = [
     "Adjuntas", "Aguada", "Aguadilla", "Aguas Buenas", "Aibonito", "Añasco", "Arecibo",
@@ -21,3 +22,14 @@ const municipalityNames = [
     "Utuado", "Vega Alta", "Vega Baja", "Vieques", "Villalba", "Yabucoa", "Yauco"
 ];
 export let municipalities = writable(municipalityNames);
+
+const categories = {
+    0: 'Servicio de Agua',
+    1: 'Servicio de Luz',
+    2: 'Carretera Dañada',
+    3: 'Poste Caido',
+    4: 'Deslizamiento',
+    5: 'Peligro de Deslizamiento'
+};
+
+export const reportCategories = writable(categories);
