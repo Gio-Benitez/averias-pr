@@ -69,7 +69,7 @@
       </div>
       <div class="stat-title">Solved Reports</div>
       <div class="stat-value text-secondary">38</div>
-      <div class="stat-desc">1% more than last month</div>
+      <div class="stat-desc">25% more than last month</div>
     </div>
   </div>
 
