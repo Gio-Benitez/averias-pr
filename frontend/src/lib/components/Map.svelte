@@ -10,7 +10,7 @@
   let showFill = true;
   let fillColor = '#006600';
   let borderColor = '#003300';
-  const mapClasses = 'rounded-lg aspect-auto w-full h-full';
+  const mapClasses = 'rounded-2xl aspect-auto w-full h-full';
 
   let map: maplibregl.Map | undefined;
   let loaded: boolean;
