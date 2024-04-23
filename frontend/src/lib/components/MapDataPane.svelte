@@ -2,8 +2,9 @@
     import { mapDataStore } from "$lib/stores";
 </script>
 <div class="flex flex-col flex-wrap w-full h-full bg-primary px-8 py-12 rounded-2xl">
-    <div class="flex flex-col w-full h-2/5 text-center gap-2">
+    <div class="flex flex-col w-full h-2/5 text-center gap-1">
         <h1>Filters</h1>
+        <div class="divider divider-neutral"></div>
         <div class="dropdown">
             <div tabindex="0" role="button" class="btn m-1 w-full">Select Region</div>
             <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
