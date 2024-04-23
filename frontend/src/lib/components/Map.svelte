@@ -3,7 +3,7 @@
   import type { Feature } from 'geojson';
   import municipios from '$lib/data/municipios.json';
   import { contrastingColor } from '$lib/site/colors';
-  import mapDataStore from '$lib/stores';
+  import { mapDataStore } from '$lib/stores';
   
 
   let showBorder = true;
