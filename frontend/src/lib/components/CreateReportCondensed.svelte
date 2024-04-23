@@ -9,10 +9,10 @@
 
   let municipalityNames: string[] = [];
   let next = false;
-  let selectedMunicipality = 'Select current municipality';
+  let selectedMunicipality = '¿En qué municipio se encuentra?';
   let userLocation: GeoJSONPoint | null = null;
   let errorMessage: string | null = null;  
-  let steps_counter = 2;
+  let steps_counter = 0;
 
   // Define type for GeoJSON Point
   interface GeoJSONPoint {
@@ -59,7 +59,7 @@
     }
   }
   // $: console.log("selectedMunicipality:", selectedMunicipality);
-  $: if (selectedMunicipality != 'Select current municipality') {
+  $: if (selectedMunicipality != '¿En qué municipio se encuentra?') {
     next = true;
   }
 </script>
@@ -71,10 +71,10 @@
       {#if steps_counter===1}
         <div class="flex justify-center align-middle w-full">
           <ul class="steps sm:steps-vertical lg:steps-horizontal w-full" style="z-index:-1;">
-            <li class="step step-primary text-sm">Detect Location</li>
-            <li class="step text-sm">Select Category</li>
-            <li class="step text-sm">Upload Photo</li>
-            <li class="step text-sm">Create Report</li>
+            <li class="step step-primary text-sm">Detectar Ubicación</li>
+            <li class="step text-sm">Seleccionar Categoría</li>
+            <li class="step text-sm">Subir Imágen</li>
+            <li class="step text-sm">Crear Reporte</li>
           </ul>
         </div>
         <div class="flex flex-row justify-center pt-10 pb-20">
@@ -84,7 +84,7 @@
                 <img alt="Theme Icon" src="{target_icon}" />              
               </div>
               {#if !userLocation}
-                Press to detect location
+                Presione para detectar su ubicación
               {:else}
                 <img class="transition-opacity duration-1000 ease-in-out" alt="Check Mark Icon" src="{check_mark}" transition:fade /> 
               {/if}
@@ -93,7 +93,7 @@
           {#if userLocation}
             <div class="w-1/2 flex flex-col">
               <select class="select select-bordered w-full max-w-xs mt-auto transition-opacity duration-1000 ease-in-out" bind:value={selectedMunicipality} transition:fade>
-                <option disabled selected>Select current municipality</option>
+                <option disabled selected>¿En qué municipio se encuentra?</option>
                 {#each municipalityNames as muni}
                   <option value={muni}>{muni}</option>
                 {/each}
@@ -107,10 +107,10 @@
     {#if steps_counter===2}
       <div class="flex justify-center w-full">
         <ul class="steps sm:steps-vertical lg:steps-horizontal w-full" style="z-index:-1;">
-          <li class="step step-primary text-sm">Detect Location</li>
-          <li class="step step-primary text-sm">Select Category</li>
-          <li class="step text-sm">Upload Photo</li>
-          <li class="step text-sm">Create Report</li>
+          <li class="step step-primary text-sm">Detectar Ubicación</li>
+          <li class="step step-primary text-sm">Seleccionar Categoría</li>
+          <li class="step text-sm">Subir Imágen</li>
+          <li class="step text-sm">Crear Reporte</li>
         </ul>
       </div>
       <div class="mb-40 mt-20">
@@ -121,29 +121,29 @@
     {#if steps_counter===3}
       <div class="flex justify-center w-full">
         <ul class="steps sm:steps-vertical lg:steps-horizontal w-full" style="z-index:-1;">
-          <li class="step step-primary text-sm">Detect Location</li>
-          <li class="step step-primary text-sm">Select Category</li>
-          <li class="step step-primary text-sm">Upload Photo</li>
-          <li class="step text-sm">Create Report</li>
+          <li class="step step-primary text-sm">Detectar Ubicación</li>
+          <li class="step step-primary text-sm">Seleccionar Categoría</li>
+          <li class="step step-primary text-sm">Subir Imágen</li>
+          <li class="step text-sm">Crear Reporte</li>
         </ul>
       </div>
     {/if}
     {#if steps_counter>=4}
       <div class="flex justify-center w-full">
         <ul class="steps sm:steps-vertical lg:steps-horizontal w-full" style="z-index:-1;">
-          <li class="step step-primary text-sm">Detect Location</li>
-          <li class="step step-primary text-sm">Select Category</li>
-          <li class="step step-primary text-sm">Upload Photo</li>
-          <li class="step step-success text-sm text-success">Create Report</li>
+          <li class="step step-primary text-sm">Detectar Ubicación</li>
+          <li class="step step-primary text-sm">Seleccionar Categoría</li>
+          <li class="step step-primary text-sm">Subir Imágen</li>
+          <li class="step step-success text-sm text-success">Crear Reporte</li>
         </ul>
       </div>
     {/if}
-    <!-- </div> -->
+
   {/if}
   <!-- Steps Buttons -->
   <div class="mt-5">
     {#if steps_counter===0}
-      <button class="btn btn-success btn-outline" on:click={()=>steps_counter+=1}>Create Report +</button>
+      <button class="btn btn-success btn-outline" on:click={()=>steps_counter+=1}>Crear Reporte +</button>
     {:else if steps_counter ===1}
       <button class="btn btn-sm" on:click={reset}>Cancel</button>
       <button class="btn btn-sm {next ? '' : 'btn-disabled'}" on:click={forward}>Next</button>

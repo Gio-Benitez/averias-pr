@@ -37,19 +37,19 @@
                 </div>
                 <div class="form-control">
                     <label class="label">
-                        <span class="label-text">Password</span>
+                        <span class="label-text">Contraseña</span>
                     </label>
-                    <input type="password" name= "password" placeholder="password" class="input input-bordered" required />
+                    <input type="password" name= "password" placeholder="contraseña" class="input input-bordered" required />
                     <form method="dialog">
                         <!-- <a href="#" class="label-text-alt link link-hover">Forgot password?</a> -->
-                        <button class="label-text-alt link link-hover" on:click={openForgotModal}>Forgot password?</button>
+                        <button class="label-text-alt link link-hover" on:click={openForgotModal}>¿Has olvidado tu contraseña?</button>
                     </form>
                 </div>
                 {#if $invalidAuth}
-                    <p class="text-error font-semibold ml-2 mt-2">Email or password is not valid</p>
+                    <p class="text-error font-semibold ml-2 mt-2">El email o la contraseña no son válidos</p>
                 {/if}
                 <div class="form-control mt-6">
-                    <button class="btn btn-primary" type = "submit">Login</button>
+                    <button class="btn btn-primary" type = "submit">Iniciar</button>
                 </div>
             </form>
         </div>

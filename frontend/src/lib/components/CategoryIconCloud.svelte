@@ -27,7 +27,7 @@
         <div class="w-20 h-20 overflow-hidden">
           <img alt="Pothole Icon" src="{pothole_icon}" />              
         </div>
-        Pothole   
+        Carretera Dañada   
     </button>
 </div>
 <div class="flex flex-row justify-center">
@@ -35,20 +35,20 @@
         <div class="w-20 h-20 overflow-hidden">
           <img alt="Electrical Pole Icon" src="{electrical_pole_icon}" />              
         </div>
-        Fallen Electrical Pole    
+        Poste Caído   
     </button>
 
     <button class="btn btn-lg btn-square btn-primary">
         <div class="w-20 h-20 overflow-hidden">
           <img alt="Landslide Icon" src="{landslide_icon}" />              
         </div>
-        Landslide   
+        Deslizamiento   
     </button>
 
     <button class="btn btn-lg btn-square btn-primary">
         <div class="w-20 h-20 overflow-hidden">
           <img alt="Potential Landslide Icon" src="{landslidehazard_icon}" />              
         </div>
-        Landslide Hazard   
+        Peligro de deslizamiento   
     </button>
 </div>
