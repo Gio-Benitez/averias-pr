@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { MapLibre, GeoJSON, FillLayer, LineLayer, hoverStateFilter, MarkerLayer, Popup } from 'svelte-maplibre';
+  import { MapLibre, GeoJSON, FillLayer, LineLayer, hoverStateFilter, MarkerLayer, Popup, FillExtrusionLayer } from 'svelte-maplibre';
   import type { Feature } from 'geojson';
   import municipios from '$lib/data/municipios.json';
   import { contrastingColor } from '$lib/site/colors';
@@ -27,18 +27,22 @@
     }
   }
 
-  let filterStates = false;
+  let filterMunicipio = false;
   
-  $: filter = filterStates ? ['==', 'T', ['slice', ['get', 'NAME'], 0, 1]] : undefined;
+  $: filter = filterMunicipio ? ['==', clickedFeature?.NAME, ['Arecibo']] : undefined;
 
   
   // Values for populating Map Data Panel
-  export let clickedFeature: Record<string, any> | null = null;
-  function updateDataPanel(clickedFeature) {
-    $mapDataStore.dataRegion = clickedFeature?.NAME;
-  }
-</script>
+  let clickedFeature: Record<string, any> | null = null;
 
+  function regionHandler (data: any) {
+    clickedFeature = data.detail.features?.[0]?.properties
+    $mapDataStore.dataRegion = clickedFeature?.NAME;
+    console.log(clickedFeature);
+    console.log($mapDataStore.dataRegion);
+  }
+
+</script>
 
 <MapLibre
   bind:map
@@ -62,7 +66,7 @@
         {filter}
         beforeLayerType="symbol"
         manageHoverState
-        on:click={ (data) => (clickedFeature = data.detail.features?.[0]?.properties) }
+        on:click={ (data) => regionHandler(data) }
     />
     {/if}
     {#if showBorder}
@@ -76,9 +80,6 @@
   </GeoJSON>
 </MapLibre>
 
-{#if clickedFeature}
-  {updateDataPanel(clickedFeature)}
-{/if}
 
 <style lang="postcss">
 
