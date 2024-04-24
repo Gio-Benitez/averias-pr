@@ -5,6 +5,7 @@
     import DashboardPanel from '$components/DashboardPanel.svelte';
     import DashboardDataPanel from '$components/DashboardDataPanel.svelte';
     import { mapDataStore } from '$lib/stores';
+    import TestChart from '$components/TestChart.svelte';
 
     //export let data: PageData;
     //$mapDataStore.populationData = data.item[1][1];
