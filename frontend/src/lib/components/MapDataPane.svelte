@@ -1,26 +1,36 @@
 <script lang="ts">
-    import { mapDataStore } from "$lib/stores";
+    import { mapDataStore, reportCategories, municipios } from "$lib/stores";
+    import { createEventDispatcher } from "svelte";
+    
+    // Report Category Filter Logic
+    let catUnselected: boolean = true;
+    let muniUnselected: boolean = true;
+    let cat: string = '';
+    let muni: string = '';
+    const municipalities = $municipios.municipiosArray;
+    const categoryArray = $reportCategories.categoryArray;
+    function updateRegion (data: any) {
+        $mapDataStore.dataRegion = data;
+        console.log($mapDataStore.dataRegion);
+  }
+
 </script>
 <div class="flex flex-col flex-wrap w-full h-full bg-primary px-8 py-12 rounded-2xl">
     <div class="flex flex-col w-full h-2/5 text-center gap-1">
-        <h1>Filters</h1>
+        <h1>{$mapDataStore.dataRegion}</h1>
         <div class="divider divider-neutral"></div>
-        <div class="dropdown">
-            <div tabindex="0" role="button" class="btn m-1 w-full">Select Region</div>
-            <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full">
-                <li>Item 1</li>
-                <li>Item 2</li>
-            </ul>
-        </div>
-        <div class="dropdown">
-            <div tabindex="0" role="button" class="btn m-1 w-full">Select Report Category</div>
-            <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full">
-                <li>Item 1</li>
-                <li>Item 2</li>
-            </ul>
-        </div>
+        <select class="select select-secondary w-full">
+            <option selected>{$mapDataStore.dataRegion}</option>
+            {#each municipalities as municipio}
+            <option>{municipio}</option>
+            {/each}    
+        </select>
+        <select class="select text-lg font-medium select-secondary w-full">
+            <option disabled selected >Seleccione Categoría</option>
+            {#each categoryArray as category}
+            <option value={category}>{category}</option>
+            {/each}    
+        </select>
     </div>
     <div class="flex flex-col w-full h-1/5 text-center">
         <h1>Statistics</h1>
@@ -33,11 +43,11 @@
         </div>
         <div class="stat w-1/2 shadow-lg">
             <div class="stat-title">Population</div>
-            <div class="stat-value">{$mapDataStore.populationData}</div>
+            <div class="stat-value">{$mapDataStore.population}</div>
         </div>
         <div class="stat w-1/2 shadow-lg">
-            <div class="stat-title">Stat 1</div>
-            <div class="stat-value">{$mapDataStore.stat1}</div>
+            <div class="stat-title">Report Category</div>
+            <div class="stat-value">{$mapDataStore.reportCategory}</div>
         </div> 
         <div class="stat w-1/2 shadow-lg">
             <div class="stat-title">Stat 2</div>
@@ -56,5 +66,11 @@
     }
     .stat-value {
         @apply text-primary-content text-2xl;
+    }
+    option {
+        @apply text-base font-medium;
+    }
+    select {
+        @apply text-lg font-medium;
     }
 </style>
