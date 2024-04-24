@@ -3,7 +3,6 @@
   import { invalidAuth, isSignInModalOpen, isForgotPasswordModalOpen, isCreateAccountModalOpen, signedIn } from '$lib/stores';
   import avatar_icon from '$lib/images/avatar_icon.png';
   import target_icon from '$lib/images/target_icon.png';
-  import PrettyMap from '$components/PrettyMap.svelte';
 
   /** @type {import('./$types').PageData} */
 	export let data;

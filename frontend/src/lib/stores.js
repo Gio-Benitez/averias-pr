@@ -7,6 +7,7 @@ export let isCreateAccountModalOpen = writable(false);
 export let isForgotPasswordModalOpen = writable(false);
 export let invalidAuth = writable(false);
 export let buttonNext = writable(false);
+export let steps_counter = writable(0);
 
 const municipalityNames = [
     "Adjuntas", "Aguada", "Aguadilla", "Aguas Buenas", "Aibonito", "Añasco", "Arecibo",
@@ -33,3 +34,21 @@ const categories = {
 };
 
 export const reportCategories = writable(categories);
+
+// Handler for when you press reset button
+export function reset() {
+    steps_counter.set(0);
+    buttonNext.set(false);
+}
+
+// Handler for when you press next button
+export function forward() {
+    steps_counter.update((n) => n + 1);
+    buttonNext.set(false);
+}
+
+// Handler for when you press back button
+export function backward() {
+    steps_counter.update((n) => n - 1);
+    buttonNext.set(true);
+}

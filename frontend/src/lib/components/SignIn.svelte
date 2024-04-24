@@ -15,13 +15,8 @@
 
 </script>
 
-<!--Initially just the Sign In button-->
-<!-- <button class="btn mr-8 modal-button" on:click={()=>$isSignInModalOpen =true}>Sign In</button> -->
 <!--If Sign In button is pressed, open modal-->
 <dialog id="signInModal" class="modal" class:modal-open={$isSignInModalOpen}>
-    <!-- {#if form?.message}
-        <p style="bg-error">{form.message}</p>
-    {/if} -->
     <div class="hero-content flex-col lg:flex-row-reverse">
         <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <!--This form allows you to close modal by clicking x-->
@@ -41,7 +36,6 @@
                     </label>
                     <input type="password" name= "password" placeholder="contraseña" class="input input-bordered" required />
                     <form method="dialog">
-                        <!-- <a href="#" class="label-text-alt link link-hover">Forgot password?</a> -->
                         <button class="label-text-alt link link-hover" on:click={openForgotModal}>¿Has olvidado tu contraseña?</button>
                     </form>
                 </div>
