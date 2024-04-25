@@ -4,12 +4,16 @@
   import municipios from '$lib/data/municipios.json';
   import { contrastingColor } from '$lib/site/colors';
   import { mapDataStore } from '$lib/stores';
+  import { lab, type LabColor } from 'd3-color';
   
-
+  
   let showBorder = true;
   let showFill = true;
   let fillColor = '#006600';
   let borderColor = '#003300';
+  let alternateFillColor = '#002604';
+  let mapCenter: [number, number] = [-66.41, 18.24];
+  let zoomLevel = 4;
   const mapClasses = 'rounded-2xl aspect-auto w-full h-full';
 
   let map: maplibregl.Map | undefined;
@@ -27,20 +31,41 @@
     }
   }
 
+
   let filterMunicipio = false;
   
-  $: filter = filterMunicipio ? ['==', clickedFeature?.NAME, ['Arecibo']] : undefined;
-
-  
   // Values for populating Map Data Panel
+  // 
   let clickedFeature: Record<string, any> | null = null;
-
+  let municipioClicked: Boolean = true;
+  
+  map?.on('click', function(e) {
+	    // When the map is clicked, get the geographic coordinate.
+	    let coordinate = map?.unproject(e.point);
+	    console.log(coordinate);
+      map?.flyTo({center: coordinate, zoom: 11});
+  });
   function regionHandler (data: any) {
-    clickedFeature = data.detail.features?.[0]?.properties
-    $mapDataStore.dataRegion = clickedFeature?.NAME;
-    console.log(clickedFeature);
-    console.log($mapDataStore.dataRegion);
+    clickedFeature = data.detail.features?.[0];
+    let clickedName = clickedFeature?.properties.NAME;
+    let clickedLayer = clickedFeature?.layer.id;
+    $mapDataStore.dataRegion = clickedFeature?.properties.NAME;
+    municipioClicked = true;
+    console.log(clickedName);
+    console.log(clickedLayer);
+    
   }
+  $: map?.on('click', function(e) {
+      
+	    // When the map is clicked, get the geographic coordinate.
+	    let coordinate = map?.unproject(e.point);
+      if (municipioClicked == true) {
+        map?.flyTo({center: coordinate, zoom: 11});
+        municipioClicked = false;
+      }
+  });
+  
+  $: filter = filterMunicipio ? ['==', clickedFeature?.NAME, ['Arecibo']] : undefined;
 
 </script>
 
@@ -50,9 +75,10 @@
   style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
   class= {mapClasses}
   standardControls
-  center={[-66.41, 18.24]}
-  zoom={4}
+  center={mapCenter}
+  zoom={zoomLevel}
   maxBounds={[-67.5, 17.8, -65.1, 18.6]}
+
 >
   <GeoJSON id="municipios" data= { municipios } promoteId="NAME">
     {#if showFill}
@@ -66,7 +92,8 @@
         {filter}
         beforeLayerType="symbol"
         manageHoverState
-        on:click={ (data) => regionHandler(data) }
+        
+        on:click={ (data, map) => regionHandler(data, map) }
     />
     {/if}
     {#if showBorder}
