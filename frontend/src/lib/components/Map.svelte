@@ -64,6 +64,13 @@
         municipioClicked = false;
       }
   });
+
+  // Changing Basemap color
+  let selected: 'light' | 'dark' = 'light';
+  $: style =
+    selected === 'light'
+      ? 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
+      : 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
   
   $: filter = filterMunicipio ? ['==', clickedFeature?.NAME, ['Arecibo']] : undefined;
 
@@ -72,7 +79,7 @@
 <MapLibre
   bind:map
   bind:loaded
-  style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+  {style}
   class= {mapClasses}
   standardControls
   center={mapCenter}
@@ -106,7 +113,12 @@
 
   </GeoJSON>
 </MapLibre>
-
+<div class="controls">
+  <select class="select" bind:value={selected}>
+    <option value="light">Light</option>
+    <option value="dark">dark</option>
+  </select>
+</div>
 
 <style lang="postcss">
 
