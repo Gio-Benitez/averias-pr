@@ -31,7 +31,7 @@
         <h1>Statistics</h1>
         <div class="divider divider-neutral"></div>
     </div>
-    <div class="flex flex-col flex-wrap w-full h-3/5 text-center gap-2">
+    <div class="flex flex-col flex-wrap w-full text-center gap-2">
         <div class="stats stats-vertical shadow">
             <div class="stat shadow-lg">
                 <div class="stat-title">Población</div>
@@ -58,10 +58,10 @@
         @apply text-primary-content text-3xl font-bold;
     }
     .stat-title {
-        @apply text-lg;
+        @apply text-lg font-semibold;
     }
     .stat-value {
-        @apply text-2xl;
+        @apply text-2xl font-bold;
     }
     option {
         @apply font-medium;
