@@ -11,10 +11,10 @@ export let invalidAuth = writable(false);
 // Initialize Map data panel with default values (Stats for all of Puerto Rico)
 export let mapDataStore = writable({
     dataRegion: 'Puerto Rico',
-    numOfReports: 100,
+    numOfReports: 0,
     population: 3205691,
-    reportCategory: 'All',
-    stat2: 0
+    reportCategory: 'Carretera Rota',
+    resolved: 0
 });
 
 
