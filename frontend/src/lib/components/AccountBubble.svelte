@@ -46,18 +46,18 @@
         <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
             <li>
             <a class="justify-between">
-                My Reports
-                <span class="badge">New</span>
+                Mis Reportes
+                <span class="badge">Nuevo</span>
             </a>
             </li>
-            <li><a>Settings</a></li>
-            <li><a>Logout</a></li>
+            <li><a>Ajustes</a></li>
+            <li><a>Cerrar Sesión</a></li>
         </ul>
         
     {:else}
         <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-            <li><button class="justify-between" on:click={()=>$isCreateAccountModalOpen = true}>Create an account</button></li>
-            <li><button class="justify-between" on:click={()=>$isSignInModalOpen =true}>Sign In</button></li>
+            <li><button class="justify-between" on:click={()=>$isCreateAccountModalOpen = true}>Crear una cuenta</button></li>
+            <li><button class="justify-between" on:click={()=>$isSignInModalOpen =true}>Iniciar Sesión</button></li>
             <!-- <li><a>Logout</a></li> -->
         </ul>
     {/if}
