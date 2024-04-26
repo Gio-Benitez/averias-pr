@@ -4,6 +4,24 @@
   import avatar_icon from '$lib/images/avatar_icon.png';
   import target_icon from '$lib/images/target_icon.png';
 
+  // let da = [];
+
+  // async function fetchData() {
+  //   try {
+  //     const response = await fetch('http://localhost:5000/');
+  //     if (response.ok) {
+  //       da = await response.json();
+  //     } else {
+  //       console.error('Failed to fetch data');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // }
+
+  // // Call this function when you want to fetch data
+  // fetchData();
+
   /** @type {import('./$types').PageData} */
 	export let data;
 
@@ -28,6 +46,7 @@
 </script>
 
 <main class="flex h-full flex-col gap-8 pb-8 text-center overflow-y-auto overflow-x-auto min-h-screen">
+  <!-- <p>{da}</p> -->
   <CreateReportCondensed/> 
 
   <!-- Horizontal Line -->

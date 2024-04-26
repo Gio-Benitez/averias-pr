@@ -34,8 +34,6 @@
         image: ''
     };
 
-    
-
     async function fetchUserLocation() {
         try {
             const userLocation: GeoJSONPoint = await getUserLocation();

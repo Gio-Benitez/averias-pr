@@ -6,14 +6,15 @@
     "node": ">=18"
   },
   "scripts": {
-    "dev": "vite dev",
+    "dev": "concurrently \"vite dev\" \"npm run start-backend\"",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
-    "clean": "rm -rf node_modules .svelte-kit"
+    "clean": "rm -rf node_modules .svelte-kit",
+    "start-backend": "cd ../backend/app && flask run"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -35,6 +36,7 @@
     "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
     "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
     "daisyui": "^4.9.0",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
