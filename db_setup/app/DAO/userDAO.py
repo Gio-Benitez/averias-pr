@@ -1,4 +1,3 @@
-import psycopg2 as ps
 from DAO.dao import BaseDAO
 
 
