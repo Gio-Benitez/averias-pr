@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { mapDataStore, reportCategories, municipios } from "$lib/stores";
+    import { reportCategories, municipios, dashboardStore } from "$lib/stores";
     import { createEventDispatcher } from "svelte";
     
     // Report Category Filter Logic
@@ -9,47 +9,30 @@
     let muni: string = '';
     const municipalities = $municipios.municipiosArray;
     const categoryArray = $reportCategories.categoryArray;
-    function updateRegion (data: any) {
-        $mapDataStore.dataRegion = data;
-        console.log($mapDataStore.dataRegion);
+    function updateChart (data: any) {
+        $dashboardStore.chartData = data;
+        console.log($dashboardStore.chartData);
   }
 
 </script>
 <div class="flex flex-col flex-wrap gap-4 w-full h-full bg-primary px-8 py-8 rounded-2xl">
     <div class="flex flex-col w-full h-1/5 text-center">
-        <h1>{$mapDataStore.dataRegion}</h1>
+        <h1>Variables Requeridas</h1>
         <div class="divider divider-neutral"></div>
-        
+        <h2>Variable 1 (Eje Vertical)</h2>
         <select class="select text-lg font-medium select-secondary w-full">
-            <option disabled selected >Seleccione Categoría</option>
-            {#each categoryArray as category}
-            <option value={category}>{category}</option>
-            {/each}    
+            <option selected ># de Reportes</option>
+            <option>% de Reportes</option>  
         </select>
-    </div>
-    <div class="flex flex-col w-full text-center">
-        <h1>Statistics</h1>
+        <h2>Variable 2 (Eje Horizontal)</h2>
+        <select class="select text-lg font-medium select-secondary w-full">
+            <option selected>Municipios</option>
+            <option>Categorías</option> 
+        </select>
+        
         <div class="divider divider-neutral"></div>
-    </div>
-    <div class="flex flex-col flex-wrap w-full text-center gap-2">
-        <div class="stats stats-vertical shadow">
-            <div class="stat shadow-lg">
-                <div class="stat-title">Población</div>
-                <div class="stat-value">{$mapDataStore.population}</div>
-            </div>
-            <div class="stat shadow-lg">
-                <div class="stat-title">Averías Reportadas</div>
-                <div class="stat-value">{$mapDataStore.numOfReports}</div>
-            </div>
-            <div class="stat shadow-lg">
-                <div class="stat-title">Categoría más Común</div>
-                <div class="stat-value">{$mapDataStore.reportCategory}</div>
-            </div>
-            <div class="stat shadow-lg">
-                <div class="stat-title">Averías Resueltas</div>
-                <div class="stat-value">{$mapDataStore.resolved}</div>
-            </div>
-        </div>
+        <h1>Variables Opcionales</h1>
+            
     </div>
 </div>
 
