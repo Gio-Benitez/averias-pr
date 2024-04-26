@@ -54,11 +54,11 @@
             </div>
         </div>
         <!--Dashboard Component Segment-->
-        <div id="dashboard" class="col-start-2 col-end-8 row-start-2 row-end-10">
+        <div id="dashboard" class="min-h-[697px] col-start-2 col-end-8 row-start-2 row-end-10">
             <DashboardPanel />
         </div>
         <!--Dashboard Data Panel Segement-->
-        <div id="dataPanelSlot" class="min-w-72 min-h-fit col-start-8 col-end-10 row-start-2 row-end-10">
+        <div id="dataPanelSlot" class="min-w-72 min-h-[697px] col-start-8 col-end-10 row-start-2 row-end-10">
             <DashboardDataPanel />
         </div>
     {/if}
