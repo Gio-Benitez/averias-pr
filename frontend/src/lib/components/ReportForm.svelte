@@ -3,10 +3,11 @@
     import check_mark from '$lib/images/green_checkmark.png';
     import { getUserLocation } from "$lib/geolocation";
     import { fade } from 'svelte/transition';
-    import { municipalities, buttonNext, steps_counter } from '$lib/stores';
+    import { municipalities, buttonNext, steps_counter,reset } from '$lib/stores';
     import { onMount } from 'svelte';
-    import { writable } from 'svelte/store';
-
+    import CategoryIconCloud from './CategoryIconCloud.svelte';
+    
+    
     // Define type for GeoJSON Point
     interface GeoJSONPoint {
         type: string;
@@ -24,13 +25,14 @@
     let selectedMunicipality = '¿En qué municipio se encuentra?';
     let success = false; // Measures if the user's location was obtained successfully
     let errorMessage: string | null = null;  
+    let reportCategory = ''; 
 
-    export const formData = writable({
+    let formData = {
         location: { type: "Point", coordinates: [0, 0] },
         municipality: '',
         category: '',
         image: ''
-    });
+    };
 
     
 
@@ -38,12 +40,9 @@
         try {
             const userLocation: GeoJSONPoint = await getUserLocation();
             errorMessage = null; // Reset error message on success
-            console.log("User location retrieved successfully:", userLocation);
+            console.log("User location retrieved successfully");
 
-            formData.update(data => ({
-                ...data,
-                location: userLocation
-            }));
+            formData.location = userLocation;
             success = true;
 
         } catch (error) {
@@ -57,18 +56,19 @@
     }
 
     async function handleSubmit() {
-        console.log("Your form data => ",formData)
-        
+        console.log("Your form data => ",formData);
+        reset();
+    }
+
+    function checkShit() {
+        console.log("Your form data => ",formData);   
     }
 
     function handleSelectionChange() {
         if (success) {
             $buttonNext = true;
         }
-        formData.update(data => ({
-                ...data,
-                municipality: selectedMunicipality
-        }));
+        formData.municipality = selectedMunicipality;
         console.log(selectedMunicipality);
     }
 
@@ -96,14 +96,37 @@
                 {/if}
             </span>
         </form>
-        <div class="w-1/2 relative">
-            <select class="select select-bordered w-full max-w-xs absolute left-0 transition-opacity duration-1000 ease-in-out" style="top:25px;" bind:value={selectedMunicipality} transition:fade on:change={handleSelectionChange}>
-                <option disabled selected>¿En qué municipio se encuentra?</option>
-                {#each municipalityNames as muni}
-                    <option value={muni}>{muni}</option>
-                {/each}
-            </select>
+        {#if success}
+            <div class="w-1/2 relative">
+                <select class="select select-bordered w-full max-w-xs absolute left-0" style="top:25px;" bind:value={selectedMunicipality} on:change={handleSelectionChange}>
+                    <option disabled selected>¿En qué municipio se encuentra?</option>
+                    {#each municipalityNames as muni}
+                        <option value={muni}>{muni}</option>
+                    {/each}
+                </select>
+            </div>
+        {/if}
+    {/if}
+
+    {#if $steps_counter ===2}
+        <form method="dialog">
+            <CategoryIconCloud bind:value={formData.category}/>
+        </form>
+    {/if}
+    {#if $steps_counter===3}
+        <label class="form-control w-1/8 max-w-xs">
+            <div class="label">
+                <span class="label-text">Subir Imagen</span>
+            </div>
+            <input type="file" bind:value={formData.image} on:change={() => $buttonNext=true} class="file-input file-input-bordered file-input-primary w-7/8 max-w-xs file-input-sm mb-9"/>
+        </label>
+    {/if}
+    {#if $steps_counter===4}
+        <div class="flex flex-col">
+            <div class="label mb-10">
+                <span class="label-text font-semibold" style="font-size: 1.5rem;">¿Todo listo?</span>
+            </div>
+            <button class="btn btn-success btn-lg mb-10" type="submit" on:click={checkShit}>Crear</button>
         </div>
     {/if}
-    <!-- <button class="btn btn-success" type="submit">Submit</button> -->
 </form>    
