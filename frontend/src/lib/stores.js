@@ -20,11 +20,12 @@ export let mapDataStore = writable({
 
 // Dashboard Stores
 export let dashboardStore = writable({
-    chartType: '',
-    xaxis: 100,
-    yaxis: 0,
-    filter1: 0,
-    filter2: 0
+    chartType: 'Bar',
+    xaxis: 'Municipio',
+    yaxis: '# de Reportes',
+    requiredFilter: 'Por Municipio',
+    optionalFilter: 'Por Categoría',
+    chartData: {},
 });
 
 // Filter Stores
