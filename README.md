@@ -5,7 +5,9 @@ Capstone Final project for INSO 4151/CIIC 4151 at the University of Puerto Rico 
 
 Title: Averías PR
 
-Desc: Online platform that offers users: 
+Description:
+
+Online platform that offers users: 
 - A reporting tool to report infrastructure issues (averías) in their region, reports contain: Location, Report Category and an image of the issue being reported.
 - An interactive map where users can select a region (municipio) and report category of their choise and see statistics regarding reports from that region.
 - An data visualization dashboard where users can select different filtering options and generate graphs comparing report quantities per region, category, or a combination of these.
