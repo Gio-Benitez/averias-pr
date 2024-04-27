@@ -1,7 +1,7 @@
 # AveriasPR
 Capstone Final project for INSO 4151/CIIC 4151 at the University of Puerto Rico - Mayagüez
 
-Spring Semester for 2023-2024 School Year
+2023-2024 - Spring Semester
 
 Title: Averías PR
 
