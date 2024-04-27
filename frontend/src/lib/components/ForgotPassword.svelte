@@ -19,25 +19,25 @@
             <form class="card-body" method="post" action="auth/?/forgotPassword">
                 <div class="form-control">
                     <label class="label">
-                        <span class="label-text">Enter your email</span>
+                        <span class="label-text">Entre su email</span>
                     </label>
-                    <input type="email" name ="email" placeholder="Enter your email" class="input input-bordered" required />
+                    <input type="email" name ="email" placeholder="email" class="input input-bordered" required />
                 </div>
                 <div class="form-control">
                     <label class="label">
-                        <span class="label-text">Enter a new password</span>
+                        <span class="label-text">Entre una nueva contraseña</span>
                     </label>
-                    <input type="password" name= "password" placeholder="Enter a password" class="input input-bordered" required />
+                    <input type="password" name= "password" placeholder="Nueva contraseña" class="input input-bordered" required />
                     <label class="label">
-                        <span class="label-text">Confirm new password</span>
+                        <span class="label-text">Confirme su nueva contraseña</span>
                     </label>
-                    <input type="password" name= "password-confirmation" placeholder="Confirm password" class="input input-bordered" required />
+                    <input type="password" name= "password-confirmation" placeholder="Confirme contraseña" class="input input-bordered" required />
                 </div>
                 {#if $invalidAuth}
-                    <p class="text-error font-semibold ml-2 mt-2">Passwords do not match</p>
+                    <p class="text-error font-semibold ml-2 mt-2">Las contraseñas no son iguales</p>
                 {/if}
                 <div class="form-control mt-6">
-                    <button class="btn btn-primary" type = "submit">Change password</button>
+                    <button class="btn btn-primary" type = "submit">Cambiar contraseña</button>
                 </div>
             </form>
         </div>
