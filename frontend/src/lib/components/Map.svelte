@@ -52,8 +52,6 @@
     $mapDataStore.dataRegion = clickedFeature?.properties.NAME;
     municipioClicked = true;
     console.log(clickedName);
-    console.log(clickedLayer);
-    
   }
   $: map?.on('click', function(e) {
       
