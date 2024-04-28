@@ -35,6 +35,17 @@ const categories = {
 
 export const reportCategories = writable(categories);
 
+// Report Categories used for filters in /map route
+const filterCategories = [
+    'Servicio de Luz',
+    'Servicio de Agua',
+    'Carretera Dañada',
+    'Poste Caido',
+    'Deslizamiento',
+    'Peligro de Deslizamiento'
+];
+export const filterCategoriesStore = writable(filterCategories);
+
 // Handler for when you press reset button
 export function reset() {
     steps_counter.set(0);
