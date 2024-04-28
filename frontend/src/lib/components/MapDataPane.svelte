@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { mapDataStore, reportCategories, municipios } from "$lib/stores";
+    import { mapDataStore, filterCategoriesStore, municipios, municipalities } from "$lib/stores";
     import { createEventDispatcher } from "svelte";
     
     // Report Category Filter Logic
@@ -7,8 +7,6 @@
     let muniUnselected: boolean = true;
     let cat: string = '';
     let muni: string = '';
-    const municipalities = $municipios.municipiosArray;
-    const categoryArray = $reportCategories.categoryArray;
     function updateRegion (data: any) {
         $mapDataStore.dataRegion = data;
         console.log($mapDataStore.dataRegion);
@@ -22,7 +20,7 @@
         
         <select class="select text-lg font-medium select-secondary w-full">
             <option disabled selected >Seleccione Categoría</option>
-            {#each categoryArray as category}
+            {#each $filterCategoriesStore as category}
             <option value={category}>{category}</option>
             {/each}    
         </select>
