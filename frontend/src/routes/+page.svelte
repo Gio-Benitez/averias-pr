@@ -3,21 +3,23 @@
   import { invalidAuth, isSignInModalOpen, isForgotPasswordModalOpen, isCreateAccountModalOpen, signedIn } from '$lib/stores';
   import avatar_icon from '$lib/images/avatar_icon.png';
   import target_icon from '$lib/images/target_icon.png';
+  // import axios from 'axios';
+  // import { onMount } from 'svelte';
+  // import { actions } from './auth/proxy+page.server';
 
-  // let da = [];
 
-  // async function fetchData() {
-  //   try {
-  //     const response = await fetch('http://localhost:5000/');
-  //     if (response.ok) {
-  //       da = await response.json();
-  //     } else {
-  //       console.error('Failed to fetch data');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
+  // let lala = [];
+
+  // const getData = () => {
+  //   axios.get('http://localhost:5000/')
+  //         .then(res => {
+  //             lala = res.data;
+
+  //         });
   // }
+      
+  // onMount(getData);
+  
 
   // // Call this function when you want to fetch data
   // fetchData();
@@ -46,7 +48,7 @@
 </script>
 
 <main class="flex h-full flex-col gap-8 pb-8 text-center overflow-y-auto overflow-x-auto min-h-screen">
-  <!-- <p>{da}</p> -->
+  <!-- <p>{lala}</p> -->
   <CreateReportCondensed/> 
 
   <!-- Horizontal Line -->

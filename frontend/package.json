@@ -58,6 +58,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.12",
     "@vercel/postgres": "^0.7.2",
+    "axios": "^1.6.8",
     "chart.js": "^4.4.2",
     "d3-color": "^3.1.0",
     "maplibre-gl": "^4.1.0",

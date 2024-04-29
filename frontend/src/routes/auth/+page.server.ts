@@ -1,4 +1,5 @@
 import { redirect } from "@sveltejs/kit";
+import axios from 'axios';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
@@ -23,10 +24,18 @@ export const actions = {
 
     createAccount: async ({cookies,request}) => {
         const formData = await request.formData();
-        const email = formData.get("email");
-        const password = formData.get("password");
-        const passwordConf = formData.get("password-confirmation");
+        const email = formData.get("Email");
+        const password = formData.get("PasswordHash");
+        const passwordConf = formData.get("PasswordConf");
         console.log(email, password, passwordConf);
+
+        // const sendData = () => {
+        //     let formu = document.getElementById('formu');
+        //     axios.post('http://localhost:5000/averias/users/', new FormData(formu))
+        //           .then(res => {
+        //               console.log(res);
+        //           })
+        // }
         // Do backend stuff here
         if (password === passwordConf) {
             // Do backend shit

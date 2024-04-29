@@ -25,27 +25,27 @@
                     <label class="label">
                         <span class="label-text">Nombre</span>
                     </label>
-                    <input name ="first_name" placeholder="Kiara" class="input input-bordered" required />
+                    <input name ="FirstName" placeholder="Kiara" class="input input-bordered" required />
                     <label class="label">
                         <span class="label-text">Apellidos</span>
                     </label>
-                    <input name ="last_name" placeholder="Velazquez Ortiz" class="input input-bordered" required />
+                    <input name ="LastName" placeholder="Velazquez Ortiz" class="input input-bordered" required />
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Entre su email</span>
                     </label>
-                    <input type="email" name ="email" placeholder="email" class="input input-bordered" required />
+                    <input type="email" name ="Email" placeholder="email" class="input input-bordered" required />
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Crea una contraseña</span>
                     </label>
-                    <input type="password" name= "password" placeholder="contraseña" class="input input-bordered" required />
+                    <input type="password" name= "PasswordHash" placeholder="contraseña" class="input input-bordered" required />
                     <label class="label">
                         <span class="label-text">Confirme su contraseña</span>
                     </label>
-                    <input type="password" name= "password-confirmation" placeholder="confirma contraseña" class="input input-bordered" required />
+                    <input type="password" name= "PasswordConf" placeholder="confirma contraseña" class="input input-bordered" required />
                 </div>
                 {#if $invalidAuth}
                     <p class="text-error font-semibold ml-2 mt-2">Las contraseñas no son iguales</p>
