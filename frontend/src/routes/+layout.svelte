@@ -4,7 +4,9 @@
   import { onMount } from 'svelte';
   import { themeChange } from 'theme-change';
   import '../app.postcss';
+  import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 
+  injectSpeedInsights();
   // initialize theme change
   onMount(() => {
     themeChange(false);

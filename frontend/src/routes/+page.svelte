@@ -27,7 +27,7 @@
 
 </script>
 
-<main class="flex h-full flex-col gap-8 pb-8 text-center overflow-y-auto overflow-x-auto min-h-screen">
+<main class="flex w-full h-full flex-col gap-8 pb-8 text-center overflow-y-auto overflow-x-auto min-h-screen">
   <CreateReportCondensed/> 
 
   <!-- Horizontal Line -->
