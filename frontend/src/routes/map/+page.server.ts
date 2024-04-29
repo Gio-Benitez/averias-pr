@@ -1,8 +1,17 @@
-/* export async function loadData<T>(url: string): Promise<T> {
-    try {
-        const response = await axios.get<T>(url);
-        return response.data;
-    } catch (error) {
-        throw new Error(`Failed to load data from ${url}: ${error.message}`);
-    }
-} */
+/* 
+Server-side functions for Interactive Map and Dashboard page, all requests to the data server are handled here.
+Functions here are used to fetch the statistics data corresponding to the selected filters in the Map or Dashboard. 
+*/
+
+// Imports
+
+// Map Data Stores
+
+// Dashboard Data Stores
+
+
+
+// Map Data Fetching
+
+
+// Dashboard Data Fetching

@@ -4,9 +4,6 @@
 
   const dispatch = createEventDispatcher();
 
-  function openSecondModal() {
-    dispatch('handleOpenSecondModal');
-  }
   function openForgotModal() {
     dispatch('handleOpenForgotModal');
   }
@@ -18,13 +15,8 @@
 
 </script>
 
-<!--Initially just the Sign In button-->
-<button class="btn mr-8 modal-button" on:click={()=>$isSignInModalOpen =true}>Sign In</button>
 <!--If Sign In button is pressed, open modal-->
 <dialog id="signInModal" class="modal" class:modal-open={$isSignInModalOpen}>
-    <!-- {#if form?.message}
-        <p style="bg-error">{form.message}</p>
-    {/if} -->
     <div class="hero-content flex-col lg:flex-row-reverse">
         <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <!--This form allows you to close modal by clicking x-->
@@ -40,23 +32,19 @@
                 </div>
                 <div class="form-control">
                     <label class="label">
-                        <span class="label-text">Password</span>
+                        <span class="label-text">Contraseña</span>
                     </label>
-                    <input type="password" name= "password" placeholder="password" class="input input-bordered" required />
+                    <input type="password" name= "password" placeholder="contraseña" class="input input-bordered" required />
                     <form method="dialog">
-                        <!-- <a href="#" class="label-text-alt link link-hover">Forgot password?</a> -->
-                        <button class="label-text-alt link link-hover" on:click={openForgotModal}>Forgot password?</button>
+                        <button class="label-text-alt link link-hover" on:click={openForgotModal}>¿Has olvidado tu contraseña?</button>
                     </form>
                 </div>
                 {#if $invalidAuth}
-                    <p class="text-error font-semibold ml-2 mt-2">Email or password is not valid</p>
+                    <p class="text-error font-semibold ml-2 mt-2">El email o la contraseña no son válidos</p>
                 {/if}
                 <div class="form-control mt-6">
-                    <button class="btn btn-primary" type = "submit">Login</button>
+                    <button class="btn btn-primary" type = "submit">Iniciar</button>
                 </div>
-                <form method="dialog" style="display: flex; justify-content: center;">
-                    <button class="label-text-alt link link-hover" on:click={openSecondModal}>Create an account</button>
-                </form>
             </form>
         </div>
     </div>
