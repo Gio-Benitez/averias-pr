@@ -9,6 +9,12 @@ user_handler = Blueprint('user_handler', __name__)
 def create_users():
     data = request.get_json()
     user_email = data.get('Email')
+    response = {
+            'message': 'User created successfully',
+            'Useremail': user_email
+        }
+    return jsonify(response), 201
+    print(user_email)
     user_pass_hash = data.get('PasswordHash')
     user_salt = data.get('Salt')
     user_fname = data.get('FirstName')

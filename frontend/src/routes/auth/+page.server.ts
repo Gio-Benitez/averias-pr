@@ -1,6 +1,7 @@
 import { redirect } from "@sveltejs/kit";
 import axios from 'axios';
 
+
 /** @type {import('./$types').Actions} */
 export const actions = {
     // @ts-ignore
@@ -29,27 +30,29 @@ export const actions = {
         const passwordConf = formData.get("PasswordConf");
         console.log(email, password, passwordConf);
 
-        // const sendData = () => {
-        //     let formu = document.getElementById('formu');
-        //     axios.post('http://localhost:5000/averias/users/', new FormData(formu))
-        //           .then(res => {
-        //               console.log(res);
-        //           })
-        // }
+
+        const sendData = () => {
+            axios.post('http://localhost:5000/averias/users/', formData)
+                  .then(res => {
+                      console.log(res);
+                  })
+        }
+
+        throw redirect(302,"/")
         // Do backend stuff here
-        if (password === passwordConf) {
-            // Do backend shit
-            cookies.set("access", "true",{path:"/",sameSite:"strict",httpOnly:true});
-            cookies.delete("failedAuth",{path:"/",sameSite:"strict",httpOnly:true});
-            cookies.delete("failedAuthPath",{path:"/",sameSite:"strict",httpOnly:true});
-            //Redirect user to home page
-            throw redirect(302,"/")
-        }
-        else{
-            cookies.set("failedAuth", "true",{path:"/",sameSite:"strict",httpOnly:true});
-            cookies.set("failedAuthPath", "create",{path:"/",sameSite:"strict",httpOnly:true});
-            throw redirect(302,"/")
-        }
+        // if (password === passwordConf) {
+        //     // Do backend shit
+        //     cookies.set("access", "true",{path:"/",sameSite:"strict",httpOnly:true});
+        //     cookies.delete("failedAuth",{path:"/",sameSite:"strict",httpOnly:true});
+        //     cookies.delete("failedAuthPath",{path:"/",sameSite:"strict",httpOnly:true});
+        //     //Redirect user to home page
+        //     throw redirect(302,"/")
+        // }
+        // else{
+        //     cookies.set("failedAuth", "true",{path:"/",sameSite:"strict",httpOnly:true});
+        //     cookies.set("failedAuthPath", "create",{path:"/",sameSite:"strict",httpOnly:true});
+        //     throw redirect(302,"/")
+        // }
     },
 
     forgotPassword: async ({cookies,request}) => {

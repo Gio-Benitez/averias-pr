@@ -36,11 +36,11 @@
             </div>
         </div>
         <!--Map Component Segment-->
-        <div id="map" class="min-h-[697px] col-start-2 col-end-8 row-start-2 row-end-10">
+        <div id="map" class="min-h-[697px] col-start-2 col-end-8 row-start-2 row-end-10 mt-3">
             <Map />
         </div>
         <!--Map Data Panel Segment-->
-        <div id="dataPane" class="min-w-72 min-h-[697px] col-start-8 col-end-10 row-start-2 row-end-10">
+        <div id="dataPane" class="min-w-72 min-h-[697px] col-start-8 col-end-10 row-start-2 row-end-10 mt-3">
             <MapDataPane />
         </div>
     {:else if selectedTab === 'dashboard'}

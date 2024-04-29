@@ -62,6 +62,7 @@
     "axios": "^1.6.8",
     "chart.js": "^4.4.2",
     "d3-color": "^3.1.0",
+    "formdata-polyfill": "^4.0.10",
     "maplibre-gl": "^4.1.0",
     "svelte-chartjs": "^3.1.5",
     "svelte-legos": "^0.2.2",
