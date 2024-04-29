@@ -54,6 +54,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@maptiler/client": "^1.8.1",
     "@tailwindcss/typography": "^0.5.12",
     "@vercel/postgres": "^0.7.2",
     "chart.js": "^4.4.2",

@@ -18,7 +18,7 @@
 <Footer/>
 
 
-<style>
+<style lang="postcss">
   .slot-content {
     overflow-y: auto; /* Add scrollbar if content exceeds height */
   }
