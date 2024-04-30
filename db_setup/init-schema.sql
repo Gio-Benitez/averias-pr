@@ -14,8 +14,7 @@
 CREATE TABLE if not exists "user" (
     user_id SERIAL PRIMARY KEY,
     user_email VARCHAR(255) UNIQUE NOT NULL,
-    user_pass_hash VARCHAR(255) NOT NULL,
-    user_salt VARCHAR(255) NOT NULL,
+    user_pass VARCHAR(255) NOT NULL,
     user_fname VARCHAR(100),
     user_lname VARCHAR(100),
     admin_id bool

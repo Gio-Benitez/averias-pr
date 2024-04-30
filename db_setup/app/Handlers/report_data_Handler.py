@@ -69,7 +69,7 @@ def get_all_report_data():
 
 
 
-@report_data_handler.route('/<int:data_id>', methods=['GET'])
+@report_data_handler.route('/get/<int:data_id>', methods=['GET'])
 def get_report_data(data_id):
     dao_factory = DAOFactory(get_connection())
     report_data_dao = dao_factory.get_report_data_dao()
@@ -94,4 +94,81 @@ def get_report_data(data_id):
     except Exception as e:
         error_message = str(e)
         return jsonify(error=error_message), 500
-    return jsonify(report_data), 200
+
+@report_data_handler.route('/update_report_data/<int:data_id>', methods=['PUT'])
+def update_status(data_id):
+    data = request.get_json()
+    report_status = data.get('report_status')
+
+    dao_factory = DAOFactory(get_connection())
+    report_data_dao = dao_factory.get_report_data_dao()
+
+    try:
+        report_data_dao.update_report_data(data_id, report_status)
+        response = {
+            'message': 'Report Data Updated'
+        }
+        return jsonify(response), 200
+    except Exception as e:
+        error_message = str(e)
+        return jsonify(error=error_message),
+
+
+# get all reports from a given target municipality
+@report_data_handler.route('/get_reports_by_mun/<int:mun_id>', methods=['GET'])
+def get_reports_by_mun(mun_id):
+    dao_factory = DAOFactory(get_connection())
+    report_data_dao = dao_factory.get_report_data_dao()
+
+    try:
+        report_data = report_data_dao.get_reports_by_mun(mun_id)
+        response = []
+        for data in report_data:
+            response.append({
+                'data_id': data[0],
+                'user_id': data[1],
+                'mun_id': data[2],
+                'category_id': data[3],
+                'address_line_1': data[4],
+                'address_line_2': data[5],
+                'report_category': data[6],
+                'city_name': data[7],
+                'zipcode': data[8],
+                'geo_data_lat': data[9],
+                'geo_data_long': data[10],
+                'img_src': data[11]
+            })
+        return jsonify(response), 200
+    except Exception as e:
+        error_message = str(e)
+        return jsonify(error=error_message), 500
+
+# get all reports from a given target category
+@report_data_handler.route('/get_reports_by_cat/<int:category_id>', methods=['GET'])
+def get_reports_by_cat(category_id):
+    dao_factory = DAOFactory(get_connection())
+    report_data_dao = dao_factory.get_report_data_dao()
+
+    try:
+        report_data = report_data_dao.get_reports_by_cat(category_id)
+        response = []
+        for data in report_data:
+            response.append({
+                'data_id': data[0],
+                'user_id': data[1],
+                'mun_id': data[2],
+                'category_id': data[3],
+                'address_line_1': data[4],
+                'address_line_2': data[5],
+                'report_category': data[6],
+                'city_name': data[7],
+                'zipcode': data[8],
+                'geo_data_lat': data[9],
+                'geo_data_long': data[10],
+                'img_src': data[11]
+            })
+        return jsonify(response), 200
+    except Exception as e:
+        error_message = str(e)
+        return jsonify(error=error_message),
+
