@@ -8,22 +8,65 @@
   // let signedIn = false;
   // initialize theme change
   // Theme array
-  export const themes = [
-      'light',
-      'dark',
-      'dim',
-      'cupcake',
-      'retro',
-      'business',
-      'cyberpunk',
-      'aqua',
-      'valentine',
-      'coffee',
-      'forest',
-      'night',
-      'autumn',
-      'corporate'
-    ];
+  const themes = [
+      {
+        name: 'Light',
+        value: 'light'
+      },
+      {
+        name: 'Dark',
+        value: 'dark'
+      },
+      {
+        name: 'Dim',
+        value: 'dim'
+      },
+      {
+        name: 'Cupcake',
+        value: 'cupcake'
+      },
+      {
+        name: 'Retro',
+        value: 'retro'
+      },
+      {
+        name: 'Business',
+        value: 'business'
+      },
+      {
+        name: 'Cyberpunk',
+        value: 'cyberpunk'
+      },
+      {
+        name: 'Aqua',
+        value: 'aqua'
+      },
+      {
+        name: 'Valentine',
+        value: 'valentine'
+      },
+      {
+        name: 'Coffee',
+        value: 'coffee'
+      },
+      {
+        name: 'Forest',
+        value: 'forest'
+      },
+      {
+        name: 'Night',
+        value: 'night'
+      },
+      {
+        name: 'Autumn',
+        value: 'autumn'
+      },
+      {
+        name: 'Corporate',
+        value: 'corporate'
+      },
+  ];
+
   onMount(() => {
     themeChange(false);
   });
@@ -51,10 +94,11 @@
             <img alt="Theme Icon" src="{theme_icon}" />
           </div>
         </div>
-        <ul class="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-52">
+        <ul tabindex="0" class="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-52">
           {#each themes as theme}
-            <li><input data-set-theme="{theme}" data-act-class="ACTIVECLASS" type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="{theme}" value="{theme}"/></li>
+            <li><input data-set-theme={theme.value} data-act-class="ACTIVECLASS" type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label={theme.name} value={theme.value}/></li>
           {/each} 
+        </ul>
       </section>
       <AccountBubble />
     </section>
