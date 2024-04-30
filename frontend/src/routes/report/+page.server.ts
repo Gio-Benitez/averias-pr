@@ -15,14 +15,3 @@ export const actions = {
         throw redirect(302,"/");
     }
 }
-
-
-// /** @type {import('./$types').PageLoad} */
-// export async function load({ cookies, fetch }) {
-//     // Retrieve form data from Step 1
-//     const step1FormData = await fetch('/reportstep1/data');
-//     const { location, municipality } = await step1FormData.json();
-
-//     console.log(location)
-//     console.log(municipality)
-// }

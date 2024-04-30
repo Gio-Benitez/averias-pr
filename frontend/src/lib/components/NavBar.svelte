@@ -45,10 +45,8 @@
     </section>
     <section class="flex items-center mr-16 py-1">
       <section class="dropdown dropdown-left ml-8 mr-1">
-        <!-- <button class="btn btn-outline btn-primary">Theme</button> -->
         <div tabindex="0" role="button" class="btn btn-xm btn-ghost m-1 btn-circle ">
           <!-- Theme -->
-          <!-- <svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg> -->
           <div class="w-5 h-5 rounded-full overflow-hidden">
             <img alt="Theme Icon" src="{theme_icon}" />
           </div>

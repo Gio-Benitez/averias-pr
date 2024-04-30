@@ -4,6 +4,47 @@
   import avatar_icon from '$lib/images/avatar_icon.png';
   import target_icon from '$lib/images/target_icon.png';
 
+  import axios from 'axios';
+  import { onMount } from 'svelte';
+  // import { actions } from './auth/proxy+page.server';
+
+
+  let lala = [];
+
+  const getData = () => {
+    axios.get('http://localhost:5000/')
+          .then(res => {
+              lala = res.data;
+
+          });
+  }
+      
+  onMount(getData);
+  
+  // const sendData = () => {
+  //   let formu = document.getElementById('formu');
+  //   let form = new FormData(formu);
+  //   const jsonData = {};
+  //   form.forEach((value, key) => {
+  //     jsonData[key] = value;
+  //   });
+  //   axios.post('http://localhost:5000/averias/users/', jsonData, {
+  //     headers: {
+  //             'Content-Type': 'application/json'
+  //     }
+  //     })
+  //     .then(res=> {
+  //         console.log(res);
+  //     })
+  //     .catch(error => {
+  //         console.error('Error:', error);
+  //     });
+  // }
+
+
+  // // Call this function when you want to fetch data
+  // fetchData();
+
   /** @type {import('./$types').PageData} */
 	export let data;
 
@@ -28,6 +69,12 @@
 </script>
 
 <main class="flex h-full flex-col gap-8 pb-8 text-center overflow-y-auto overflow-x-auto min-h-screen">
+  <!-- <p>{lala}</p> -->
+  <!-- <form id="formu" method="POST">
+    <input type="text" id="name" name="name"/>
+    <input type="email" id="email" name="email"/>
+    <button on:click|preventDefault={sendData}>Enviar</button>
+  </form> -->
   <CreateReportCondensed/> 
 
   <!-- Horizontal Line -->

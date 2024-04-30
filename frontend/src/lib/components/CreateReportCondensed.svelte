@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {buttonNext, steps_counter, forward, backward, reset } from '$lib/stores';
+  import {buttonNext, steps_counter, forward, backward, reset, signedIn, isSignInModalOpen } from '$lib/stores';
   import ReportForm from './ReportForm.svelte';
   import ReportProgressBar from './ReportProgressBar.svelte';
 </script>
@@ -12,7 +12,7 @@
   <!-- Next, Back, and Cancel Buttons -->
   <div class="mt-5">
     {#if $steps_counter===0}
-      <button class="btn btn-success btn-outline" on:click={()=>$steps_counter+=1}>Crear Reporte +</button>
+      <button class="btn btn-success btn-outline" on:click={$signedIn ? () => $steps_counter+=1 : () => $isSignInModalOpen = true}>Crear Reporte +</button>
     {:else if $steps_counter ===1}
       <button class="btn btn-sm" on:click={reset}>Cancel</button>
       <button class="btn btn-sm {$buttonNext ? '' : 'btn-disabled'}" on:click={forward}>Next</button>
