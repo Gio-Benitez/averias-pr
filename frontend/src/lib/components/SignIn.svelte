@@ -11,6 +11,10 @@
     dispatch('handleOpenForgotModal');
   }
 
+  function openCreateAccountModal() {
+    dispatch('handleOpenCreateAccountModal')
+  }
+
   function close() {
     $isSignInModalOpen = false;
     $invalidAuth = false;
@@ -80,6 +84,9 @@
                 <div class="form-control mt-6">
                     <button class="btn btn-primary" on:click|preventDefault={sendData}>Iniciar</button>
                 </div>
+                <label class="label" style="display: flex; justify-content: center;">
+                    <button class="label-text-alt link link-hover" on:click={openCreateAccountModal}>Crear una cuenta</button>
+                </label>
             </form>
         </div>
     </div>

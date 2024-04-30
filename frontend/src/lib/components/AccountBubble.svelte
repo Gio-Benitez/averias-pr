@@ -11,6 +11,12 @@
         $invalidAuth = false;
     }
 
+    function handleOpenCreateAccountModal() {
+        $isSignInModalOpen = false;
+        $isCreateAccountModalOpen = true;
+        $invalidAuth = false;
+    }
+
     function handleForgottoSignIn (){
         $isForgotPasswordModalOpen = false;
         $isSignInModalOpen = true;
@@ -24,7 +30,7 @@
 {/if}
 
 {#if $isSignInModalOpen}
-    <SignIn on:handleOpenForgotModal={handleOpenForgotModal} />
+    <SignIn on:handleOpenForgotModal={handleOpenForgotModal} on:handleOpenCreateAccountModal={handleOpenCreateAccountModal}/>
 {/if}
 
 {#if $isForgotPasswordModalOpen}
