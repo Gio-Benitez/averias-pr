@@ -30,13 +30,24 @@ export const actions = {
         const passwordConf = formData.get("PasswordConf");
         console.log(email, password, passwordConf);
 
+        // const sendData = () => {
+        //     const jsonData = {};
+        //     formData.forEach((value, key) => {
+        //       jsonData[key] = value;
+        //     });
+        //     axios.post('http://localhost:5000/averias/users/', jsonData, {
+        //       headers: {
+        //               'Content-Type': 'application/json'
+        //       }
+        //       })
+        //       .then(res=> {
+        //           console.log(res);
+        //       })
+        //       .catch(error => {
+        //           console.error('Error:', error);
+        //       });
+        // }
 
-        const sendData = () => {
-            axios.post('http://localhost:5000/averias/users/', formData)
-                  .then(res => {
-                      console.log(res);
-                  })
-        }
 
         throw redirect(302,"/")
         // Do backend stuff here

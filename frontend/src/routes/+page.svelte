@@ -21,6 +21,26 @@
       
   onMount(getData);
   
+  // const sendData = () => {
+  //   let formu = document.getElementById('formu');
+  //   let form = new FormData(formu);
+  //   const jsonData = {};
+  //   form.forEach((value, key) => {
+  //     jsonData[key] = value;
+  //   });
+  //   axios.post('http://localhost:5000/averias/users/', jsonData, {
+  //     headers: {
+  //             'Content-Type': 'application/json'
+  //     }
+  //     })
+  //     .then(res=> {
+  //         console.log(res);
+  //     })
+  //     .catch(error => {
+  //         console.error('Error:', error);
+  //     });
+  // }
+
 
   // // Call this function when you want to fetch data
   // fetchData();
@@ -49,7 +69,12 @@
 </script>
 
 <main class="flex h-full flex-col gap-8 pb-8 text-center overflow-y-auto overflow-x-auto min-h-screen">
-  <p>{lala}</p>
+  <!-- <p>{lala}</p> -->
+  <!-- <form id="formu" method="POST">
+    <input type="text" id="name" name="name"/>
+    <input type="email" id="email" name="email"/>
+    <button on:click|preventDefault={sendData}>Enviar</button>
+  </form> -->
   <CreateReportCondensed/> 
 
   <!-- Horizontal Line -->

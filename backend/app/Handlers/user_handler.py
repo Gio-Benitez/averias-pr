@@ -9,29 +9,25 @@ user_handler = Blueprint('user_handler', __name__)
 def create_users():
     data = request.get_json()
     user_email = data.get('Email')
-    response = {
-            'message': 'User created successfully',
-            'Useremail': user_email
-        }
-    return jsonify(response), 201
-    print(user_email)
     user_pass_hash = data.get('PasswordHash')
-    user_salt = data.get('Salt')
+    user_pass_conf = data.get('PasswordConf')
+    user_salt = "Temp info"
     user_fname = data.get('FirstName')
     user_lname = data.get('LastName')
     admin_id = data.get('AdminID', False)  # Default to False if AdminID is not provided
-
     dao_factory = DAOFactory(get_connection())
     user_dao = dao_factory.get_user_dao()
-
     try:
         # TODO may help to create a validator function to check if the email is valid
         if user_dao.get_user_by_email(user_email) is not None:
             return jsonify(error='Email already in use'), 400
+        if user_pass_conf != user_pass_hash: 
+            return jsonify(error='Passwords do not match'), 400
         user_id = user_dao.create_user(user_email, user_pass_hash, user_salt, user_fname, user_lname, admin_id)
         response = {
             'message': 'User created successfully',
-            'UserID': user_id
+            'Userid': user_id,
+            'access': 'true'
         }
         return jsonify(response), 201
 
