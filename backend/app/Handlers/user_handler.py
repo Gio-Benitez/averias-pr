@@ -139,11 +139,13 @@ def login():
     try:
         user = user_dao.get_user_by_email(user_email)
         if user is None:
-            return jsonify(error='User not found'), 404
+            return jsonify(error='Email not found'), 404
         if user[2] != str(user_pass_hash):
             return jsonify(error=f"Incorrect password"), 401
         response = {
+            'message': 'Signed in successfully',
             'UserID': user[0],
+            'access': 'true'
             # 'Email': user[1],
             # 'FirstName': user[3],
             # 'LastName': user[4],
