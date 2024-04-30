@@ -6,7 +6,6 @@ class UserDAO(BaseDAO):
         super().__init__(conn)
 
     def create_user(self, user_email, user_pass_hash, user_salt, user_fname=None, user_lname=None, admin_id=False):
-
         query = """INSERT INTO "user" (user_email, user_pass,  user_fname, user_lname, admin_id)
                 VALUES (%s, %s, %s, %s, %s) returning user_id;
                 """
@@ -48,7 +47,7 @@ class UserDAO(BaseDAO):
         self.commit()
         return cur.fetchone()
 
-    def delete_user(self, user_id):
+      def delete_user(self, user_id):
         query = """DELETE FROM "user" WHERE "user_id" = %s;"""
         self.execute_query(query, (user_id,))
         self.commit()
@@ -71,5 +70,3 @@ class UserDAO(BaseDAO):
         query = """SELECT user_pass FROM "user" WHERE "user_id" = %s;"""
         cur = self.execute_query(query, (user_id,))
         return cur.fetchone()
-
-

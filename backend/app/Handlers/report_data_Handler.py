@@ -95,6 +95,7 @@ def get_report_data(data_id):
         error_message = str(e)
         return jsonify(error=error_message), 500
 
+
 @report_data_handler.route('/update_report_data/<int:data_id>', methods=['PUT'])
 def update_status(data_id):
     data = request.get_json()

@@ -19,7 +19,3 @@ class reportDAO(BaseDAO):
         cur = self.execute_query(query)
         return cur.fetchall()
 
-
-
-
-
