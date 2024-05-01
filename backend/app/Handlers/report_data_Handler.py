@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from DAO.dao_factory import DAOFactory
 from config.dbconfig import get_connection
+from datetime import datetime
 
 report_data_handler = Blueprint('report_data_handler', __name__)
 
@@ -12,6 +13,9 @@ def create_report_data():
     municipality = data.get('municipality') # Get mun id from municipality name
     category = data.get('category') # Get category id from category name
     location = data.get('location')
+    current_date = datetime.now()
+    formatted_date = current_date.strftime('%Y-%m-%d')
+    status = "No"
     [geo_data_lat,geo_data_long] = location.get('coordinates')
     img_src = data.get('image')
     
@@ -25,7 +29,7 @@ def create_report_data():
         mun_id = municipality_dao.get_municipality_id_by_name(municipality)
         category_id = category_dao.get_category_id_by_name(category)
 
-        report = report_data_dao.create_report_data(user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src)
+        report = report_data_dao.create_report_data(user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src, formatted_date, status)
         report_count = report_data_dao.get_report_count_by_user_id(user_id) # Update Report count in front end
         reports = report_data_dao.get_users_reports(user_id)
         response = {

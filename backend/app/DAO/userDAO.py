@@ -12,16 +12,11 @@ class UserDAO(BaseDAO):
         params = (user_email, user_pass,  user_fname, user_lname, admin_id)
         cur = self.execute_query(query, params)
         self.commit()
-        return cur.fetchone()
-        # try:
-        #     # Execute the query
-        #     cur = self.execute_query(query, params)
-        # # Error checking
-        # except ps.errors.UniqueViolation as uv:
-        #     return f'Email already in use, try to login.'
-        #
-        # self.commit()
-        # return cur.fetchone()
+        result = cur.fetchone()
+        if result:
+            return result[0]
+        else:
+            return None 
 
     def get_users(self):
         query = """SELECT user_id, user_email, user_pass, user_fname, user_lname, admin_id FROM "user";"""

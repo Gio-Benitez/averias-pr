@@ -42,20 +42,10 @@ CREATE TABLE if not exists report_data (
     category_id INT REFERENCES category(category_id),
     Geo_Data_Lat DECIMAL(10, 6),
     Geo_Data_Long DECIMAL(10, 6),
-    image_src TEXT
-);
-
-
--- Create the report table
-CREATE TABLE if not exists report (
-    report_id SERIAL PRIMARY KEY,
-    data_id INT REFERENCES report_data(data_id),
+    image_src TEXT,
     report_date DATE NOT NULL,
-    report_email VARCHAR(255) NOT NULL,
-    report_status VARCHAR(20) NOT NULL,
-    CONSTRAINT fk_report_data FOREIGN KEY (report_id) REFERENCES report_data(data_id) ON DELETE CASCADE
+    report_status VARCHAR(20) NOT NULL
 );
-
 
 -- inserts for static tables --
 INSERT INTO category (category_name) VALUES
