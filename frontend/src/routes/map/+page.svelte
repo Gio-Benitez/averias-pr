@@ -1,12 +1,9 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
-	import MapDataPane from '$components/MapDataPane.svelte';
     import Map from '$components/Map.svelte';
     import DashboardPanel from '$components/DashboardPanel.svelte';
-    import DashboardDataPanel from '$components/DashboardDataPanel.svelte';
-    import { mapDataStore, filterCategoriesStore } from '$lib/stores';
-    import TestChart from '$components/TestChart.svelte';
+    import { mapDataStore, filterCategoriesStore, municipios } from '$lib/stores';
     
     export let data: PageData;
     export let form: ActionData;
@@ -24,10 +21,17 @@
                         region: data.props.mapData.dataRegion, 
                         category: 'Seleccione Categoría'
                     };
-
+    
+    let category:string;
     function selectCat (event: any) {
-        selection.category = event.target.value;
+        category = event.target.value;
+        console.log(category);
     }
+    function updateWithForm (event: any) {
+        $mapDataStore.dataRegion = form?.props.mapData.dataRegion as string;
+    } 
+    // Dashboard Data Panel Logic
+    const municipalities = $municipios.municipiosList;
   </script>
 <svelte:head>
     <!--- To-Do -->
@@ -36,118 +40,101 @@
 
 <main class="grid grid-rows-10 grid-cols-10 h-full w-full gap-8 pb-8">
 <!--Tab Implementation to switch between Map and Dashboard Segments-->
-    {#if selectedTab === 'map'}
-        <!--Map and Dashboard Nav Buttons-->
-        <div class="flex pt-12 pl-0 space-x-2 col-span-3 row-span-1 col-start-2 row-start-1 ">
-            <div class="flex shrink-0 h-full">
-                <div class="tabs-lifted tabs-lg w-full h-full" >
-                    <button on:click={changeTab} class="tab tab-active">Interactive Map</button>
-                    <button on:click={changeTab} class="tab">Dashboard</button>
-                </div>
+    <!--Map and Dashboard Nav Buttons-->
+    <div class="flex pt-12 pl-0 space-x-2 col-span-3 row-span-1 col-start-2 row-start-1 ">
+        <div class="flex shrink-0 h-full">
+            <div class="tabs-lifted tabs-lg w-full h-full " >
+                <a role="tab" href="/map" class="tab">Interactive Map</a>
+                <a role="tab" href="/dashboard" class="tab">Dashboard</a>
             </div>
         </div>
-        <!--Map Component Segment-->
-        <div id="map" class="min-h-[697px] col-start-2 col-end-8 row-start-2 row-end-10 mt-3">
-            <Map />
-        </div>
-        <!--Map Data Panel Segment-->
-        <div id="dataPane" class="min-w-72 min-h-[697px] col-start-8 col-end-10 row-start-2 row-end-10">
-            <div class="flex flex-col flex-wrap gap-4  w-full h-full bg-primary px-8 py-2 rounded-2xl">
-                <div class="flex flex-col w-full text-center">
-                    <h1>{$mapDataStore.dataRegion}</h1>
-                    <div class="divider divider-neutral"></div>
-                    <form action="?/mapCategorySelection" name="selection" method="POST" class="flex flex-col" use:enhance>
-                        <select
-                            name="category" 
-                            class="select text-lg font-medium select-secondary w-full"
-                            value={selection.category} 
-                            on:change= {selectCat}
-                            >
-                            <option disabled selected >Seleccione Categoría</option>
-                            {#each $filterCategoriesStore as category}
-                            <option value={category}>{category}</option>
-                            {/each}    
-                        </select>
-                        <input type="hidden" id="region" name="region" value={$mapDataStore.dataRegion}>
-                        <button type="submit"  class="btn">Filtrar</button>
-                    </form>
-                </div>
-                <div class="flex flex-col w-full text-center">
-                    <h1>Statistics</h1>
-                    <div class="divider divider-neutral"></div>
-                </div>
-                {#if !form && data}
-                <div class="flex flex-col flex-wrap w-full text-center gap-0">
-                    <div class="stats stats-vertical shadow">
-                        <div class="stat shadow-lg">
-                            <div class="stat-title">Población</div>
-                            <div class="stat-value">{data.props.mapData.population}</div>
-                        </div>
-                        <div class="stat shadow-lg">
-                            <div class="stat-title">Averías Reportadas</div>
-                            <div class="stat-value">{data.props.mapData.numOfReports}</div>
-                        </div>
-                        <div class="stat shadow-lg">
-                            <div class="stat-title">Categoría más Común</div>
-                            <div class="stat-value">{data.props.mapData.reportCategory}</div>
-                        </div>
-                        <div class="stat shadow-lg">
-                            <div class="stat-title">Averías Resueltas</div>
-                            <div class="stat-value">{data.props.mapData.resolved}</div>
-                        </div>
+    </div>
+    <!--Map Component Segment-->
+    <div id="map" class="min-h-[697px] col-start-2 col-end-8 row-start-2 row-end-10 mt-3">
+        <Map />
+    </div>
+    <!--Map Data Panel Segment-->
+    <div id="dataPane" class="min-w-72 min-h-[697px] col-start-8 col-end-10 row-start-2 row-end-10">
+        <div class="flex flex-col flex-wrap gap-4  w-full h-full bg-primary px-8 py-2 rounded-2xl">
+            <div class="flex flex-col w-full text-center">
+                
+                <h1>{$mapDataStore.dataRegion}</h1>
+                
+                <div class="divider divider-neutral"></div>
+                <form action="?/mapCategorySelection" method="POST" class="flex flex-col" use:enhance>
+                    <!-- Region input -->
+                    <input type="hidden" name="region" value={$mapDataStore.dataRegion}>
+                    <!-- Category Select -->
+                    <select name="category" class="select text-lg font-medium select-secondary w-full">
+                        <option disabled selected >Seleccione Categoría</option>
+                        {#each $filterCategoriesStore as category}
+                        <option value={category}>{category}</option>
+                        {/each}    
+                    </select>
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn">Filtrar</button>
+                </form>
+            </div>
+            <div class="flex flex-col w-full text-center">
+                <h1>Statistics</h1>
+                <div class="divider divider-neutral"></div>
+            </div>
+            {#if !form && data}
+            <div class="flex flex-col flex-wrap w-full text-center gap-0">
+                <div class="stats stats-vertical shadow">
+                    <div class="stat shadow-lg">
+                        <div class="stat-title">Población</div>
+                        <div class="stat-value">{data.props.mapData.population}</div>
+                    </div>
+                    <div class="stat shadow-lg">
+                        <div class="stat-title">Averías Reportadas</div>
+                        <div class="stat-value">{data.props.mapData.numOfReports}</div>
+                    </div>
+                    <div class="stat shadow-lg">
+                        <div class="stat-title">Categoría más Común</div>
+                        <div class="stat-value">{data.props.mapData.reportCategory}</div>
+                    </div>
+                    <div class="stat shadow-lg">
+                        <div class="stat-title">Averías Resueltas</div>
+                        <div class="stat-value">{data.props.mapData.resolved}</div>
                     </div>
                 </div>
-                {:else if form}
-                <div class="flex flex-col flex-wrap w-full text-center gap-2">
-                    <div class="stats stats-vertical shadow">
-                        <div class="stat shadow-lg">
-                            <div class="stat-title">Población</div>
-                            <div class="stat-value">{form.props.mapData.population}</div>
-                        </div>
-                        <div class="stat shadow-lg">
-                            <div class="stat-title">Averías Reportadas</div>
-                            <div class="stat-value">{form.props.mapData.numOfReports}</div>
-                        </div>
-                        <div class="stat shadow-lg">
-                            <div class="stat-title">Categoría más Común</div>
-                            <div class="stat-value">{form.props.mapData.reportCategory}</div>
-                        </div>
-                        <div class="stat shadow-lg">
-                            <div class="stat-title">Averías Resueltas</div>
-                            <div class="stat-value">{form.props.mapData.resolved}</div>
-                        </div>
+            </div>
+            {:else if form}
+            <div class="flex flex-col flex-wrap w-full text-center gap-2">
+                <div class="stats stats-vertical shadow">
+                    <div class="stat shadow-lg">
+                        <div class="stat-title">Población</div>
+                        <div class="stat-value">{form.props.mapData.population}</div>
+                    </div>
+                    <div class="stat shadow-lg">
+                        <div class="stat-title">Averías Reportadas</div>
+                        <div class="stat-value">{form.props.mapData.numOfReports}</div>
+                    </div>
+                    <div class="stat shadow-lg">
+                        <div class="stat-title">Categoría más Común</div>
+                        <div class="stat-value">{form.props.mapData.reportCategory}</div>
+                    </div>
+                    <div class="stat shadow-lg">
+                        <div class="stat-title">Averías Resueltas</div>
+                        <div class="stat-value">{form.props.mapData.resolved}</div>
                     </div>
                 </div>
-                {/if}
             </div>
+            {/if}
         </div>
-    {:else if selectedTab === 'dashboard'}
-        <!--Map and Dashboard Nav Buttons-->
-        <div class="flex pt-12 pl-0 space-x-2 col-span-3 row-span-1 col-start-2 row-start-1 ">
-            <div class="flex shrink-0 h-full">
-                <div class="tabs-lifted tabs-lg w-full h-full ">
-                    <button on:click={changeTab} class="tab">Interactive Map</button>
-                    <button on:click={changeTab} class="tab tab-active">Dashboard</button>
-                </div>
-            </div>
-        </div>
-        <!--Dashboard Component Segment-->
-        <div id="dashboard" class="min-h-[697px] col-start-2 col-end-8 row-start-2 row-end-10">
-            <DashboardPanel />
-        </div>
-        <!--Dashboard Data Panel Segement-->
-        <div id="dataPanelSlot" class="min-w-72 min-h-[697px] col-start-8 col-end-10 row-start-2 row-end-10">
-            <DashboardDataPanel />
-        </div>
-    {/if}
+    </div>
 </main>
 
 <style lang="postcss">
     button {
-        @apply  btn-md  text-primary font-medium text-lg;
+        @apply  btn-md text-primary font-medium text-lg;
     }
     h1 {
         @apply text-primary-content text-3xl font-bold;
+    }
+    h2 {
+        @apply text-primary-content text-lg font-medium;
     }
     .stat-title {
         @apply text-lg font-semibold;
@@ -159,6 +146,7 @@
         @apply font-medium;
     }
     select {
-        @apply text-lg font-medium;
+        @apply select select-secondary w-full text-lg font-medium;
     }
+    
 </style>
