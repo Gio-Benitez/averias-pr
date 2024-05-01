@@ -42,3 +42,11 @@ class report_dataDAO(BaseDAO):
                   img_src, data_id)
         self.execute_query(query, params)
         self.commit()
+
+    def get_report_count_by_user_id(self, user_id):
+        query = """SELECT user_id, COUNT(data_id) AS report_count 
+                FROM report_data 
+                WHERE user_id = %s 
+                GROUP BY user_id;"""
+        cur = self.execute_query(query, (user_id,))
+        return cur.fetchone()

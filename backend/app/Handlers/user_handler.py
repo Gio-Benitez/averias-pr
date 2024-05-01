@@ -141,9 +141,11 @@ def login():
 
     dao_factory = DAOFactory(get_connection())
     user_dao = dao_factory.get_user_dao()
+    report_data_dao = dao_factory.get_report_data_dao()
 
     try:
         user = user_dao.get_user_by_email(user_email)
+        report_count = report_data_dao.get_report_count_by_user_id(user[0]) # Update Report count in front end
 
         if user is None:
             return jsonify(error='User not found'), 404
@@ -151,6 +153,7 @@ def login():
             return jsonify(error=f"Incorrect password"), 401
         response = {
             'UserID': user[0],
+            'report_count': report_count[1]
             # 'Email': user[1],
             # 'FirstName': user[3],
             # 'LastName': user[4],

@@ -57,7 +57,7 @@
 
             formData.location = userLocation;
             // @ts-ignore
-            formData.userID = getCookie('UserID');
+            formData.userID = getCookie('UserData').UserID;
             success = true;
 
         } catch (error) {
@@ -80,14 +80,7 @@
 
     let message ="";
     const sendData = () => {
-        // let formu = document.getElementById('formu');
-        // // @ts-ignore
-        // let form = new FormData(formu);
         const jsonData = JSON.stringify(formData);
-        // formData.forEach((value, key) => {
-        // // @ts-ignore
-        // jsonData[key] = value;
-        // });
         
         axios.post('http://localhost:5000/averias/report_data/', jsonData, {
         headers: {
@@ -96,6 +89,14 @@
         })
         .then(res=> {
             console.log(res.data);
+            let userData = {
+                UserID: 0,
+                user_report_count: 0
+            }
+            // @ts-ignore
+            userData.UserID = getCookie('UserData').UserID;
+            userData.user_report_count = res.data.report_count;
+            document.cookie = 'UserData' + "=" + (JSON.stringify(userData) || "") + "; path=/";
             reset()
         })
         .catch(error => {

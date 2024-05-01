@@ -1,6 +1,6 @@
 <script lang="ts">
     import avatar_icon from '$lib/images/avatar_icon.png';
-    import { invalidAuth, isCreateAccountModalOpen, isForgotPasswordModalOpen, isSignInModalOpen, signedIn } from '$lib/stores'; 
+    import { invalidAuth, isCreateAccountModalOpen, isForgotPasswordModalOpen, isSignInModalOpen, signedIn} from '$lib/stores'; 
     import CreateAccount from './CreateAccount.svelte';
     import ForgotPassword from './ForgotPassword.svelte';
     import SignIn from './SignIn.svelte';
@@ -25,7 +25,7 @@
 
     function signOut() {
         document.cookie = 'access' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = 'UserID' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'UserData' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         window.location.reload();
     }
 

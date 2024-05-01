@@ -36,9 +36,17 @@
         }
         })
         .then(res=> {
-            console.log(res.data.message);
+            console.log(res.data);
             document.cookie = 'access' + "=" + ('true' || "") + "; path=/";
-            document.cookie = 'UserID' + "=" + (res.data.UserID || "") + "; path=/";
+            // Neccessary user info to store as cookie
+            let userData = {
+                UserID: 0,
+                user_report_count: 0
+            }
+            // @ts-ignore
+            userData.UserID = res.data.UserID;
+            userData.user_report_count = res.data.report_count;
+            document.cookie = 'UserData' + "=" + (JSON.stringify(userData) || "") + "; path=/";
             window.location.reload();
         })
         .catch(error => {
