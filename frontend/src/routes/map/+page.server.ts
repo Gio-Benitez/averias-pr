@@ -4,7 +4,6 @@ Functions here are used to fetch the statistics data corresponding to the select
 */
 
 // Imports
-import { watch } from 'fs';
 import type { PageServerLoad, Actions } from './$types';
 
 // Map Data Stores
@@ -15,7 +14,7 @@ import type { PageServerLoad, Actions } from './$types';
 
 // Map Data Fetching
 
-export const load: PageServerLoad = (async ({ fetch }) => {
+export const load: PageServerLoad = (async () => {
     // Fetch map data
     //const mapDataResponse = await fetch('/api/map-data');
 
@@ -57,12 +56,15 @@ export const actions: Actions = {
     mapCategorySelection: async ({ request }) => {
         console.log(request);
         const formData = await request.formData();
-        const region = formData.get('region');
-        const category = formData.get('category');
+        console.log(Object.fromEntries(formData));
+        const region = Object.fromEntries(formData).region as string;
+        const category = Object.fromEntries(formData).category as string;
+        console.log(region, category);
         // TO-DO: Send a fetch request to the data server to get the data for the selected region and category
-         
+        
 
         // TO-DO: Return data from request properly formatted
+        
         const mapData = {
             dataRegion: region,
             numOfReports: 5,
@@ -75,7 +77,20 @@ export const actions: Actions = {
                 mapData
             }
         };
+    },
+
+    dashboardGraph: async ({ request }) => {
+        console.log(request);
+        const formData = await request.formData();
+        console.log(Object.fromEntries(formData));
+        const var_1 = Object.fromEntries(formData).var_1 as string;
+        const var_2 = Object.fromEntries(formData).var_2 as string;
+        const var_2_opt = Object.fromEntries(formData).var_2_opt as string;
+        
+        console.log(var_1, var_2, var_2_opt);
     }
+
 };
 
 // Dashboard Data Fetching
+
