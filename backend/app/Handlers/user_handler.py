@@ -164,29 +164,29 @@ def login():
 
 
 
-@user_handler.route('/update_user/<int:user_id>', methods=['PUT'])
-def update_user(user_id):
-    data = request.get_json()
-    user_email = data.get('Email')
-    user_pass = data.get('Password')
-    user_fname = data.get('FirstName')
-    user_lname = data.get('LastName')
-    admin_id = data.get('AdminID', False)
+# @user_handler.route('/update_user/<int:user_id>', methods=['PUT'])
+# def update_user(user_id):
+#     data = request.get_json()
+#     user_email = data.get('Email')
+#     user_pass = data.get('Password')
+#     user_fname = data.get('FirstName')
+#     user_lname = data.get('LastName')
+#     admin_id = data.get('AdminID', False)
 
-    dao_factory = DAOFactory(get_connection())
-    user_dao = dao_factory.get_user_dao()
+#     dao_factory = DAOFactory(get_connection())
+#     user_dao = dao_factory.get_user_dao()
 
-    try:
-        if user_dao.get_user_by_email(user_email) is not None:
-            return jsonify(error='Email already in use'), 400
-        user_dao.update_user(user_id, user_email, user_pass, user_fname, user_lname, admin_id)
-        response = {
-            'message': 'User updated successfully'
-        }
-        return jsonify(response), 200
-    except Exception as e:
-        error_message = str(e)
-        return jsonify(error=error_message), 500
+#     try:
+#         if user_dao.get_user_by_email(user_email) is not None:
+#             return jsonify(error='Email already in use'), 400
+#         user_dao.update_user(user_id, user_email, user_pass, user_fname, user_lname, admin_id)
+#         response = {
+#             'message': 'User updated successfully'
+#         }
+#         return jsonify(response), 200
+#     except Exception as e:
+#         error_message = str(e)
+#         return jsonify(error=error_message), 500
 
 
 # user route to update password
