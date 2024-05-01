@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import avatar_icon from '$lib/images/avatar_icon.png';
     import { invalidAuth, isCreateAccountModalOpen, isForgotPasswordModalOpen, isSignInModalOpen, signedIn } from '$lib/stores'; 
     import CreateAccount from './CreateAccount.svelte';
@@ -21,6 +21,15 @@
         $isForgotPasswordModalOpen = false;
         $isSignInModalOpen = true;
         $invalidAuth = false;
+    }
+
+    function deleteCookie(name: string) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    }
+
+    function signOut() {
+        deleteCookie('access');
+        window.location.reload();
     }
 
 </script>
@@ -57,7 +66,7 @@
             </a>
             </li>
             <li><a>Ajustes</a></li>
-            <li><a>Cerrar Sesión</a></li>
+            <li><a on:click={signOut}>Cerrar Sesión</a></li>
         </ul>
         
     {:else}

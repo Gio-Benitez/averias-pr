@@ -76,7 +76,7 @@
                     <label class="label">
                         <span class="label-text">Crea una contraseña</span>
                     </label>
-                    <input type="password" name= "PasswordHash" placeholder="contraseña" class="input input-bordered" required />
+                    <input type="password" name= "Password" placeholder="contraseña" class="input input-bordered" required />
                     <label class="label">
                         <span class="label-text">Confirme su contraseña</span>
                     </label>
