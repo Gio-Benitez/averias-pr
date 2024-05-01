@@ -29,7 +29,8 @@
             document.cookie = 'access' + "=" + ('true' || "") + "; path=/";
             let userData = {
                 UserID: 0,
-                user_report_count: 0
+                user_report_count: 0,
+                user_reports: []
             }
             // @ts-ignore
             userData.UserID = getCookie('UserData').UserID;

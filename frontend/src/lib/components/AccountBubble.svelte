@@ -26,6 +26,7 @@
     function signOut() {
         document.cookie = 'access' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         document.cookie = 'UserData' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        $signedIn = false;
         window.location.reload();
     }
 

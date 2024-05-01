@@ -27,10 +27,12 @@ def create_report_data():
 
         report = report_data_dao.create_report_data(user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src)
         report_count = report_data_dao.get_report_count_by_user_id(user_id) # Update Report count in front end
+        reports = report_data_dao.get_users_reports(user_id)
         response = {
             'message': 'Report Data Created',
             'report_data_id': report[0],
-            'report_count': report_count[1]
+            'report_count': report_count[1],
+            'user_reports': reports
         }
         return jsonify(response), 201
 

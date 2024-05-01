@@ -25,20 +25,6 @@
     }
   }
 
-  function getCookie(name: string) {
-        const cookieName = name + "=";
-        const decodedCookie = decodeURIComponent(document.cookie);
-        const cookieArray = decodedCookie.split(';');
-
-        for(let i = 0; i < cookieArray.length; i++) {
-            let cookie = cookieArray[i].trim();
-            if (cookie.indexOf(cookieName) === 0) {
-                return cookie.substring(cookieName.length, cookie.length);
-            }
-        }
-        return null;
-  }
-
 </script>
 
 <main class="flex h-full flex-col gap-8 pb-8 text-center overflow-y-auto overflow-x-auto min-h-screen">
@@ -87,7 +73,7 @@
   <!-- My Reports Table -->
   <h1 class="font-bold text-4xl flex flex-start ml-48 mt-10">Tus Reportes</h1>
   <div class="reports-table-container">
-    <div class="overflow-x-auto flex justify-center w-full h-full" style="{$signedIn ? '' : 'filter: blur(6px);'}">
+    <div class="overflow-x-auto flex justify-center w-full h-full" style="{data.access ? '' : 'filter: blur(6px);'}">
       <table class="table w-3/4">
         <!-- head -->
         <thead>
@@ -99,31 +85,42 @@
           </tr>
         </thead>
         <tbody>
-          <!-- row 1 -->
-          <tr class="{$signedIn ? 'hover' : ''}">
-            <th>1</th>
-            <td>Poste caído</td>
-            <td>Añasco</td>
-            <td>Yes</td>
-          </tr>
-          <!-- row 2 -->
-          <tr class="{$signedIn ? 'hover' : ''}">
-            <th>2</th>
-            <td>Carretera dañada</td>
-            <td>Mayagüez</td>
-            <td>No</td>
-          </tr>
-          <!-- row 3 -->
-          <tr class="{$signedIn ? 'hover' : ''}">
-            <th>3</th>
-            <td>Edificio abandonado</td>
-            <td>Mayagüez</td>
-            <td>--</td>
-          </tr>
+          {#if !data.access}
+            <!-- row 1 -->
+            <tr class="{data.access ? 'hover' : ''}">
+              <th>1</th>
+              <td>Poste caído</td>
+              <td>Añasco</td>
+              <td>Yes</td>
+            </tr>
+            <!-- row 2 -->
+            <tr class="{data.access ? 'hover' : ''}">
+              <th>2</th>
+              <td>Carretera dañada</td>
+              <td>Mayagüez</td>
+              <td>No</td>
+            </tr>
+            <!-- row 3 -->
+            <tr class="{data.access ? 'hover' : ''}">
+              <th>3</th>
+              <td>Edificio abandonado</td>
+              <td>Mayagüez</td>
+              <td>--</td>
+            </tr>
+          {:else if data.UserData.user_reports}
+            {#each data.UserData.user_reports as report, i}
+                <tr class="{data.access ? 'hover' : ''}">
+                  <th>{i+1}</th>
+                  <td>{report[3]}</td>
+                  <td>{report[2]}</td>
+                  <td>Yes</td>
+                </tr>
+            {/each}
+          {/if}
         </tbody>
       </table>
     </div>
-    {#if !$signedIn}
+    {#if !data.access}
       <div class="overlay-button text-lg">
         <button class="label-text-alt link text-base mr-2 text-accent" on:click={()=>$isCreateAccountModalOpen = true}>Crear una cuenta</button>
         o
