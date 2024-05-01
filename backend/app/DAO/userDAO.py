@@ -5,7 +5,7 @@ class UserDAO(BaseDAO):
     def __init__(self, conn):
         super().__init__(conn)
 
-    def create_user(self, user_email, user_pass_hash, user_salt, user_fname=None, user_lname=None, admin_id=False):
+    def create_user(self, user_email, user_pass, user_fname=None, user_lname=None, admin_id=False):
         query = """INSERT INTO "user" (user_email, user_pass,  user_fname, user_lname, admin_id)
                 VALUES (%s, %s, %s, %s, %s) returning user_id;
                 """
