@@ -1,13 +1,15 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+    import { enhance } from '$app/forms';
+	import type { PageData, ActionData } from './$types';
 	import MapDataPane from '$components/MapDataPane.svelte';
     import Map from '$components/Map.svelte';
     import DashboardPanel from '$components/DashboardPanel.svelte';
     import DashboardDataPanel from '$components/DashboardDataPanel.svelte';
-    import { mapDataStore } from '$lib/stores';
+    import { mapDataStore, filterCategoriesStore } from '$lib/stores';
     import TestChart from '$components/TestChart.svelte';
-
-    //export let data: PageData;
+    
+    export let data: PageData;
+    export let form: ActionData;
     //$mapDataStore.populationData = data.item[1][1];
     let selectedTab = 'map';
     function changeTab(event: MouseEvent) {
@@ -16,6 +18,15 @@
         } else if (selectedTab === 'dashboard'){
             selectedTab = 'map';
         }
+    }
+    // Selectg Category function for map data pane
+    let selection = {   
+                        region: data.props.mapData.dataRegion, 
+                        category: 'Seleccione Categoría'
+                    };
+
+    function selectCat (event: any) {
+        selection.category = event.target.value;
     }
   </script>
 <svelte:head>
@@ -41,7 +52,74 @@
         </div>
         <!--Map Data Panel Segment-->
         <div id="dataPane" class="min-w-72 min-h-[697px] col-start-8 col-end-10 row-start-2 row-end-10">
-            <MapDataPane />
+            <div class="flex flex-col flex-wrap gap-4  w-full h-full bg-primary px-8 py-2 rounded-2xl">
+                <div class="flex flex-col w-full text-center">
+                    <h1>{$mapDataStore.dataRegion}</h1>
+                    <div class="divider divider-neutral"></div>
+                    <form action="?/mapCategorySelection" name="selection" method="POST" class="flex flex-col" use:enhance>
+                        <select
+                            name="category" 
+                            class="select text-lg font-medium select-secondary w-full"
+                            value={selection.category} 
+                            on:change= {selectCat}
+                            >
+                            <option disabled selected >Seleccione Categoría</option>
+                            {#each $filterCategoriesStore as category}
+                            <option value={category}>{category}</option>
+                            {/each}    
+                        </select>
+                        <input type="hidden" id="region" name="region" value={$mapDataStore.dataRegion}>
+                        <button type="submit"  class="btn">Filtrar</button>
+                    </form>
+                </div>
+                <div class="flex flex-col w-full text-center">
+                    <h1>Statistics</h1>
+                    <div class="divider divider-neutral"></div>
+                </div>
+                {#if !form && data}
+                <div class="flex flex-col flex-wrap w-full text-center gap-0">
+                    <div class="stats stats-vertical shadow">
+                        <div class="stat shadow-lg">
+                            <div class="stat-title">Población</div>
+                            <div class="stat-value">{data.props.mapData.population}</div>
+                        </div>
+                        <div class="stat shadow-lg">
+                            <div class="stat-title">Averías Reportadas</div>
+                            <div class="stat-value">{data.props.mapData.numOfReports}</div>
+                        </div>
+                        <div class="stat shadow-lg">
+                            <div class="stat-title">Categoría más Común</div>
+                            <div class="stat-value">{data.props.mapData.reportCategory}</div>
+                        </div>
+                        <div class="stat shadow-lg">
+                            <div class="stat-title">Averías Resueltas</div>
+                            <div class="stat-value">{data.props.mapData.resolved}</div>
+                        </div>
+                    </div>
+                </div>
+                {:else if form}
+                <div class="flex flex-col flex-wrap w-full text-center gap-2">
+                    <div class="stats stats-vertical shadow">
+                        <div class="stat shadow-lg">
+                            <div class="stat-title">Población</div>
+                            <div class="stat-value">{form.props.mapData.population}</div>
+                        </div>
+                        <div class="stat shadow-lg">
+                            <div class="stat-title">Averías Reportadas</div>
+                            <div class="stat-value">{form.props.mapData.numOfReports}</div>
+                        </div>
+                        <div class="stat shadow-lg">
+                            <div class="stat-title">Categoría más Común</div>
+                            <div class="stat-value">{form.props.mapData.reportCategory}</div>
+                        </div>
+                        <div class="stat shadow-lg">
+                            <div class="stat-title">Averías Resueltas</div>
+                            <div class="stat-value">{form.props.mapData.resolved}</div>
+                        </div>
+                    </div>
+                </div>
+                {/if}
+            </div>
         </div>
     {:else if selectedTab === 'dashboard'}
         <!--Map and Dashboard Nav Buttons-->
@@ -66,7 +144,21 @@
 
 <style lang="postcss">
     button {
-        @apply font-black text-3xl text-left;
+        @apply  btn-md  text-primary font-medium text-lg;
     }
-
+    h1 {
+        @apply text-primary-content text-3xl font-bold;
+    }
+    .stat-title {
+        @apply text-lg font-semibold;
+    }
+    .stat-value {
+        @apply text-2xl font-bold;
+    }
+    option {
+        @apply font-medium;
+    }
+    select {
+        @apply text-lg font-medium;
+    }
 </style>
