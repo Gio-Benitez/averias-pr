@@ -27,7 +27,14 @@
         .then(res=> {
             console.log(res.data.message);
             document.cookie = 'access' + "=" + ('true' || "") + "; path=/";
-            document.cookie = 'UserID' + "=" + (res.data.UserID || "") + "; path=/";
+            let userData = {
+                UserID: 0,
+                user_report_count: 0,
+                user_reports: []
+            }
+            // @ts-ignore
+            userData.UserID = getCookie('UserData').UserID;
+            document.cookie = 'UserData' + "=" + (JSON.stringify(userData) || "") + "; path=/";
             window.location.reload();
         })
         .catch(error => {

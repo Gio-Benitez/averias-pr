@@ -1,49 +1,8 @@
 <script lang="ts">
   import CreateReportCondensed from '$components/CreateReportCondensed.svelte';
-  import { invalidAuth, isSignInModalOpen, isForgotPasswordModalOpen, isCreateAccountModalOpen, signedIn } from '$lib/stores';
+  import { invalidAuth, isSignInModalOpen, isForgotPasswordModalOpen, isCreateAccountModalOpen, signedIn} from '$lib/stores';
   import avatar_icon from '$lib/images/avatar_icon.png';
   import target_icon from '$lib/images/target_icon.png';
-
-  import axios from 'axios';
-  import { onMount } from 'svelte';
-  // import { actions } from './auth/proxy+page.server';
-
-
-  let lala = [];
-
-  const getData = () => {
-    axios.get('http://localhost:5000/')
-          .then(res => {
-              lala = res.data;
-
-          });
-  }
-      
-  onMount(getData);
-  
-  // const sendData = () => {
-  //   let formu = document.getElementById('formu');
-  //   let form = new FormData(formu);
-  //   const jsonData = {};
-  //   form.forEach((value, key) => {
-  //     jsonData[key] = value;
-  //   });
-  //   axios.post('http://localhost:5000/averias/users/', jsonData, {
-  //     headers: {
-  //             'Content-Type': 'application/json'
-  //     }
-  //     })
-  //     .then(res=> {
-  //         console.log(res);
-  //     })
-  //     .catch(error => {
-  //         console.error('Error:', error);
-  //     });
-  // }
-
-
-  // // Call this function when you want to fetch data
-  // fetchData();
 
   /** @type {import('./$types').PageData} */
 	export let data;
@@ -69,18 +28,10 @@
 </script>
 
 <main class="flex h-full flex-col gap-8 pb-8 text-center overflow-y-auto overflow-x-auto min-h-screen">
-  <!-- <p>{lala}</p> -->
-  <!-- <form id="formu" method="POST">
-    <input type="text" id="name" name="name"/>
-    <input type="email" id="email" name="email"/>
-    <button on:click|preventDefault={sendData}>Enviar</button>
-  </form> -->
   <CreateReportCondensed/> 
 
   <!-- Horizontal Line -->
   <hr class="horizontal-line mt-24">
-
-  <!-- <PrettyMap/> -->
 
   <!-- Stats -->
   <div class="stats shadow mt-15" style="min-height: 116px; min-width: auto;">
@@ -92,8 +43,8 @@
           </div>
         </div>
       </div>
-      {#if $signedIn}
-        <div class="stat-value">3</div>
+      {#if data.access}
+        <div class="stat-value">{data.UserData.user_report_count}</div>
       {:else}
         <div class="stat-value">--</div>
       {/if}
@@ -122,7 +73,7 @@
   <!-- My Reports Table -->
   <h1 class="font-bold text-4xl flex flex-start ml-48 mt-10">Tus Reportes</h1>
   <div class="reports-table-container">
-    <div class="overflow-x-auto flex justify-center w-full h-full" style="{$signedIn ? '' : 'filter: blur(6px);'}">
+    <div class="overflow-x-auto flex justify-center w-full h-full" style="{data.access ? '' : 'filter: blur(6px);'}">
       <table class="table w-3/4">
         <!-- head -->
         <thead>
@@ -134,31 +85,42 @@
           </tr>
         </thead>
         <tbody>
-          <!-- row 1 -->
-          <tr class="{$signedIn ? 'hover' : ''}">
-            <th>1</th>
-            <td>Poste caído</td>
-            <td>Añasco</td>
-            <td>Yes</td>
-          </tr>
-          <!-- row 2 -->
-          <tr class="{$signedIn ? 'hover' : ''}">
-            <th>2</th>
-            <td>Carretera dañada</td>
-            <td>Mayagüez</td>
-            <td>No</td>
-          </tr>
-          <!-- row 3 -->
-          <tr class="{$signedIn ? 'hover' : ''}">
-            <th>3</th>
-            <td>Edificio abandonado</td>
-            <td>Mayagüez</td>
-            <td>--</td>
-          </tr>
+          {#if !data.access}
+            <!-- row 1 -->
+            <tr class="{data.access ? 'hover' : ''}">
+              <th>1</th>
+              <td>Poste caído</td>
+              <td>Añasco</td>
+              <td>Yes</td>
+            </tr>
+            <!-- row 2 -->
+            <tr class="{data.access ? 'hover' : ''}">
+              <th>2</th>
+              <td>Carretera dañada</td>
+              <td>Mayagüez</td>
+              <td>No</td>
+            </tr>
+            <!-- row 3 -->
+            <tr class="{data.access ? 'hover' : ''}">
+              <th>3</th>
+              <td>Edificio abandonado</td>
+              <td>Mayagüez</td>
+              <td>--</td>
+            </tr>
+          {:else if data.UserData.user_reports}
+            {#each data.UserData.user_reports as report, i}
+                <tr class="{data.access ? 'hover' : ''}">
+                  <th>{i+1}</th>
+                  <td>{report[3]}</td>
+                  <td>{report[2]}</td>
+                  <td>No</td>
+                </tr>
+            {/each}
+          {/if}
         </tbody>
       </table>
     </div>
-    {#if !$signedIn}
+    {#if !data.access}
       <div class="overlay-button text-lg">
         <button class="label-text-alt link text-base mr-2 text-accent" on:click={()=>$isCreateAccountModalOpen = true}>Crear una cuenta</button>
         o
