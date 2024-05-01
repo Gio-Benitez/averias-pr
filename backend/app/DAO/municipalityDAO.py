@@ -34,3 +34,8 @@ class municipalityDAO(BaseDAO):
         query = """SELECT * FROM municipality WHERE mun_name = %s;"""
         cur = self.execute_query(query, (mun_name,))
         return cur.fetchone()
+    
+    def get_municipality_id_by_name(self, mun_name):
+        query = """SELECT mun_id FROM municipality WHERE mun_name = %s;"""
+        cur = self.execute_query(query, (mun_name,))
+        return cur.fetchone()

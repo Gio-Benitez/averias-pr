@@ -25,7 +25,8 @@ CREATE TABLE if not exists municipality (
     mun_id SERIAL PRIMARY KEY,
     mun_name VARCHAR(255) NOT NULL,
     mun_population INT,
-    mun_size_area DECIMAL(10, 2)
+    mun_size_area DECIMAL(10, 2),
+    num_reports INT
 );
 
 create TABLE if not exists category(
@@ -39,11 +40,6 @@ CREATE TABLE if not exists report_data (
     user_id INT REFERENCES "user"(user_id),
     mun_id INT REFERENCES municipality(mun_id),
     category_id INT REFERENCES category(category_id),
-    Address_Line_1 VARCHAR(255),
-    Address_Line_2 VARCHAR(255),
-    Report_category VARCHAR(100),
-    City_name VARCHAR(100),
-    Zipcode VARCHAR(20),
     Geo_Data_Lat DECIMAL(10, 6),
     Geo_Data_Long DECIMAL(10, 6),
     image_src TEXT
@@ -63,11 +59,12 @@ CREATE TABLE if not exists report (
 
 -- inserts for static tables --
 INSERT INTO category (category_name) VALUES
-('Pothole'),
-('Light post damages'),
-('Landslide/potential landslide'),
-('Water outage'),
-('Power outage');
+('Carretera Dañada'),
+('Poste Caido'),
+('Deslizamiento'),
+('Peligro de Deslizamiento'),
+('Servicio de Agua'),
+('Servicio de energía eléctrica');
 
 
 INSERT INTO municipality (mun_name, mun_population, mun_size_area) VALUES

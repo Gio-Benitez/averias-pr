@@ -5,13 +5,10 @@ class report_dataDAO(BaseDAO):
     def __init__(self, conn):
         super().__init__(conn)
 
-    def create_report_data(self, user_id, mun_id, category_id, address_line_1, address_line_2, report_category,
-                           city_name, zipcode, geo_data_lat, geo_data_long, img_src):
-        query = """INSERT INTO report_data (user_id, mun_id, category_id, address_line_1, address_line_2, 
-        report_category, city_name, zipcode, geo_data_lat, geo_data_long, image_src) 
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) returning data_id;"""
-        params = (user_id, mun_id, category_id, address_line_1, address_line_2, report_category,
-                  city_name, zipcode, geo_data_lat, geo_data_long, img_src)
+    def create_report_data(self, user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src):
+        query = """INSERT INTO report_data (user_id, mun_id, category_id, geo_data_lat, geo_data_long, image_src) 
+        VALUES (%s, %s, %s, %s, %s, %s) returning data_id;"""
+        params = (user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src)
         cur = self.execute_query(query, params)
         self.commit()
         return cur.fetchone()

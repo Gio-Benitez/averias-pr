@@ -8,25 +8,34 @@ report_data_handler = Blueprint('report_data_handler', __name__)
 @report_data_handler.route('/', methods=['POST'])
 def create_report_data():
     data = request.get_json()
-    user_id = data.get('user_id')
-    mun_id = data.get('mun_id')
-    category_id = data.get('category_id')
-    address_line_1 = data.get('address_line_1')
-    address_line_2 = data.get('address_line_2')
-    report_category = data.get('report_category')
-    city_name = data.get('city_name')
-    zipcode = data.get('zipcode')
-    geo_data_lat = data.get('geo_data_lat')
-    geo_data_long = data.get('geo_data_long')
-    img_src = data.get('img_src')
-
+    user_id = data.get('userID') # Get current user here
+    municipality = data.get('municipality') # Get mun id from municipality name
+    category = data.get('category') # Get category id from category name
+    location = data.get('location')
+    [geo_data_lat,geo_data_long] = location.get('coordinates')
+    img_src = data.get('image')
+    
     dao_factory = DAOFactory(get_connection())
     report_data_dao = dao_factory.get_report_data_dao()
+    municipality_dao = dao_factory.get_municipality_dao()
+    category_dao = dao_factory.get_category_dao()
 
     try:
-        report = report_data_dao.create_report_data(user_id, mun_id, category_id, address_line_1, address_line_2,
-                                                    report_category, city_name, zipcode, geo_data_lat, geo_data_long,
-                                                    img_src)
+        # Fetch municipality and category id using names
+        mun_id = municipality_dao.get_municipality_id_by_name(municipality)
+        category_id = category_dao.get_category_id_by_name(category)
+
+        report = report_data_dao.create_report_data(user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src)
+        # test_response = {
+        #     'message': 'Report Data Received',
+        #     'userid': user_id,
+        #     'municipality': mun_id,
+        #     'category': category_id,
+        #     'geo_data_lat': geo_data_lat,
+        #     'geo_data_long': geo_data_long,
+        #     'img_src': img_src
+        # }
+
         response = {
             'message': 'Report Data Created',
             'report_data_id': report[0]
