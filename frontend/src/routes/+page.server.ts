@@ -1,9 +1,12 @@
 /** @type {import('./$types').PageLoad} */
 export function load({ cookies}) {
     if (cookies.get("access")==="true") {
+        // @ts-ignore
+        let user_data = JSON.parse(cookies.get("UserData"));
         return {
             access: true,
-            failedAuth: false
+            failedAuth: false,
+            UserData: user_data
         }
     }
     else if (cookies.get("failedAuth")==="true") {

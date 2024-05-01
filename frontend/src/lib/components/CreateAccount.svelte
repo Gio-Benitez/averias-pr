@@ -1,10 +1,52 @@
 <script>
-    import { isCreateAccountModalOpen } from "$lib/stores";
-    import { invalidAuth } from "$lib/stores";
+    import { isCreateAccountModalOpen, invalidAuth} from "$lib/stores";
+    import axios from 'axios';
+
+    let message="";
 
     function closeModal() {
         $isCreateAccountModalOpen = false;
         $invalidAuth = false;
+    }
+
+    const sendData = () => {
+        let formu = document.getElementById('formu');
+        // @ts-ignore
+        let form = new FormData(formu);
+        const jsonData = {};
+        form.forEach((value, key) => {
+        // @ts-ignore
+        jsonData[key] = value;
+        });
+        
+        axios.post('http://localhost:5000/averias/users/', jsonData, {
+        headers: {
+                'Content-Type': 'application/json'
+        }
+        })
+        .then(res=> {
+            console.log(res.data.message);
+            document.cookie = 'access' + "=" + ('true' || "") + "; path=/";
+            let userData = {
+                UserID: 0,
+                user_report_count: 0,
+                user_reports: []
+            }
+            // @ts-ignore
+            userData.UserID = res.data.UserID;
+            document.cookie = 'UserData' + "=" + (JSON.stringify(userData) || "") + "; path=/";
+            window.location.reload();
+        })
+        .catch(error => {
+            // Handle error response here
+            if (error.response) {
+                console.error('Error:', error.response.data.error); // Log the error message
+                // Handle the error message here (e.g., display it on the UI)
+                message = error.response.data.error;
+            } else {
+                console.error('Error:', error);
+            }
+    });
     }
 </script>
 
@@ -16,42 +58,42 @@
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" on:click={closeModal}>✕</button>
                 <!-- <button class="label-text-alt link link-hover" on:click={openSecondModal}>Create an account</button> -->
             </form>
-            <form class="card-body" method="post" action="auth/?/createAccount">
+            <form id="formu" class="card-body" method="POST">
                 <div class="form-control mb-10">
-                    <label class="label">
+                    <!-- <label class="label">
                         <span class="label-text">¿De qué municipio eres?</span>
                     </label>
-                    <input name ="municipality" placeholder="Arecibo" class="input input-bordered" required />
+                    <input name ="municipality" placeholder="Arecibo" class="input input-bordered" required /> -->
                     <label class="label">
                         <span class="label-text">Nombre</span>
                     </label>
-                    <input name ="first_name" placeholder="Kiara" class="input input-bordered" required />
+                    <input name ="FirstName" placeholder="Kiara" class="input input-bordered" required />
                     <label class="label">
                         <span class="label-text">Apellidos</span>
                     </label>
-                    <input name ="last_name" placeholder="Velazquez Ortiz" class="input input-bordered" required />
+                    <input name ="LastName" placeholder="Velazquez Ortiz" class="input input-bordered" required />
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Entre su email</span>
                     </label>
-                    <input type="email" name ="email" placeholder="email" class="input input-bordered" required />
+                    <input type="email" name ="Email" placeholder="email" class="input input-bordered" required />
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Crea una contraseña</span>
                     </label>
-                    <input type="password" name= "password" placeholder="contraseña" class="input input-bordered" required />
+                    <input type="password" name= "Password" placeholder="contraseña" class="input input-bordered" required />
                     <label class="label">
                         <span class="label-text">Confirme su contraseña</span>
                     </label>
-                    <input type="password" name= "password-confirmation" placeholder="confirma contraseña" class="input input-bordered" required />
+                    <input type="password" name= "PasswordConf" placeholder="confirma contraseña" class="input input-bordered" required />
                 </div>
-                {#if $invalidAuth}
-                    <p class="text-error font-semibold ml-2 mt-2">Las contraseñas no son iguales</p>
+                {#if message}
+                    <p class="text-error font-semibold ml-2 mt-2">{message}</p>
                 {/if}
                 <div class="form-control mt-6">
-                    <button class="btn btn-primary" type = "submit">Crear cuenta</button>
+                    <button class="btn btn-primary" on:click|preventDefault={sendData}>Crear cuenta</button>
                 </div>
             </form>
         </div>

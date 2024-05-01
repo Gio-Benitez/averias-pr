@@ -14,8 +14,7 @@
 CREATE TABLE if not exists "user" (
     user_id SERIAL PRIMARY KEY,
     user_email VARCHAR(255) UNIQUE NOT NULL,
-    user_pass_hash VARCHAR(255) NOT NULL,
-    user_salt VARCHAR(255) NOT NULL,
+    user_pass VARCHAR(255) NOT NULL,
     user_fname VARCHAR(100),
     user_lname VARCHAR(100),
     admin_id bool
@@ -26,7 +25,8 @@ CREATE TABLE if not exists municipality (
     mun_id SERIAL PRIMARY KEY,
     mun_name VARCHAR(255) NOT NULL,
     mun_population INT,
-    mun_size_area DECIMAL(10, 2)
+    mun_size_area DECIMAL(10, 2),
+    num_reports INT
 );
 
 create TABLE if not exists category(
@@ -40,35 +40,21 @@ CREATE TABLE if not exists report_data (
     user_id INT REFERENCES "user"(user_id),
     mun_id INT REFERENCES municipality(mun_id),
     category_id INT REFERENCES category(category_id),
-    Address_Line_1 VARCHAR(255),
-    Address_Line_2 VARCHAR(255),
-    Report_category VARCHAR(100),
-    City_name VARCHAR(100),
-    Zipcode VARCHAR(20),
     Geo_Data_Lat DECIMAL(10, 6),
     Geo_Data_Long DECIMAL(10, 6),
-    image_src TEXT
-);
-
-
--- Create the report table
-CREATE TABLE if not exists report (
-    report_id SERIAL PRIMARY KEY,
-    data_id INT REFERENCES report_data(data_id),
+    image_src TEXT,
     report_date DATE NOT NULL,
-    report_email VARCHAR(255) NOT NULL,
-    report_status VARCHAR(20) NOT NULL,
-    CONSTRAINT fk_report_data FOREIGN KEY (report_id) REFERENCES report_data(data_id) ON DELETE CASCADE
+    report_status VARCHAR(20) NOT NULL
 );
-
 
 -- inserts for static tables --
 INSERT INTO category (category_name) VALUES
-('Pothole'),
-('Light post damages'),
-('Landslide/potential landslide'),
-('Water outage'),
-('Power outage');
+('Carretera Dañada'),
+('Poste Caido'),
+('Deslizamiento'),
+('Peligro de Deslizamiento'),
+('Servicio de Agua'),
+('Servicio de energía eléctrica');
 
 
 INSERT INTO municipality (mun_name, mun_population, mun_size_area) VALUES

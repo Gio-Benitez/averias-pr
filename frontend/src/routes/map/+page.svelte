@@ -47,7 +47,7 @@
             </div>
         </div>
         <!--Map Component Segment-->
-        <div id="map" class="min-h-[697px] col-start-2 col-end-8 row-start-2 row-end-10">
+        <div id="map" class="min-h-[697px] col-start-2 col-end-8 row-start-2 row-end-10 mt-3">
             <Map />
         </div>
         <!--Map Data Panel Segment-->

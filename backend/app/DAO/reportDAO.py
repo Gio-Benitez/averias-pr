@@ -15,9 +15,7 @@ class reportDAO(BaseDAO):
 
 
     def get_all_reports(self):
-        query = """SELECT * FROM report;"""
+        query = """SELECT data_id, report_date, report_email, report_status FROM report;"""
         cur = self.execute_query(query)
         return cur.fetchall()
-
-
 
