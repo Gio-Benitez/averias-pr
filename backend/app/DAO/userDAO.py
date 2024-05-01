@@ -47,7 +47,7 @@ class UserDAO(BaseDAO):
         self.commit()
         return cur.fetchone()
 
-      def delete_user(self, user_id):
+    def delete_user(self, user_id):
         query = """DELETE FROM "user" WHERE "user_id" = %s;"""
         self.execute_query(query, (user_id,))
         self.commit()
