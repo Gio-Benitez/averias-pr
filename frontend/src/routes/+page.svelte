@@ -113,7 +113,7 @@
                   <th>{i+1}</th>
                   <td>{report[3]}</td>
                   <td>{report[2]}</td>
-                  <td>Yes</td>
+                  <td>No</td>
                 </tr>
             {/each}
           {/if}
