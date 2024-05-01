@@ -73,7 +73,7 @@
                     <label class="label">
                         <span class="label-text">Contraseña</span>
                     </label>
-                    <input type="password" name= "PasswordHash" placeholder="contraseña" class="input input-bordered" required />
+                    <input type="password" name= "Password" placeholder="contraseña" class="input input-bordered" required />
                     <form method="dialog">
                         <button class="label-text-alt link link-hover" on:click={openForgotModal}>¿Has olvidado tu contraseña?</button>
                     </form>
