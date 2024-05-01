@@ -8,6 +8,7 @@
     import CategoryIconCloud from './CategoryIconCloud.svelte';
     import { CldUploadButton } from 'svelte-cloudinary';
     
+    const VITE_PUBLIC_CLOUDINARY_CLOUD_NAME="dyahmh8mt";
     // Define type for GeoJSON Point
     interface GeoJSONPoint {
         type: string;
