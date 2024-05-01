@@ -25,7 +25,7 @@ const municipalityNames = [
 export let municipalities = writable(municipalityNames);
 
 const categories = {
-    0: 'Servicio de Luz',
+    0: 'Servicio de energía eléctrica',
     1: 'Servicio de Agua',
     2: 'Carretera Dañada',
     3: 'Poste Caido',

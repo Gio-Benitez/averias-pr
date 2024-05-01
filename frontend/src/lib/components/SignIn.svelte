@@ -1,5 +1,5 @@
 <script>
-  import { invalidAuth, isSignInModalOpen } from "$lib/stores";
+  import { invalidAuth, isSignInModalOpen} from "$lib/stores";
   import axios from "axios";
   import { createEventDispatcher } from 'svelte';
 
@@ -36,8 +36,19 @@
         }
         })
         .then(res=> {
-            console.log(res.data.message);
-            document.cookie = 'access' + "=" + ('true' || "") + "; path=/"; // Sets a cookie named 'access' with value 'true' that expires in half a day
+            console.log(res.data);
+            document.cookie = 'access' + "=" + ('true' || "") + "; path=/";
+            // Neccessary user info to store as cookie
+            let userData = {
+                UserID: 0,
+                user_report_count: 0,
+                user_reports: []
+            }
+            // @ts-ignore
+            userData.UserID = res.data.UserID;
+            userData.user_report_count = res.data.report_count;
+            userData.user_reports = res.data.user_reports;
+            document.cookie = 'UserData' + "=" + (JSON.stringify(userData) || "") + "; path=/";
             window.location.reload();
         })
         .catch(error => {
@@ -73,7 +84,7 @@
                     <label class="label">
                         <span class="label-text">Contraseña</span>
                     </label>
-                    <input type="password" name= "PasswordHash" placeholder="contraseña" class="input input-bordered" required />
+                    <input type="password" name= "Password" placeholder="contraseña" class="input input-bordered" required />
                     <form method="dialog">
                         <button class="label-text-alt link link-hover" on:click={openForgotModal}>¿Has olvidado tu contraseña?</button>
                     </form>

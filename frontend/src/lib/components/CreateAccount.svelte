@@ -1,6 +1,5 @@
 <script>
-    import { isCreateAccountModalOpen } from "$lib/stores";
-    import { invalidAuth } from "$lib/stores";
+    import { isCreateAccountModalOpen, invalidAuth} from "$lib/stores";
     import axios from 'axios';
 
     let message="";
@@ -27,7 +26,15 @@
         })
         .then(res=> {
             console.log(res.data.message);
-            document.cookie = 'access' + "=" + ('true' || "") + "; path=/"; // Sets a cookie named 'access' with value 'true' that expires in half a day
+            document.cookie = 'access' + "=" + ('true' || "") + "; path=/";
+            let userData = {
+                UserID: 0,
+                user_report_count: 0,
+                user_reports: []
+            }
+            // @ts-ignore
+            userData.UserID = res.data.UserID;
+            document.cookie = 'UserData' + "=" + (JSON.stringify(userData) || "") + "; path=/";
             window.location.reload();
         })
         .catch(error => {
@@ -76,7 +83,7 @@
                     <label class="label">
                         <span class="label-text">Crea una contraseña</span>
                     </label>
-                    <input type="password" name= "PasswordHash" placeholder="contraseña" class="input input-bordered" required />
+                    <input type="password" name= "Password" placeholder="contraseña" class="input input-bordered" required />
                     <label class="label">
                         <span class="label-text">Confirme su contraseña</span>
                     </label>

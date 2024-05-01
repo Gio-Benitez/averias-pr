@@ -5,23 +5,18 @@ class UserDAO(BaseDAO):
     def __init__(self, conn):
         super().__init__(conn)
 
-    def create_user(self, user_email, user_pass_hash, user_salt, user_fname=None, user_lname=None, admin_id=False):
+    def create_user(self, user_email, user_pass, user_fname=None, user_lname=None, admin_id=False):
         query = """INSERT INTO "user" (user_email, user_pass,  user_fname, user_lname, admin_id)
                 VALUES (%s, %s, %s, %s, %s) returning user_id;
                 """
         params = (user_email, user_pass,  user_fname, user_lname, admin_id)
         cur = self.execute_query(query, params)
         self.commit()
-        return cur.fetchone()
-        # try:
-        #     # Execute the query
-        #     cur = self.execute_query(query, params)
-        # # Error checking
-        # except ps.errors.UniqueViolation as uv:
-        #     return f'Email already in use, try to login.'
-        #
-        # self.commit()
-        # return cur.fetchone()
+        result = cur.fetchone()
+        if result:
+            return result[0]
+        else:
+            return None 
 
     def get_users(self):
         query = """SELECT user_id, user_email, user_pass, user_fname, user_lname, admin_id FROM "user";"""
@@ -46,8 +41,13 @@ class UserDAO(BaseDAO):
         cur = self.execute_query(query, (user_email,))
         self.commit()
         return cur.fetchone()
+    
+    def get_user_id_by_email(self, user_email):
+        query = """SELECT user_id FROM "user" WHERE "user_email" = %s;"""
+        cur = self.execute_query(query, (user_email,))
+        return cur.fetchone()
 
-      def delete_user(self, user_id):
+    def delete_user(self, user_id):
         query = """DELETE FROM "user" WHERE "user_id" = %s;"""
         self.execute_query(query, (user_id,))
         self.commit()
