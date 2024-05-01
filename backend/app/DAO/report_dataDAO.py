@@ -5,16 +5,16 @@ class report_dataDAO(BaseDAO):
     def __init__(self, conn):
         super().__init__(conn)
 
-    def create_report_data(self, user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src):
-        query = """INSERT INTO report_data (user_id, mun_id, category_id, geo_data_lat, geo_data_long, image_src) 
-        VALUES (%s, %s, %s, %s, %s, %s) returning data_id;"""
-        params = (user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src)
+    def create_report_data(self, user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src, report_date, report_status):
+        query = """INSERT INTO report_data (user_id, mun_id, category_id, geo_data_lat, geo_data_long, image_src, report_date, report_status) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s::DATE, %s) returning data_id;"""
+        params = (user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src, report_date, report_status)
         cur = self.execute_query(query, params)
         self.commit()
         return cur.fetchone()
     
     def get_users_reports(self, user_id):
-        query = """SELECT rd.data_id, rd.user_id, m.mun_name, c.category_name, rd.geo_data_lat, rd.geo_data_long, rd.image_src 
+        query = """SELECT rd.data_id, rd.user_id, m.mun_name, c.category_name, rd.geo_data_lat, rd.geo_data_long, rd.image_src, rd.report_status 
                 FROM report_data rd
                 JOIN municipality m ON rd.mun_id = m.mun_id
                 JOIN category c ON rd.category_id = c.category_id
@@ -57,4 +57,9 @@ class report_dataDAO(BaseDAO):
                 WHERE user_id = %s 
                 GROUP BY user_id;"""
         cur = self.execute_query(query, (user_id,))
-        return cur.fetchone()
+        result = cur.fetchone()
+        # Check if result is None
+        if result is None:
+            return (user_id, 0)  # Return user_id and count 0
+        
+        return result

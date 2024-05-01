@@ -28,7 +28,6 @@ def create_users():
             'message': 'User created successfully',
             'UserID': user_id,
             'access': 'true'
-
         }
         return jsonify(response), 201
 
@@ -136,8 +135,7 @@ def get_user_by_id(user_id):
 def login():
     data = request.get_json()
     user_email = data.get('Email')
-    user_pass = data.get('Password')
-
+    user_pass = data.get('Password')    
 
     dao_factory = DAOFactory(get_connection())
     user_dao = dao_factory.get_user_dao()
@@ -145,13 +143,13 @@ def login():
 
     try:
         user = user_dao.get_user_by_email(user_email)
-        report_count = report_data_dao.get_report_count_by_user_id(user[0]) # Update Report count in front end
-        reports = report_data_dao.get_users_reports(user[0])
-
         if user is None:
             return jsonify(error='User not found'), 404
         if str(user[2]) != str(user_pass):
             return jsonify(error=f"Incorrect password"), 401
+        report_count = report_data_dao.get_report_count_by_user_id(user[0]) # Update Report count in front end
+        reports = report_data_dao.get_users_reports(user[0])
+        
         response = {
             'UserID': user[0],
             'report_count': report_count[1],

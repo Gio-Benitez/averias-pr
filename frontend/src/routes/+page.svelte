@@ -110,7 +110,7 @@
           {:else if data.UserData.user_reports}
             {#each data.UserData.user_reports as report, i}
                 <tr class="{data.access ? 'hover' : ''}">
-                  <th>{i+1}</th>
+                  <th>{report[7]}</th>
                   <td>{report[3]}</td>
                   <td>{report[2]}</td>
                   <td>No</td>

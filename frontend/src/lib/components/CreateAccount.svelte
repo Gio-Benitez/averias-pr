@@ -33,7 +33,7 @@
                 user_reports: []
             }
             // @ts-ignore
-            userData.UserID = getCookie('UserData').UserID;
+            userData.UserID = res.data.UserID;
             document.cookie = 'UserData' + "=" + (JSON.stringify(userData) || "") + "; path=/";
             window.location.reload();
         })
