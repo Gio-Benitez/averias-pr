@@ -46,6 +46,11 @@ class UserDAO(BaseDAO):
         cur = self.execute_query(query, (user_email,))
         self.commit()
         return cur.fetchone()
+    
+    def get_user_id_by_email(self, user_email):
+        query = """SELECT user_id FROM "user" WHERE "user_email" = %s;"""
+        cur = self.execute_query(query, (user_email,))
+        return cur.fetchone()
 
     def delete_user(self, user_id):
         query = """DELETE FROM "user" WHERE "user_id" = %s;"""
