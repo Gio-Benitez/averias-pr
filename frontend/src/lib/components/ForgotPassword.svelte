@@ -1,6 +1,6 @@
 <script>
-    import { isForgotPasswordModalOpen, invalidAuth } from "$lib/stores";
-  import axios from "axios";
+    import { isForgotPasswordModalOpen, invalidAuth} from "$lib/stores";
+    import axios from "axios";
     import { createEventDispatcher } from "svelte";
     
     const dispatch = createEventDispatcher();
@@ -29,6 +29,7 @@
         .then(res=> {
             console.log(res.data.message);
             document.cookie = 'access' + "=" + ('true' || "") + "; path=/"; // Sets a cookie named 'access' with value 'true' that expires in half a day
+            document.cookie = 'UserID' + "=" + (res.data.UserID || "") + "; path=/";
             window.location.reload();
         })
         .catch(error => {

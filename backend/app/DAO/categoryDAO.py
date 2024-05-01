@@ -19,3 +19,8 @@ class CategoryDAO(BaseDAO):
         query = """SELECT * FROM category WHERE category_name = %s;"""
         cur = self.execute_query(query, (category_name,))
         return cur.fetchone()
+    
+    def get_category_id_by_name(self, category_name):
+        query = """SELECT category_id FROM category WHERE category_name = %s;"""
+        cur = self.execute_query(query, (category_name,))
+        return cur.fetchone()

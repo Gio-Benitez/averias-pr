@@ -26,7 +26,7 @@ def create_users():
         user_id = user_dao.create_user(user_email, user_pass, user_fname, user_lname, admin_id)
         response = {
             'message': 'User created successfully',
-            'Userid': user_id,
+            'UserID': user_id,
             'access': 'true'
 
         }
@@ -206,7 +206,8 @@ def update_password():
         user_id = user_dao.get_user_id_by_email(user_email)
         user_dao.update_user_password(user_id, new_pass)
         response = {
-            'message': 'Password updated successfully'
+            'message': 'Password updated successfully',
+            'UserID': user_id
         }
         return jsonify(response), 200
     except Exception as e:

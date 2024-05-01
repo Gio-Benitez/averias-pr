@@ -3,9 +3,10 @@
     import check_mark from '$lib/images/green_checkmark.png';
     import { getUserLocation } from "$lib/geolocation";
     import { fade } from 'svelte/transition';
-    import { municipalities, buttonNext, steps_counter,reset } from '$lib/stores';
+    import { municipalities, buttonNext, steps_counter,reset} from '$lib/stores';
     import { onMount } from 'svelte';
     import CategoryIconCloud from './CategoryIconCloud.svelte';
+    import axios from 'axios';
     
     
     // Define type for GeoJSON Point
@@ -25,14 +26,28 @@
     let selectedMunicipality = '¿En qué municipio se encuentra?';
     let success = false; // Measures if the user's location was obtained successfully
     let errorMessage: string | null = null;  
-    let reportCategory = ''; 
 
     let formData = {
+        userID: 0,
         location: { type: "Point", coordinates: [0, 0] },
         municipality: '',
         category: '',
         image: ''
     };
+
+    function getCookie(name: string) {
+        const cookieName = name + "=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const cookieArray = decodedCookie.split(';');
+
+        for(let i = 0; i < cookieArray.length; i++) {
+            let cookie = cookieArray[i].trim();
+            if (cookie.indexOf(cookieName) === 0) {
+                return cookie.substring(cookieName.length, cookie.length);
+            }
+        }
+        return null;
+    }
 
     async function fetchUserLocation() {
         try {
@@ -41,6 +56,8 @@
             console.log("User location retrieved successfully");
 
             formData.location = userLocation;
+            // @ts-ignore
+            formData.userID = getCookie('UserID');
             success = true;
 
         } catch (error) {
@@ -53,15 +70,6 @@
         }
     }
 
-    async function handleSubmit() {
-        console.log("Your form data => ",formData);
-        reset();
-    }
-
-    function checkShit() {
-        console.log("Your form data => ",formData);   
-    }
-
     function handleSelectionChange() {
         if (success) {
             $buttonNext = true;
@@ -70,9 +78,41 @@
         console.log(selectedMunicipality);
     }
 
+    let message ="";
+    const sendData = () => {
+        // let formu = document.getElementById('formu');
+        // // @ts-ignore
+        // let form = new FormData(formu);
+        const jsonData = JSON.stringify(formData);
+        // formData.forEach((value, key) => {
+        // // @ts-ignore
+        // jsonData[key] = value;
+        // });
+        
+        axios.post('http://localhost:5000/averias/report_data/', jsonData, {
+        headers: {
+                'Content-Type': 'application/json'
+        }
+        })
+        .then(res=> {
+            console.log(res.data);
+            reset()
+        })
+        .catch(error => {
+            // Handle error response here
+            if (error.response) {
+                console.error('Error:', error.response.data.error); // Log the error message
+                // Handle the error message here (e.g., display it on the UI)
+                message = error.response.data.error;
+            } else {
+                console.error('Error:', error);
+            }
+     });
+    }
+
 </script>
 
-<form class="form-container flex justify-center" method="post" action="report/?/createReport" on:submit={handleSubmit}>
+<form class="form-container flex justify-center" method="POST">
     {#if $steps_counter === 1}
         <form method="dialog" class="flex flex-col justify-center w-1/2">
             <div class="flex justify-center">
@@ -124,7 +164,7 @@
             <div class="label mb-10">
                 <span class="label-text font-semibold" style="font-size: 1.5rem;">¿Todo listo?</span>
             </div>
-            <button class="btn btn-success btn-lg mb-10" type="submit" on:click={checkShit}>Crear</button>
+            <button class="btn btn-success btn-lg mb-10" on:click|preventDefault={sendData}>Crear</button>
         </div>
     {/if}
 </form>    
