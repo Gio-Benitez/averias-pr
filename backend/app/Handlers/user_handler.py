@@ -190,16 +190,21 @@ def login():
 
 
 # user route to update password
-@user_handler.route('/update_password/<int:user_id>', methods=['PUT'])
-def update_password(user_id):
+@user_handler.route('/update_password', methods=['POST'])
+def update_password():
     data = request.get_json()
-    new_password = data.get('Password')
+    user_email = data.get('Email')
+    new_pass = data.get('Password')
+    new_pass_conf = data.get('PasswordConf')
 
     dao_factory = DAOFactory(get_connection())
     user_dao = dao_factory.get_user_dao()
 
     try:
-        user_dao.update_user_password(user_id, new_password)
+        if new_pass_conf != new_pass: 
+            return jsonify(error='Passwords do not match'), 400
+        user_id = user_dao.get_user_id_by_email(user_email)
+        user_dao.update_user_password(user_id, new_pass)
         response = {
             'message': 'Password updated successfully'
         }
