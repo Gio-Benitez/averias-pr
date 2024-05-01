@@ -46,7 +46,7 @@ CREATE TABLE if not exists report_data (
     Zipcode VARCHAR(20),
     Geo_Data_Lat DECIMAL(10, 6),
     Geo_Data_Long DECIMAL(10, 6),
-    image_src TEXT
+    img_src VARCHAR(255)
 );
 
 

@@ -173,3 +173,5 @@ def get_reports_by_cat(category_id):
         error_message = str(e)
         return jsonify(error=error_message),
 
+
+# get population, count of all reports, most common report category and count reports resolved for all municipalities in the database
