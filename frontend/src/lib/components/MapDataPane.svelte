@@ -1,12 +1,21 @@
 <script lang="ts">
     import { mapDataStore, filterCategoriesStore, municipios, municipalities } from "$lib/stores";
     import { createEventDispatcher } from "svelte";
+    import { enhance } from "$app/forms";
+    import { page } from "$app/stores";
+    
     
     // Report Category Filter Logic
     let catUnselected: boolean = true;
     let muniUnselected: boolean = true;
-    let cat: string = '';
     let muni: string = '';
+    function selectCat (event: any) {
+        $mapDataStore.reportCategory = event.target.value;
+        catUnselected = false;
+        console.log($mapDataStore.reportCategory);
+        console.log($page.form);
+        
+    }
     function updateRegion (data: any) {
         $mapDataStore.dataRegion = data;
         console.log($mapDataStore.dataRegion);
@@ -17,13 +26,19 @@
     <div class="flex flex-col w-full h-1/5 text-center">
         <h1>{$mapDataStore.dataRegion}</h1>
         <div class="divider divider-neutral"></div>
-        
-        <select class="select text-lg font-medium select-secondary w-full">
-            <option disabled selected >Seleccione Categoría</option>
-            {#each $filterCategoriesStore as category}
-            <option value={category}>{category}</option>
-            {/each}    
-        </select>
+        <form action="?/mapCategorySelection" name="category" method="POST">
+            <select 
+                name="category"
+                class="select text-lg font-medium select-secondary w-full"
+                value={$mapDataStore.reportCategory} 
+                on:change= {selectCat}
+                >
+                <option disabled selected >Seleccione Categoría</option>
+                {#each $filterCategoriesStore as category}
+                <option value={category}>{category}</option>
+                {/each}    
+            </select>
+        </form>
     </div>
     <div class="flex flex-col w-full text-center">
         <h1>Statistics</h1>

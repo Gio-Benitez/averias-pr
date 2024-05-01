@@ -4,6 +4,7 @@
   import avatar_icon from '$lib/images/avatar_icon.png';
   import target_icon from '$lib/images/target_icon.png';
 
+  
   /** @type {import('./$types').PageData} */
 	export let data;
 

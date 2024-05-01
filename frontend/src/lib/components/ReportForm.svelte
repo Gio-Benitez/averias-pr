@@ -7,7 +7,8 @@
     import { onMount } from 'svelte';
     import CategoryIconCloud from './CategoryIconCloud.svelte';
     import axios from 'axios';
-    
+    import { CldUploadButton } from 'svelte-cloudinary';
+
     
     // Define type for GeoJSON Point
     interface GeoJSONPoint {
@@ -157,12 +158,22 @@
         </form>
     {/if}
     {#if $steps_counter===3}
-        <label class="form-control w-1/8 max-w-xs">
-            <div class="label">
-                <span class="label-text">Subir Imagen</span>
+            
+            <div class="flex flex-col">
+                <h2>Subir Imagen</h2>
+                <CldUploadButton 
+                    class="btn btn-primary btn-md mb-4"
+                    uploadPreset="uw_test"
+                    onUpload={() => $buttonNext=true}
+                    bind:value={formData.image}
+                />
             </div>
+            
+        <!--  Original file upload input
             <input type="file" bind:value={formData.image} on:change={() => $buttonNext=true} class="file-input file-input-bordered file-input-primary w-7/8 max-w-xs file-input-sm mb-9"/>
         </label>
+        -->
+        
     {/if}
     {#if $steps_counter===4}
         <div class="flex flex-col">
@@ -173,3 +184,11 @@
         </div>
     {/if}
 </form>    
+
+<style lang="postcss">
+    h2 {
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+</style>
