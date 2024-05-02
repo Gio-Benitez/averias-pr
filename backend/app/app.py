@@ -32,3 +32,8 @@ def get_data():
     # Fetch data from the database
     data = ["dad","charma"]  # Fetch data from your local database here
     return jsonify(data)
+
+@app.route('/test', methods=['POST'])
+def test():
+    data = request.get_json()
+    return jsonify(data)

@@ -1,7 +1,11 @@
+
 import axios from 'axios';
 
-export async function postData(var_1: string, var_2: string, var_2_val: string, var_opt: string) {
-    const url = 'https://your-api-endpoint.com'; // replace with your API endpoint
+
+// API Server Link: https://averias-pr.onrender.com
+export async function postDashboardData(var_1: string, var_2: string, var_2_val: string[], var_opt: string[]) {
+    //const url = 'https://averias-pr.onrender.com/test'; // replace with your API endpoint
+    const url = 'http://127.0.0.1:5000/averias/report_data/dashboard';
     const data = {
         var_1: var_1,
         var_2: var_2,
@@ -16,4 +20,4 @@ export async function postData(var_1: string, var_2: string, var_2_val: string, 
     } catch (error) {
         console.error(`Error posting data: ${error}`);
     }
-}
+};
