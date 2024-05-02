@@ -4,42 +4,31 @@ Functions here are used to fetch the statistics data corresponding to the select
 */
 // Imports
 import type { PageServerLoad, Actions } from './$types';
+import axios from 'axios';
 
 // Map Data Fetching
 // API Server Link: https://averias-pr.onrender.com
 export const load: PageServerLoad = (async () => {
     // Fetch map data
-    //const mapDataResponse = await fetch('/api/map-data');
-
-    const whatIwant = {
-        'Adjuntas': {
-            'population': 1000,
-            'total_reports': 5,
-            'common_cat': 'Acera Rota',
-            'resolved_reports': 2
-        },
-        'Aguada': {
-            'population': 2000,
-            'total_reports': 10,
-            'common_cat': 'Pothole',
-            'resolved_reports': 5
-        }
-        //etc...
-        }
+    const mapDataResponse = await axios.get('https://averias-pr.onrender.com/averias/municipalities/map');
+    console.log(mapDataResponse.data);
+    const mapData = mapDataResponse.data;
+    console.log(mapData.key);
+    // const mapDataArray = [];
+    // for (i =  of mapData[mapData.key]) {
+    //     mapDataArray[item.municipality_name] = {
+    //         population: item.population,
+    //         total_reports: item.total_reports,
+    //         common_cat: item.common_cat,
+    //         resolved_reports: item.resolved_reports
+    //     };
+    //     console.log(mapDataArray)
         
-        const mapData = {
-            dataRegion: 'Puerto Rico',
-            numOfReports: 110,
-            population: 3205691,
-            reportCategory: 'Carretera Rota',
-            resolved: 0
-        }
-        //const mapData = await mapDataResponse.json();
+    // }
     
         return {
             props: {
-                mapData,
-                whatIwant
+                mapStatistics: mapData
             }
         };
     });

@@ -39,3 +39,20 @@ class municipalityDAO(BaseDAO):
         query = """SELECT mun_id FROM municipality WHERE mun_name = %s;"""
         cur = self.execute_query(query, (mun_name,))
         return cur.fetchone()
+
+    def updateAggregates(self, mun_id, num_reports, most_common_category, resolved_reports):
+        params = (num_reports, most_common_category, resolved_reports, mun_id)
+        query = """UPDATE municipality SET "num_reports" = %s, "most_common_category" = %s, "resolved_reports" = %s
+                WHERE "mun_id" = %s;"""
+        self.execute_query(query, params)
+        self.commit()
+    
+    def getAggregates(self):
+        query = """SELECT mun_name, mun_population, num_reports, most_common_category, resolved_reports FROM municipality;"""
+        cur = self.execute_query(query)
+        return cur.fetchall()
+    
+    def getAggregateNational(self):
+        query = """SELECT  SUM(mun_population), SUM(num_reports), SUM(resolved_reports)  FROM municipality;"""
+        cur = self.execute_query(query)
+        return cur.fetchone()

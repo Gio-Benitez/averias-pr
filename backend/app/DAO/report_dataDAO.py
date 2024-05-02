@@ -63,3 +63,27 @@ class report_dataDAO(BaseDAO):
             return (user_id, 0)  # Return user_id and count 0
         
         return result
+    # Compute Aggregates
+    # Total Reports for Municipio
+    def getTotalReportsMuni(self, mun_id):
+        query = """SELECT COUNT(data_id) FROM report_data WHERE mun_id = %s;"""
+        cur = self.execute_query(query, (mun_id,))
+        return cur.fetchone()
+    
+    # Most Common Report Category by Muni
+    def getCommonCategory(self, mun_id):
+        query = """SELECT category_name FROM report_data natural inner join category WHERE mun_id = %s GROUP BY category_name ORDER BY COUNT(category_id) DESC LIMIT 1;"""
+        cur = self.execute_query(query, (mun_id,))
+        return cur.fetchone()
+    
+    # Resolved Reports
+    def getResolvedReportsMuni(self, mun_id):
+        query = """SELECT COUNT(data_id) FROM report_data WHERE mun_id = %s AND report_status = 'Resolved';"""
+        cur = self.execute_query(query, (mun_id,))
+        return cur.fetchone()
+    
+    # Most Common Report Category National
+    def getCommonCategoryNational(self):
+        query = """SELECT category_name FROM report_data natural inner join category GROUP BY category_name ORDER BY COUNT(category_id) DESC LIMIT 1;"""
+        cur = self.execute_query(query)
+        return cur.fetchone()

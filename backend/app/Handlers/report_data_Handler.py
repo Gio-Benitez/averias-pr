@@ -12,7 +12,7 @@ report_data_handler = Blueprint('report_data_handler', __name__)
 @report_data_handler.route('/', methods=['POST'])
 def create_report_data():
     data = request.get_json()
-    if data.get('municipality') is '' or data.get('category') is '' or data.get('location').get('coordinates') == [0, 0] or data.get('image') is None:
+    if data.get('municipality') == '' or data.get('category') == '' or data.get('location').get('coordinates') == [0, 0] or data.get('image') is None:
         print(data)
         return jsonify('Error: Missing data'), 400
     user_id = data.get('userID') # Get current user here
@@ -45,6 +45,14 @@ def create_report_data():
         category_id = category_dao.get_category_id_by_name(category)
 
         report = report_data_dao.create_report_data(user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src, formatted_date, status)
+        # Update Municipality Aggregates
+        num_reports = report_data_dao.getTotalReportsMuni(mun_id)
+        most_common_category = report_data_dao.getCommonCategory(mun_id)
+        if most_common_category is None:
+            most_common_category = "Ninguna"
+        resolved_reports = report_data_dao.getResolvedReportsMuni(mun_id)
+        municipality_dao.updateAggregates(mun_id, num_reports, most_common_category, resolved_reports)
+
         report_count = report_data_dao.get_report_count_by_user_id(user_id) # Update Report count in front end
         reports = report_data_dao.get_users_reports(user_id)
         response = {
@@ -246,4 +254,5 @@ def get_dashboard_data():
         return jsonify('haha'), 200
     elif data['var_1'] == 'por de Reportes':
         return jsonify('hoho'), 200
+
 

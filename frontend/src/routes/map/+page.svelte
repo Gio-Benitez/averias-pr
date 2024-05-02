@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
     import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
     import Map from '$components/Map.svelte';
@@ -9,6 +10,7 @@
     export let form: ActionData;
     //$mapDataStore.populationData = data.item[1][1];
     let selectedTab = 'map';
+    let selected = 'Adjuntas';
     function changeTab(event: MouseEvent) {
         if (selectedTab === 'map') {
             selectedTab = 'dashboard';
@@ -17,11 +19,7 @@
         }
     }
     // Selectg Category function for map data pane
-    let selection = {   
-                        region: data.props.mapData.dataRegion, 
-                        category: 'Seleccione Categoría'
-                    };
-    
+    const mapStats = data.props.mapStatistics;
     let category:string;
     function selectCat (event: any) {
         category = event.target.value;
@@ -77,19 +75,19 @@
                 <div class="stats stats-vertical shadow">
                     <div class="stat shadow-lg">
                         <div class="stat-title">Población</div>
-                        <div class="stat-value">{data.props.mapData.population}</div>
+                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion].population}</div>
                     </div>
                     <div class="stat shadow-lg">
                         <div class="stat-title">Averías Reportadas</div>
-                        <div class="stat-value">{data.props.mapData.numOfReports}</div>
+                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion].num_reports}</div>
                     </div>
                     <div class="stat shadow-lg">
                         <div class="stat-title">Categoría más Común</div>
-                        <div class="stat-value">{data.props.mapData.reportCategory}</div>
+                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion].most_common_category}</div>
                     </div>
                     <div class="stat shadow-lg">
                         <div class="stat-title">Averías Resueltas</div>
-                        <div class="stat-value">{data.props.mapData.resolved}</div>
+                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion].resolved_reports}</div>
                     </div>
                 </div>
             </div>
@@ -137,7 +135,7 @@
         @apply text-lg font-semibold;
     }
     .stat-value {
-        @apply text-2xl font-bold;
+        @apply text-xl font-bold;
     }
     option {
         @apply font-medium;

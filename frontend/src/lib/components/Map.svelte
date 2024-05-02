@@ -48,7 +48,6 @@
   function regionHandler (data: any) {
     clickedFeature = data.detail.features?.[0];
     let clickedName = clickedFeature?.properties.NAME;
-    let clickedLayer = clickedFeature?.layer.id;
     $mapDataStore.dataRegion = clickedFeature?.properties.NAME;
     municipioClicked = true;
     console.log(clickedName);
