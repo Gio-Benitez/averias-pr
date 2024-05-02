@@ -5,12 +5,13 @@ Functions here are used to fetch the statistics data corresponding to the select
 // Imports
 import type { PageServerLoad, Actions } from './$types';
 import axios from 'axios';
+import { redirect } from "@sveltejs/kit";
 
 // Map Data Fetching
 // API Server Link: https://averias-pr.onrender.com
 export const load: PageServerLoad = (async () => {
     // Fetch map data
-    const mapDataResponse = await axios.get('https://averias-pr.onrender.com/averias/municipalities/map');
+    const mapDataResponse = await axios.get('http://127.0.0.1:5000/averias/municipalities/map');
     console.log(mapDataResponse.data);
     const mapData = mapDataResponse.data;
     console.log(mapData.key);
@@ -23,9 +24,8 @@ export const load: PageServerLoad = (async () => {
     //         resolved_reports: item.resolved_reports
     //     };
     //     console.log(mapDataArray)
-        
-    // }
     
+    // }
         return {
             props: {
                 mapStatistics: mapData

@@ -58,7 +58,7 @@
                         <option value='Categorías'>Categorías</option> 
                     </select>
                     {#if var2 === 'Categorías'}
-                        <h2>Seleccione hasta 3 Categorías</h2>
+                        <h2>Seleccione Categoría</h2>
                         <select name="var_2_val" bind:value={var2_val}>
                             <option disabled selected value>Seleccione Categoría(s)</option>
                             {#each $filterCategoriesStore as category}
@@ -93,7 +93,7 @@
                     {#if !var2_val}
                         <button disabled type="submit" on:click={test} class="btn">Submit</button>
                     {:else}
-                        <button type="submit" on:click={test} class="btn">Submit</button>
+                        <button disabled type="submit" on:click={test} class="btn">Submit</button>
                     {/if}
                 </form>
             </div>

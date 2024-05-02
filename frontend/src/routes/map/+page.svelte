@@ -7,7 +7,7 @@
     import { mapDataStore, filterCategoriesStore, municipios } from '$lib/stores';
     
     export let data: PageData;
-    export let form: ActionData;
+    export let form: ActionData; 
     //$mapDataStore.populationData = data.item[1][1];
     let selectedTab = 'map';
     let selected = 'Adjuntas';
@@ -56,7 +56,7 @@
                     <!-- Region input -->
                     <input type="hidden" name="region" value={$mapDataStore.dataRegion}>
                     <!-- Category Select -->
-                    <select name="category" class="select text-lg font-medium select-secondary w-full">
+                    <select disabled name="category" class="select text-lg font-medium select-secondary w-full">
                         <option disabled selected >Seleccione Categoría</option>
                         {#each $filterCategoriesStore as category}
                         <option value={category}>{category}</option>

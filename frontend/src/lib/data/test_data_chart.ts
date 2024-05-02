@@ -1,8 +1,8 @@
 export const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: ['Caguas', 'Mayagüez', 'Canóvanas', 'Moca', 'Yabucoa', 'Fajardo'],
     datasets: [
       {
-        label: '% of Votes',
+        label: 'Número de Reportes por Municipio',
         data: [12, 19, 3, 5, 2, 3],
       },
     ],
