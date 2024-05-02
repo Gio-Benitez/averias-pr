@@ -21,7 +21,7 @@
         jsonData[key] = value;
         });
         
-        axios.post('http://localhost:5000/averias/users/update_password', jsonData, {
+        axios.post('https://averias-pr.onrender.com/averias/users/update_password', jsonData, {
         headers: {
                 'Content-Type': 'application/json'
         }

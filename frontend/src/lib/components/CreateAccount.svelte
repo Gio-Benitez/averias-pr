@@ -19,7 +19,7 @@
         jsonData[key] = value;
         });
         
-        axios.post('http://localhost:5000/averias/users/', jsonData, {
+        axios.post('https://averias-pr.onrender.com/averias/users/', jsonData, {
         headers: {
                 'Content-Type': 'application/json'
         }
