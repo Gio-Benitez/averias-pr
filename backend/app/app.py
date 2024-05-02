@@ -32,11 +32,3 @@ def get_data():
     # Fetch data from the database
     data = ["dad","charma"]  # Fetch data from your local database here
     return jsonify(data)
-
-
-# main driver function
-if __name__ == '__main__':
-
-	# run() method of Flask class runs the application 
-	# on the local development server.
-	app.run("0.0.0.0",debug=True)
