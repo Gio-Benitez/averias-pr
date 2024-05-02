@@ -26,7 +26,7 @@ class municipalityDAO(BaseDAO):
         return cur.fetchall()
 
     def get_municipality_area(self, mun_ids):
-        query = """SELECT mun_area FROM municipality WHERE mun_id = %s;"""
+        query = """SELECT mun_size_area FROM municipality WHERE mun_id = %s;"""
         cur = self.execute_query(query, (mun_ids,))
         return cur.fetchall()
 
@@ -39,3 +39,22 @@ class municipalityDAO(BaseDAO):
         query = """SELECT mun_id FROM municipality WHERE mun_name = %s;"""
         cur = self.execute_query(query, (mun_name,))
         return cur.fetchone()
+
+    def get_municipality_top_category(self, mun_id):
+        query = """SELECT category_name, COUNT(*) AS category_count
+                   FROM report_data natural inner join category
+                   WHERE mun_id = mun_id
+                   GROUP BY category_name
+                   ORDER by category_count desc
+                   LIMIT 1;"""
+
+        cur = self.execute_query(query, (mun_id,))
+        return cur.fetchone()
+
+    def update_municipality_top_category(self, mun_id, category_id):
+        query = """UPDATE municipality
+                   SET most_common_category = %s
+                   WHERE mun_id = %s;"""
+
+        self.execute_query(query, (category_id, mun_id))
+        self.commit()

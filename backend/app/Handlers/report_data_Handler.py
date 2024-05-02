@@ -24,10 +24,14 @@ def create_report_data():
     municipality_dao = dao_factory.get_municipality_dao()
     category_dao = dao_factory.get_category_dao()
 
+
     try:
         # Fetch municipality and category id using names
         mun_id = municipality_dao.get_municipality_id_by_name(municipality)
         category_id = category_dao.get_category_id_by_name(category)
+
+        # this could break if the municipality has no reports
+        current_top_cat = municipality_dao.get_municipality_top_category(mun_id)
 
         report = report_data_dao.create_report_data(user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src, formatted_date, status)
         report_count = report_data_dao.get_report_count_by_user_id(user_id) # Update Report count in front end
@@ -38,6 +42,17 @@ def create_report_data():
             'report_count': report_count[1],
             'user_reports': reports
         }
+
+        try:
+            top_category = municipality_dao.get_municipality_top_category(mun_id)
+            # if the top is different from the current category, update the top category
+            if top_category[0] != current_top_cat:
+                municipality_dao.update_municipality_top_category(mun_id, category_id)
+
+        except Exception as e:
+            error_message = str(e)
+            return jsonify(error=error_message), 500
+
         return jsonify(response), 201
 
     except Exception as e:

@@ -27,3 +27,4 @@ frontend/yarn.lock
 frontend/bun.lockb
 
 *.pyc
+**/__pycache__/

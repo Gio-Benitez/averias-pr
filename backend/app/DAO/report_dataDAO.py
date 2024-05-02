@@ -21,10 +21,9 @@ class report_dataDAO(BaseDAO):
                 WHERE rd.user_id = %s;"""
         cur = self.execute_query(query, (user_id,))
         return cur.fetchall()
-    
+
     def get_all_report_data(self):
-        query = """SELECT data_id, user_id, mun_id, category_id, address_line_1, address_line_2, 
-                   report_category, city_name, zipcode, geo_data_lat, geo_data_long, image_src 
+        query = """SELECT data_id, user_id, mun_id, category_id, geo_data_lat, geo_data_long, image_src, report_date, report_status
                    FROM report_data;"""
         cur = self.execute_query(query)
         return cur.fetchall()
@@ -40,14 +39,12 @@ class report_dataDAO(BaseDAO):
         self.execute_query(query, (data_id,))
         self.commit()
 
-    def update_report_data(self, data_id, user_id, municipality_id, address_line_1, address_line_2, city, zipcode,
-                           geo_data_lat,
-                           geo_data_long, img_src):
-        query = """UPDATE report_data SET user_id = %s, municipality_id = %s, address_line_1 = %s, address_line_2 = %s, 
-        city = %s, zipcode = %s, geo_data_lat = %s, geo_data_long = %s, img_src = %s WHERE data_id = %s;"""
+    def update_report_data(self, data_id, user_id, municipality_id, geo_data_lat, geo_data_long, img_src):
+        query = """UPDATE report_data 
+                   SET user_id = %s, mun_id = %s, category_id = %s, geo_data_lat = %s, geo_data_long = %s, image_src = %s 
+                   WHERE data_id = %s;"""
 
-        params = (user_id, municipality_id, address_line_1, address_line_2, city, zipcode, geo_data_lat, geo_data_long,
-                  img_src, data_id)
+        params = (user_id, municipality_id, geo_data_lat, geo_data_long, img_src, data_id)
         self.execute_query(query, params)
         self.commit()
 
