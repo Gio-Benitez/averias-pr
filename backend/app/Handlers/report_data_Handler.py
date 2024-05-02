@@ -2,6 +2,9 @@ from flask import Blueprint, request, jsonify
 from DAO.dao_factory import DAOFactory
 from config.dbconfig import get_connection
 from datetime import datetime
+import googlemaps
+
+gmaps = googlemaps.Client(key='AIzaSyCz_3yiRGB6ZzaDlXV3bWsDncZicdV1PRM')
 
 report_data_handler = Blueprint('report_data_handler', __name__)
 
@@ -9,6 +12,9 @@ report_data_handler = Blueprint('report_data_handler', __name__)
 @report_data_handler.route('/', methods=['POST'])
 def create_report_data():
     data = request.get_json()
+    if data.get('municipality') is '' or data.get('category') is '' or data.get('location').get('coordinates') == [0, 0] or data.get('image') is None:
+        print(data)
+        return jsonify('Error: Missing data'), 400
     user_id = data.get('userID') # Get current user here
     municipality = data.get('municipality') # Get mun id from municipality name
     category = data.get('category') # Get category id from category name
@@ -17,6 +23,15 @@ def create_report_data():
     formatted_date = current_date.strftime('%Y-%m-%d')
     status = "No"
     [geo_data_lat,geo_data_long] = location.get('coordinates')
+    # Google Maps Coordinates are inverted from the ones provided by the geolocate function
+    reverse_geocode_result = gmaps.reverse_geocode((geo_data_long, geo_data_lat))
+    print(reverse_geocode_result)
+    # Validate municipality from reverse geocode result
+    if municipality != reverse_geocode_result[0]['address_components'][5]['long_name'] and reverse_geocode_result is not None:
+        # If municipality selected by user does not match the reverse geocoded result,
+        # geocoded result will supersede it.
+        municipality = reverse_geocode_result[0]['address_components'][5]['long_name']
+    
     img_src = data.get('image')
     
     dao_factory = DAOFactory(get_connection())
