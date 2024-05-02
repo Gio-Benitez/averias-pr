@@ -2,18 +2,11 @@
 Server-side functions for Interactive Map and Dashboard page, all requests to the data server are handled here.
 Functions here are used to fetch the statistics data corresponding to the selected filters in the Map or Dashboard. 
 */
-
 // Imports
 import type { PageServerLoad, Actions } from './$types';
 
-// Map Data Stores
-
-
-// Dashboard Data Stores
-
-
 // Map Data Fetching
-
+// API Server Link: https://averias-pr.onrender.com
 export const load: PageServerLoad = (async () => {
     // Fetch map data
     //const mapDataResponse = await fetch('/api/map-data');
@@ -92,5 +85,4 @@ export const actions: Actions = {
 
 };
 
-// Dashboard Data Fetching
 
