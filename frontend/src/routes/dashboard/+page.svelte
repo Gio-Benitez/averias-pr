@@ -14,8 +14,8 @@
     const municipalities = $municipios.municipiosList;
     let var1: string;
     let var2: string;
-    let var2_val: string;
-    let var_opt: string;
+    let var2_val: string[];
+    let var_opt: string[];
     function test (){
         console.log(var1);
         console.log(var2);
@@ -24,8 +24,8 @@
     }
     // Resets the value of var2_val and var_opt when var2 is changed
     function yeet () {
-        var2_val = '';
-        var_opt = '';
+        var2_val = [];
+        var_opt = [];
     }
 </script>
 
@@ -41,11 +41,11 @@
                 <div class="divider divider-neutral"></div>
                 <!--Form section to handle dynamic filter options for Dashboard Panel Parameters-->
                 <h2>Variable 1 (Eje Vertical)</h2>
-                <form action="?/dashboardGraph" name="dashboard" method="POST">
+                <form action="?/dashboardGraph" name="dashboard" method="POST" use:enhance>
                     <!-- Variable 1 Dropdown -->
                     <select name="var_1" bind:value={var1}>
-                        <option value='# de Reportes'># de Reportes</option>
-                        <option value='% de Reportes'>% de Reportes</option>  
+                        <option value='num de Reportes'># de Reportes</option>
+                        <option value='por de Reportes'>% de Reportes</option>  
                     </select>
                     <!-- Variable 2 Dropdown -->
                     <h2>Variable 2 (Eje Horizontal)</h2>
@@ -54,6 +54,7 @@
                         <option value='Categorías'>Categorías</option> 
                     </select>
                     {#if var2 === 'Categorías'}
+                        <h2>Seleccione hasta 3 Categorías</h2>
                         <select name="var_2_val" bind:value={var2_val}>
                             <option disabled selected value>Seleccione Categoría(s)</option>
                             {#each $filterCategoriesStore as category}
@@ -62,7 +63,7 @@
                         </select>
                     {:else if var2 === 'Municipios'}
                         <select name="var_2_val" bind:value={var2_val}>
-                            <option disabled selected value>Seleccione Municipio(s)</option>
+                            <option disabled selected value='Seleccione Municipio'>Seleccione Municipio</option>
                             {#each municipalities as municipio}
                                 <option value={municipio.name}>{municipio.name}</option>
                             {/each}
@@ -85,10 +86,12 @@
                             {/each}
                         </select>
                     {/if}
-                    <button type="submit" on:click={test} class="btn">Submit</button>
+                    {#if !var2_val}
+                        <button disabled type="submit" on:click={test} class="btn">Submit</button>
+                    {:else}
+                        <button type="submit" on:click={test} class="btn">Submit</button>
+                    {/if}
                 </form>
-                <div class="divider divider-neutral"></div>
-                <h1>Selección</h1>
             </div>
         </div>
     </div>
@@ -99,6 +102,10 @@
 </main>
 
 <style lang="postcss">
+    main {
+        min-height: 100vh;
+        overflow: scroll;
+    }
     button {
         @apply  btn-md text-primary font-medium text-lg;
     }
