@@ -56,14 +56,14 @@
                     <!-- Region input -->
                     <input type="hidden" name="region" value={$mapDataStore.dataRegion}>
                     <!-- Category Select -->
-                    <select disabled name="category" class="select text-lg font-medium select-secondary w-full">
+                    <select name="category" class="select text-lg font-medium select-secondary w-full">
                         <option disabled selected >Seleccione Categoría</option>
                         {#each $filterCategoriesStore as category}
                         <option value={category}>{category}</option>
                         {/each}    
                     </select>
                     <!-- Submit Button -->
-                    <button type="submit" class="btn">Filtrar</button>
+                    <button disabled type="submit" class="btn">Filtrar</button>
                 </form>
             </div>
             <div class="flex flex-col w-full text-center">
