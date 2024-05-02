@@ -2,6 +2,9 @@ from flask import Blueprint, request, jsonify
 from DAO.dao_factory import DAOFactory
 from config.dbconfig import get_connection
 from datetime import datetime
+import googlemaps
+
+gmaps = googlemaps.Client(key='AIzaSyCz_3yiRGB6ZzaDlXV3bWsDncZicdV1PRM')
 
 report_data_handler = Blueprint('report_data_handler', __name__)
 
@@ -9,6 +12,9 @@ report_data_handler = Blueprint('report_data_handler', __name__)
 @report_data_handler.route('/', methods=['POST'])
 def create_report_data():
     data = request.get_json()
+    if data.get('municipality') == '' or data.get('category') == '' or data.get('location').get('coordinates') == [0, 0] or data.get('image') is None:
+        print(data)
+        return jsonify('Error: Missing data'), 400
     user_id = data.get('userID') # Get current user here
     municipality = data.get('municipality') # Get mun id from municipality name
     category = data.get('category') # Get category id from category name
@@ -17,6 +23,15 @@ def create_report_data():
     formatted_date = current_date.strftime('%Y-%m-%d')
     status = "No"
     [geo_data_lat,geo_data_long] = location.get('coordinates')
+    # Google Maps Coordinates are inverted from the ones provided by the geolocate function
+    reverse_geocode_result = gmaps.reverse_geocode((geo_data_long, geo_data_lat))
+    print(reverse_geocode_result)
+    # Validate municipality from reverse geocode result
+    if municipality != reverse_geocode_result[0]['address_components'][5]['long_name'] and reverse_geocode_result is not None:
+        # If municipality selected by user does not match the reverse geocoded result,
+        # geocoded result will supersede it.
+        municipality = reverse_geocode_result[0]['address_components'][5]['long_name']
+    
     img_src = data.get('image')
     
     dao_factory = DAOFactory(get_connection())
@@ -30,6 +45,14 @@ def create_report_data():
         category_id = category_dao.get_category_id_by_name(category)
 
         report = report_data_dao.create_report_data(user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src, formatted_date, status)
+        # Update Municipality Aggregates
+        num_reports = report_data_dao.getTotalReportsMuni(mun_id)
+        most_common_category = report_data_dao.getCommonCategory(mun_id)
+        if most_common_category is None:
+            most_common_category = "Ninguna"
+        resolved_reports = report_data_dao.getResolvedReportsMuni(mun_id)
+        municipality_dao.updateAggregates(mun_id, num_reports, most_common_category, resolved_reports)
+
         report_count = report_data_dao.get_report_count_by_user_id(user_id) # Update Report count in front end
         reports = report_data_dao.get_users_reports(user_id)
         response = {
@@ -219,4 +242,17 @@ def get_reports_by_cat(category_id):
     except Exception as e:
         error_message = str(e)
         return jsonify(error=error_message),
+
+@report_data_handler.route('/dashboard', methods=['POST'])
+def get_dashboard_data():
+    data = request.get_json()
+    # Check that dashboard request contains at least 3 data points
+    if len(data) < 3:
+        return jsonify('Error: Missing data'), 400
+    
+    if data['var_1'] == 'num de Reportes':
+        return jsonify('haha'), 200
+    elif data['var_1'] == 'por de Reportes':
+        return jsonify('hoho'), 200
+
 

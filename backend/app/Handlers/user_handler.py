@@ -149,7 +149,9 @@ def login():
             return jsonify(error=f"Incorrect password"), 401
         report_count = report_data_dao.get_report_count_by_user_id(user[0]) # Update Report count in front end
         reports = report_data_dao.get_users_reports(user[0])
-        
+        if reports is None:
+            reports = []
+            
         response = {
             'UserID': user[0],
             'report_count': report_count[1],
@@ -211,4 +213,26 @@ def update_password():
         return jsonify(response), 200
     except Exception as e:
         error_message = str(e)
+        return jsonify(error=error_message), 500
+
+# Get user by email to validate if email is already in use
+@user_handler.route('/verify_user_email/', methods=['POST'])
+def verify_user_email():
+    if request.get_json() is None:
+        return jsonify(error='No data provided'), 400
+    
+    data = request.get_json()
+    dao_factory = DAOFactory(get_connection())
+    user_dao = dao_factory.get_user_dao()
+
+    try:
+        user = user_dao.get_user_by_email(data.email)
+        if user is None:
+            return jsonify(error='User not found'), 404
+        else:
+            return jsonify(user), 200
+
+    except Exception as e:
+        error_message = str(e)
+        print(e)
         return jsonify(error=error_message), 500

@@ -84,7 +84,7 @@
     const sendData = () => {
         const jsonData = JSON.stringify(formData);
     
-        axios.post('http://localhost:5000/averias/report_data/', jsonData, {
+        axios.post('https://averias-pr.onrender.com/averias/report_data/', jsonData, {
         headers: {
                 'Content-Type': 'application/json'
         }
@@ -115,7 +115,11 @@
             }
      });
     }
-
+    function handleUpload(result) {
+        formData.image = result.info.url;
+        console.log(formData.image);
+        $buttonNext=true;
+    }
 </script>
 
 <form class="form-container flex justify-center" method="POST">
@@ -164,7 +168,7 @@
                 <CldUploadButton 
                     class="btn btn-primary btn-md mb-4"
                     uploadPreset="uw_test"
-                    onUpload={() => $buttonNext=true}
+                    onUpload={result => handleUpload(result) }
                     bind:value={formData.image}
                 />
             </div>

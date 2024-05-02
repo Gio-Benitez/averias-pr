@@ -94,7 +94,7 @@
             <img alt="Theme Icon" src="{theme_icon}" />
           </div>
         </div>
-        <ul tabindex="0" class="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-52">
+        <ul class="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-52">
           {#each themes as theme}
             <li><input data-set-theme={theme.value} data-act-class="ACTIVECLASS" type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label={theme.name} value={theme.value}/></li>
           {/each} 

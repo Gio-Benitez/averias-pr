@@ -17,6 +17,7 @@
     "start-backend": "cd ../backend/app && flask run"
   },
   "devDependencies": {
+    "@auth/sveltekit": "^1.0.1",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
@@ -61,6 +62,7 @@
     "@vercel/postgres": "^0.7.2",
     "axios": "^1.6.8",
     "chart.js": "^4.4.2",
+    "chartjs-plugin-autocolors": "^0.2.2",
     "d3-color": "^3.1.0",
     "formdata-polyfill": "^4.0.10",
     "maplibre-gl": "^4.1.0",

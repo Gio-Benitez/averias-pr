@@ -25,3 +25,5 @@ frontend/package-lock.json
 frontend/pnpm-lock.yaml
 frontend/yarn.lock
 frontend/bun.lockb
+backend/app/.env
+backend/app/.env.*

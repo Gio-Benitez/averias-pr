@@ -157,7 +157,8 @@
   
 </main>
 
-<style>
+<style lang="postcss">
+  
   .horizontal-line {
     border: none;
     border-bottom: 1px solid oklch(var(--b2));  

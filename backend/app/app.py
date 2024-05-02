@@ -14,7 +14,7 @@ from flask_cors import CORS, cross_origin
 # Flask constructor takes the name of 
 # current module (__name__) as argument.
 app = Flask(__name__)
-CORS(app, origins='http://localhost:4000')
+CORS(app)
 
 
 app.register_blueprint(user_handler, url_prefix='/averias/users')
@@ -33,10 +33,7 @@ def get_data():
     data = ["dad","charma"]  # Fetch data from your local database here
     return jsonify(data)
 
-
-# main driver function
-if __name__ == '__main__':
-
-	# run() method of Flask class runs the application 
-	# on the local development server.
-	app.run("0.0.0.0",debug=True)
+@app.route('/test', methods=['POST'])
+def test():
+    data = request.get_json()
+    return jsonify(data)

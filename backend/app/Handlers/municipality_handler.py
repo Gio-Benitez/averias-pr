@@ -68,3 +68,48 @@ def get_municipality_by_name(mun_name):
         error_message = str(e)
         return jsonify(error=error_message), 500
 
+@municipality_handler.route('/updateAggregates', methods=['PUT'])
+def updateAggregates():
+    dao_factory = DAOFactory(get_connection())
+    municipality_dao = dao_factory.get_municipality_dao()
+    data = request.get_json()
+    mun_id = data['mun_id']
+    num_reports = data['num_reports']
+    most_common_category = data['most_common_category']
+    resolved_reports = data['resolved_reports']
+    try:
+        municipality_dao.updateAggregates(mun_id, num_reports, most_common_category, resolved_reports)
+        response = {
+            'message': 'Aggregates updated successfully'
+        }
+        return jsonify(response), 200
+
+    except Exception as e:
+        error_message = str(e)
+        return jsonify(error=error_message), 500
+
+# Load Map Data 
+@municipality_handler.route('/map', methods=['GET'])
+def load_map():
+    dao_factory = DAOFactory(get_connection())
+    municipality_dao = dao_factory.get_municipality_dao()
+    report_data_dao = dao_factory.get_report_data_dao()
+    result = municipality_dao.getAggregates()
+    pr_stats = municipality_dao.getAggregateNational()
+    pr_cat = report_data_dao.getCommonCategoryNational()
+    output = {}
+    for row in result:
+        output[str(row[0])] = {
+            'population': row[1],
+            'num_reports': row[2],
+            'most_common_category': row[3],
+            'resolved_reports': row[4]
+        }
+    output['Puerto Rico'] = {
+        'population': pr_stats[0],
+        'num_reports': pr_stats[1],
+        'most_common_category': pr_cat[0],
+        'resolved_reports': pr_stats[2]
+    }
+    
+    return jsonify(output), 200
