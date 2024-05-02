@@ -84,7 +84,7 @@
     const sendData = () => {
         const jsonData = JSON.stringify(formData);
     
-        axios.post('http://localhost:5000/averias/report_data/', jsonData, {
+        axios.post('https://averias-pr.onrender.com/averias/report_data/', jsonData, {
         headers: {
                 'Content-Type': 'application/json'
         }
