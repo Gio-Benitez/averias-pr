@@ -1,4 +1,5 @@
 <script>
+	import { lab } from 'd3-color';
 import { Bar } from 'svelte-chartjs';
 import { data } from '$lib/data/test_data_chart'
 

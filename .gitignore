@@ -1,5 +1,5 @@
-db_setup/postgres-data/
-db_setup/env/
+backend/postgres-data/
+backend/env/
 .idea/
 env/
 node_modules
@@ -25,3 +25,5 @@ frontend/package-lock.json
 frontend/pnpm-lock.yaml
 frontend/yarn.lock
 frontend/bun.lockb
+backend/app/.env
+backend/app/.env.*

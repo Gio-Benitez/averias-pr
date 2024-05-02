@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
     import avatar_icon from '$lib/images/avatar_icon.png';
-    import { invalidAuth, isCreateAccountModalOpen, isForgotPasswordModalOpen, isSignInModalOpen, signedIn } from '$lib/stores'; 
+    import { invalidAuth, isCreateAccountModalOpen, isForgotPasswordModalOpen, isSignInModalOpen, signedIn} from '$lib/stores'; 
     import CreateAccount from './CreateAccount.svelte';
     import ForgotPassword from './ForgotPassword.svelte';
     import SignIn from './SignIn.svelte';
@@ -11,10 +11,23 @@
         $invalidAuth = false;
     }
 
+    function handleOpenCreateAccountModal() {
+        $isSignInModalOpen = false;
+        $isCreateAccountModalOpen = true;
+        $invalidAuth = false;
+    }
+
     function handleForgottoSignIn (){
         $isForgotPasswordModalOpen = false;
         $isSignInModalOpen = true;
         $invalidAuth = false;
+    }
+
+    function signOut() {
+        document.cookie = 'access' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'UserData' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        $signedIn = false;
+        window.location.reload();
     }
 
 </script>
@@ -24,7 +37,7 @@
 {/if}
 
 {#if $isSignInModalOpen}
-    <SignIn on:handleOpenForgotModal={handleOpenForgotModal} />
+    <SignIn on:handleOpenForgotModal={handleOpenForgotModal} on:handleOpenCreateAccountModal={handleOpenCreateAccountModal}/>
 {/if}
 
 {#if $isForgotPasswordModalOpen}
@@ -51,7 +64,7 @@
             </a>
             </li>
             <li><a>Ajustes</a></li>
-            <li><a>Cerrar Sesión</a></li>
+            <li><a on:click={signOut}>Cerrar Sesión</a></li>
         </ul>
         
     {:else}

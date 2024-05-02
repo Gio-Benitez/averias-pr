@@ -1,14 +1,16 @@
 <script lang="ts">
-  import type { EFC_148892 } from "$env/static/private";
     import { reportCategories, municipios, dashboardStore } from "$lib/stores";
     import { createEventDispatcher } from "svelte";
     
     // Report Category Filter Logic
-    let selected;
+    let selected:string;
+    let var1: string;
+    let var2: string;
+    let var2_options: string;
     let cat: string = '';
     let options: string = '';
     const municipalities = $municipios.municipiosList;
-    const categoryArray = $reportCategories.categoryArray;
+    const categoryArray = $reportCategories;
     const reportAxis = [{axis_id: 1, option: 'number'}, {axis_id: 2, option: 'percentage'}];
     console.log(cat);
     function updateChart (data: any) {
@@ -25,14 +27,15 @@
 
         <h1>Variables Requeridas</h1>
         <div class="divider divider-neutral"></div>
-
         <!--Form section to handle dynamic filter options for Dashboard Panel Parameters-->
-        <label for="variable-1">Variable 1 (Eje Vertical)</label>
-        <form on:submit|preventDefault={handleSubmit}>
-            <select id="variable-1" bind:value={selected}>
-                <option value='number'># de Reportes</option>
-                <option value='nercentage'>% de Reportes</option>  
+        <label for="var_1">Variable 1 (Eje Vertical)</label>
+        <form action="?/CreateGraph" name="dashboard" method="POST">
+            <!-- Variable 1 Dropdown -->
+            <select name="var_1" id="var_1">
+                <option value='# de Reportes'># de Reportes</option>
+                <option value='% de Reportes'>% de Reportes</option>  
             </select>
+            <!-- Variable 2 Dropdown -->
             <select bind:value={selected}>
                 {#each municipalities as municipio}
                     <option value={municipio}>{municipio.name}</option>
