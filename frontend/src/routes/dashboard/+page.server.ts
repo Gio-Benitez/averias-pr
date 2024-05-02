@@ -1,5 +1,6 @@
 import type { PageServerLoad, Actions } from './$types';
-import { postData } from '../../api/dashboard';
+import { postDashboardData } from '../../api/dashboard';
+
 export const load = (async () => {
     return {};
 }) satisfies PageServerLoad;
@@ -12,11 +13,11 @@ export const actions: Actions = {
         // Extract form data
         const var_1 = Object.fromEntries(formData).var_1 as string;
         const var_2 = Object.fromEntries(formData).var_2 as string;
-        const var_2_val = Object.fromEntries(formData).var_2_val as string;
-        const var_opt = Object.fromEntries(formData).var_opt as string;
+        const var_2_val = Object.fromEntries(formData).var_2_val as string[];
+        const var_opt = Object.fromEntries(formData).var_opt as string[];
         console.log(var_1, var_2, var_2_val, var_opt);
         // Send POST request to API server with form data
-        const response = await postData(var_1, var_2, var_2_val, var_opt);
+        const response = await postDashboardData(var_1, var_2, var_2_val, var_opt);
         // Process received data
         console.log(response);
     }
