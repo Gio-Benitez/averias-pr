@@ -2,7 +2,7 @@
     import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
     import Map from '$components/Map.svelte';
-    import DashboardPanel from '$components/DashboardPanel.svelte';
+    import MapDashNav from '$components/MapDashNav.svelte';
     import { mapDataStore, filterCategoriesStore, municipios } from '$lib/stores';
     
     export let data: PageData;
@@ -41,14 +41,7 @@
 <main class="grid grid-rows-10 grid-cols-10 h-full w-full gap-8 pb-8">
 <!--Tab Implementation to switch between Map and Dashboard Segments-->
     <!--Map and Dashboard Nav Buttons-->
-    <div class="flex pt-12 pl-0 space-x-2 col-span-3 row-span-1 col-start-2 row-start-1 ">
-        <div class="flex shrink-0 h-full">
-            <div class="tabs-lifted tabs-lg w-full h-full " >
-                <a role="tab" href="/map" class="tab">Interactive Map</a>
-                <a role="tab" href="/dashboard" class="tab">Dashboard</a>
-            </div>
-        </div>
-    </div>
+    <MapDashNav />
     <!--Map Component Segment-->
     <div id="map" class="min-h-[697px] col-start-2 col-end-8 row-start-2 row-end-10 mt-3">
         <Map />
