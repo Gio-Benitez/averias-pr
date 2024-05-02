@@ -149,7 +149,9 @@ def login():
             return jsonify(error=f"Incorrect password"), 401
         report_count = report_data_dao.get_report_count_by_user_id(user[0]) # Update Report count in front end
         reports = report_data_dao.get_users_reports(user[0])
-        
+        if reports is None:
+            reports = []
+            
         response = {
             'UserID': user[0],
             'report_count': report_count[1],
