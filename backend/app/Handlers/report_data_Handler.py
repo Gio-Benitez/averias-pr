@@ -220,3 +220,15 @@ def get_reports_by_cat(category_id):
         error_message = str(e)
         return jsonify(error=error_message),
 
+@report_data_handler.route('/dashboard', methods=['POST'])
+def get_dashboard_data():
+    data = request.get_json()
+    # Check that dashboard request contains at least 3 data points
+    if len(data) < 3:
+        return jsonify('Error: Missing data'), 400
+    
+    if data['var_1'] == 'num de Reportes':
+        return jsonify('haha'), 200
+    elif data['var_1'] == 'por de Reportes':
+        return jsonify('hoho'), 200
+
