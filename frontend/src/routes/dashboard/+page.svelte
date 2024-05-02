@@ -29,11 +29,15 @@
     }
 </script>
 
-<main class="grid grid-rows-10 grid-cols-10 h-full w-full gap-8 pb-8">
+<main class="grid grid-cols-10 h-full w-full gap-8 pb-8">
     <!--Map and Dashboard Nav Buttons-->
-    <MapDashNav />
+    <div id="dashboard" class="flex flex-col mb-12 min-h-[697px] col-start-2 col-end-8">
+        <MapDashNav />
+        <DashboardPanel />
+    </div>
+    
     <!--Dashboard Data Panel Segement-->
-    <div id="dataPanelSlot" class="min-w-72 min-h-[697px] col-start-8 col-end-10 row-start-2 row-end-10">
+    <div id="dataPanelSlot" class="min-w-72 my-12 min-h-[697px] col-start-8 col-end-10">
         <div class="flex flex-col flex-wrap gap-4 w-full h-full bg-primary px-8 pt-8 pb-1 rounded-2xl">
             <div class="flex flex-col w-full text-center">
                 <!-- Panel Title -->
@@ -96,9 +100,7 @@
         </div>
     </div>
     <!--Dashboard Panel Segment-->
-    <div id="dashboard" class="min-h-[697px] col-start-2 col-end-8 row-start-2 row-end-10">
-        <DashboardPanel />
-    </div>
+    
 </main>
 
 <style lang="postcss">
