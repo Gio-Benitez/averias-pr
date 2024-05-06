@@ -82,7 +82,7 @@
       <a href="/report" class="flex items-center bg-slate ml-8 mr-2" style="white-space: nowrap;"> Create a Report</a> -->
     </section>
     <section>
-      <a href="/" class="ml-16 {$page.url.pathname==='/map' ? 'btn btn-ghost btn-md font-normal' : 'font-semibold'}" style="font-size: 1.15rem;" class:active={$page.url.pathname==='/map'}>Inicio</a>
+      <a data-sveltekit-preload-data="hover" href="/" class="ml-16 {$page.url.pathname==='/map' ? 'btn btn-ghost btn-md font-normal' : 'font-semibold'}" style="font-size: 1.15rem;" class:active={$page.url.pathname==='/map'}>Inicio</a>
       <div class="divider divider-horizontal"></div>
       <a href="/map" class="{$page.url.pathname==='/' ? 'btn btn-ghost btn-md font-normal' : 'font-semibold'}" style="font-size: 1.15rem;" class:active={$page.url.pathname==='/'}>Mapa</a>
     </section>
