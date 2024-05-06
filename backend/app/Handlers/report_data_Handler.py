@@ -12,17 +12,23 @@ report_data_handler = Blueprint('report_data_handler', __name__)
 @report_data_handler.route('/', methods=['POST'])
 def create_report_data():
     data = request.get_json()
-    if data.get('municipality') == '' or data.get('category') == '' or data.get('location').get('coordinates') == [0, 0] or data.get('image') is None:
+    if data.get('municipality') == '' or data.get('category') == '' or data.get('location') == [0, 0] or data.get('image') is None:
         print(data)
         return jsonify('Error: Missing data'), 400
-    user_id = data.get('userID') # Get current user here
+    # Set anonymous user_id of 0 if user_id is undefined
+    if data.get('userID') == 'undefined':
+        user_id = 0
+    else:
+        user_id = data.get('userID') # Get current user here
+        
     municipality = data.get('municipality') # Get mun id from municipality name
     category = data.get('category') # Get category id from category name
     location = data.get('location')
     current_date = datetime.now()
     formatted_date = current_date.strftime('%Y-%m-%d')
     status = "No"
-    [geo_data_lat,geo_data_long] = location.get('coordinates')
+    print(location.split(','))
+    geo_data_lat, geo_data_long = location.split(',')[0], location.split(',')[1]
     # Google Maps Coordinates are inverted from the ones provided by the geolocate function
     reverse_geocode_result = gmaps.reverse_geocode((geo_data_long, geo_data_lat))
     print(reverse_geocode_result)
@@ -65,6 +71,7 @@ def create_report_data():
 
     except Exception as e:
         error_message = str(e)
+        print(error_message)
         return jsonify(error=error_message), 500
 
 @report_data_handler.route('/reportcount', methods=['POST'])
