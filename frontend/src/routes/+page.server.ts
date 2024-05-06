@@ -1,5 +1,14 @@
-/** @type {import('./$types').PageLoad} */
-export function load({ cookies}) {
+import type { PageServerLoad, Actions } from './$types';
+import axios from 'axios';
+import { SERVER_URL_DATA, SERVER_URL_DEV } from '$env/static/private';
+
+const dev_url: string = SERVER_URL_DEV;
+const prod_url: string = SERVER_URL_DATA;
+const form_route: string = '/averias/report_data';
+const dev_form_route: string = dev_url + form_route;
+const prod_form_route: string = prod_url + form_route;
+
+export const load: PageServerLoad = async ({ cookies }) => {
     if (cookies.get("access")==="true") {
         // @ts-ignore
         let user_data = JSON.parse(cookies.get("UserData"));
@@ -25,5 +34,35 @@ export function load({ cookies}) {
             failedAuth: false
         }
     }
-    
+};
+
+export const actions: Actions = {
+    submitReport: async ({ request }) => {
+        // Receive form data from Report Form component
+        const formData = await request.formData();
+        // Extract data from form data
+        const reportData = Object.fromEntries(formData);
+        // Send a POST request to the server to submit the report
+        let message = '';
+        await axios.post(dev_form_route, reportData)
+        .then(res=> {
+            console.log(res.data);
+            message = res.data.message;
+        })
+        .catch(error => {
+            // Handle error response here
+            if (error.response) {
+                console.error('Error:', error.response.data.error); // Log the error message
+                // Handle the error message here (e.g., display it on the UI)
+                message = error.response.data.error;
+            } else {
+                console.error('Error:', error);
+            }
+        });
+        return {
+            props: {
+                message
+            }
+        };
+    }
 };
