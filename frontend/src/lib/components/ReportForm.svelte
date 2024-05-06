@@ -6,9 +6,8 @@
     import { municipalities, buttonNext, steps_counter,reset} from '$lib/stores';
     import { onMount } from 'svelte';
     import CategoryIconCloud from './CategoryIconCloud.svelte';
-    import axios from 'axios';
     import { CldUploadButton } from 'svelte-cloudinary';
-
+    import { enhance } from '$app/forms';
     
     // Define type for GeoJSON Point
     interface GeoJSONPoint {
@@ -25,7 +24,7 @@
     });
 
     let selectedMunicipality = '¿En qué municipio se encuentra?';
-    let success = false; // Measures if the user's location was obtained successfully
+    let success: boolean = false; // Measures if the user's location was obtained successfully
     let errorMessage: string | null = null;  
 
     let formData = {
@@ -60,7 +59,14 @@
             console.log(formData.location);
             // @ts-ignore
             let cookie_parse = JSON.parse(getCookie('UserData'));
-            formData.userID = cookie_parse.UserID; 
+            console.log(cookie_parse);
+            if (cookie_parse === null || cookie_parse.UserID === undefined) {
+                // If user is not signed in, set userID to default value of 0
+                formData.userID = 0;
+            }else {
+                // If user is signed in, set userID to the value stored in the cookie
+                formData.userID = cookie_parse.UserID;
+            }
             success = true;
 
         } catch (error) {
@@ -82,40 +88,41 @@
     }
 
     let message ="";
-    const sendData = () => {
-        const jsonData = JSON.stringify(formData);
+    // const sendData = () => {
+    //     const jsonData = JSON.stringify(formData);
     
-        axios.post('https://averias-pr.onrender.com/averias/report_data/', jsonData, {
-        headers: {
-                'Content-Type': 'application/json'
-        }
-        })
-        .then(res=> {
-            console.log(res.data);
-            let userData = {
-                UserID: 0,
-                user_report_count: 0,
-                user_reports: []
-            }
-            // @ts-ignore
-            userData.UserID = getCookie('UserData').UserID;
-            userData.user_report_count = res.data.report_count;
-            userData.user_reports = res.data.user_reports;
-            document.cookie = 'UserData' + "=" + (JSON.stringify(userData) || "") + "; path=/";
-            reset()
-            window.location.reload();
-        })
-        .catch(error => {
-            // Handle error response here
-            if (error.response) {
-                console.error('Error:', error.response.data.error); // Log the error message
-                // Handle the error message here (e.g., display it on the UI)
-                message = error.response.data.error;
-            } else {
-                console.error('Error:', error);
-            }
-     });
-    }
+    //     axios.post('https://averias-pr.onrender.com/averias/report_data/', jsonData, {
+    //     headers: {
+    //             'Content-Type': 'application/json'
+    //     }
+    //     })
+    //     .then(res=> {
+    //         console.log(res.data);
+    //         let userData = {
+    //             UserID: 0,
+    //             user_report_count: 0,
+    //             user_reports: []
+    //         }
+    //         // @ts-ignore
+    //         userData.UserID = getCookie('UserData').UserID;
+    //         userData.user_report_count = res.data.report_count;
+    //         userData.user_reports = res.data.user_reports;
+    //         document.cookie = 'UserData' + "=" + (JSON.stringify(userData) || "") + "; path=/";
+    //         reset()
+    //         window.location.reload();
+    //     })
+    //     .catch(error => {
+    //         // Handle error response here
+    //         if (error.response) {
+    //             console.error('Error:', error.response.data.error); // Log the error message
+    //             // Handle the error message here (e.g., display it on the UI)
+    //             message = error.response.data.error;
+    //         } else {
+    //             console.error('Error:', error);
+    //         }
+    //  });
+    // }
+
     // Result type is any because it is the result of the Cloudinary upload, it is guaranteed to have an info object
     function handleUpload(result: any) {
         formData.image = result.info.url;
