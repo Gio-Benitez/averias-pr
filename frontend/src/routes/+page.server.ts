@@ -9,31 +9,35 @@ const dev_form_route: string = dev_url + form_route;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const prod_form_route: string = prod_url + form_route;
 
-export const load: PageServerLoad = async ({ cookies }) => {
-    if (cookies.get("access")==="true") {
+export const load: PageServerLoad = async (events) => {
 
-        const user_data = JSON.parse(cookies.get("UserData"));
-        return {
-            access: true,
-            failedAuth: false,
-            UserData: user_data
-        }
-    }
-    else if (cookies.get("failedAuth")==="true") {
-        cookies.delete("failedAuth",{path:"/",sameSite:"strict",httpOnly:true});
-        const path = cookies.get("failedAuthPath")
-        cookies.delete("failedAuthPath",{path:"/",sameSite:"strict",httpOnly:true});
-        return {
-            access: false,
-            failedAuth: true,
-            failedPath: path
-        }
-    }
-    else {
-        return {
-            access: false,
-            failedAuth: false
-        }
+    const session = await events.locals.auth()
+    // if (cookies.get("access")==="true") {
+    //     const user_data = JSON.parse(cookies.get("UserData"));
+    //     return {
+    //         access: true,
+    //         failedAuth: false,
+    //         UserData: user_data
+    //     }
+    // }
+    // else if (cookies.get("failedAuth")==="true") {
+    //     cookies.delete("failedAuth",{path:"/",sameSite:"strict",httpOnly:true});
+    //     const path = cookies.get("failedAuthPath")
+    //     cookies.delete("failedAuthPath",{path:"/",sameSite:"strict",httpOnly:true});
+    //     return {
+    //         access: false,
+    //         failedAuth: true,
+    //         failedPath: path
+    //     }
+    // }
+    // else {
+    //     return {
+    //         access: false,
+    //         failedAuth: false
+    //     }
+    // }
+    return {
+        session,
     }
 };
 
