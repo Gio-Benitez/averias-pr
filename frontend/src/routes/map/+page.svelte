@@ -11,13 +11,7 @@
     //$mapDataStore.populationData = data.item[1][1];
     let selectedTab = 'map';
     let selected = 'Adjuntas';
-    function changeTab(event: MouseEvent) {
-        if (selectedTab === 'map') {
-            selectedTab = 'dashboard';
-        } else if (selectedTab === 'dashboard'){
-            selectedTab = 'map';
-        }
-    }
+    
     // Selectg Category function for map data pane
     const mapStats = data.props.mapStatistics;
     let category:string;
@@ -56,7 +50,7 @@
                     <!-- Region input -->
                     <input type="hidden" name="region" value={$mapDataStore.dataRegion}>
                     <!-- Category Select -->
-                    <select disabled name="category" class="select text-lg font-medium select-secondary w-full">
+                    <select name="category" class="select text-lg font-medium select-secondary w-full">
                         <option disabled selected >Seleccione Categoría</option>
                         {#each $filterCategoriesStore as category}
                         <option value={category}>{category}</option>
@@ -78,12 +72,12 @@
                         <div class="stat-value">{mapStats[$mapDataStore.dataRegion].population}</div>
                     </div>
                     <div class="stat shadow-lg">
-                        <div class="stat-title">Averías Reportadas</div>
-                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion].num_reports}</div>
-                    </div>
-                    <div class="stat shadow-lg">
                         <div class="stat-title">Categoría más Común</div>
                         <div class="stat-value">{mapStats[$mapDataStore.dataRegion].most_common_category}</div>
+                    </div>
+                    <div class="stat shadow-lg">
+                        <div class="stat-title">Averías Reportadas</div>
+                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion].num_reports}</div>
                     </div>
                     <div class="stat shadow-lg">
                         <div class="stat-title">Averías Resueltas</div>
@@ -96,15 +90,15 @@
                 <div class="stats stats-vertical shadow">
                     <div class="stat shadow-lg">
                         <div class="stat-title">Población</div>
-                        <div class="stat-value">{form.props.mapData.population}</div>
+                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion].population}</div>
+                    </div>
+                    <div class="stat shadow-lg">
+                        <div class="stat-title">Categoría Seleccionada</div>
+                        <div class="stat-value">{form.props.mapData.reportCategory}</div>
                     </div>
                     <div class="stat shadow-lg">
                         <div class="stat-title">Averías Reportadas</div>
                         <div class="stat-value">{form.props.mapData.numOfReports}</div>
-                    </div>
-                    <div class="stat shadow-lg">
-                        <div class="stat-title">Categoría más Común</div>
-                        <div class="stat-value">{form.props.mapData.reportCategory}</div>
                     </div>
                     <div class="stat shadow-lg">
                         <div class="stat-title">Averías Resueltas</div>
