@@ -30,7 +30,7 @@
 
     let formData = {
         userID: 0,
-        location: { type: "Point", coordinates: [0, 0] },
+        location: [0, 0],
         municipality: '',
         category: '',
         image: ''
@@ -56,7 +56,8 @@
             errorMessage = null; // Reset error message on success
             console.log("User location retrieved successfully");
 
-            formData.location = userLocation;
+            formData.location = userLocation.coordinates;
+            console.log(formData.location);
             // @ts-ignore
             let cookie_parse = JSON.parse(getCookie('UserData'));
             formData.userID = cookie_parse.UserID; 
@@ -115,14 +116,15 @@
             }
      });
     }
-    function handleUpload(result) {
+    // Result type is any because it is the result of the Cloudinary upload, it is guaranteed to have an info object
+    function handleUpload(result: any) {
         formData.image = result.info.url;
         console.log(formData.image);
         $buttonNext=true;
     }
 </script>
 
-<form class="form-container flex justify-center" method="POST">
+<form class="form-container flex justify-center" action="?/submitReport" method="POST">
     {#if $steps_counter === 1}
         <form method="dialog" class="flex flex-col justify-center w-1/2">
             <div class="flex justify-center">
@@ -172,19 +174,19 @@
                     bind:value={formData.image}
                 />
             </div>
-            
-        <!--  Original file upload input
-            <input type="file" bind:value={formData.image} on:change={() => $buttonNext=true} class="file-input file-input-bordered file-input-primary w-7/8 max-w-xs file-input-sm mb-9"/>
-        </label>
-        -->
-        
     {/if}
     {#if $steps_counter===4}
         <div class="flex flex-col">
             <div class="label mb-10">
                 <span class="label-text font-semibold" style="font-size: 1.5rem;">¿Todo listo?</span>
             </div>
-            <button class="btn btn-success btn-lg mb-10" on:click|preventDefault={sendData}>Crear</button>
+            <!-- Map FormData variable values to FormData of actual form using hidden inputs -->
+            <input type="hidden" name="userID" value={formData.userID} />
+            <input type="hidden" name="location" value={formData.location} />
+            <input type="hidden" name="municipality" value={formData.municipality} />
+            <input type="hidden" name="category" value={formData.category} />
+            <input type="hidden" name="image" value={formData.image} />
+            <button type="submit" class="btn btn-success btn-lg mb-10">Crear</button>
         </div>
     {/if}
 </form>    
