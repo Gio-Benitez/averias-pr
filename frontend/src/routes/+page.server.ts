@@ -6,12 +6,13 @@ const dev_url: string = SERVER_URL_DEV;
 const prod_url: string = SERVER_URL_DATA;
 const form_route: string = '/averias/report_data';
 const dev_form_route: string = dev_url + form_route;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const prod_form_route: string = prod_url + form_route;
 
 export const load: PageServerLoad = async ({ cookies }) => {
     if (cookies.get("access")==="true") {
-        // @ts-ignore
-        let user_data = JSON.parse(cookies.get("UserData"));
+
+        const user_data = JSON.parse(cookies.get("UserData"));
         return {
             access: true,
             failedAuth: false,
