@@ -50,9 +50,13 @@ class municipalityDAO(BaseDAO):
     def getAggregates(self):
         query = """SELECT mun_name, mun_population, num_reports, most_common_category, resolved_reports FROM municipality;"""
         cur = self.execute_query(query)
-        return cur.fetchall()
+        result = cur.fetchall()
+        self.commit()
+        return result
     
     def getAggregateNational(self):
-        query = """SELECT  SUM(mun_population), SUM(num_reports), SUM(resolved_reports)  FROM municipality;"""
+        query = """SELECT SUM(mun_population), SUM(num_reports), SUM(resolved_reports)  FROM municipality;"""
         cur = self.execute_query(query)
-        return cur.fetchone()
+        result = cur.fetchone()
+        self.commit()
+        return result
