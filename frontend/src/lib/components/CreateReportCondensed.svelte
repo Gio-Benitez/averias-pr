@@ -12,7 +12,9 @@
   <!-- Next, Back, and Cancel Buttons -->
   <div class="mt-5">
     {#if $steps_counter===0}
-      <button class="btn btn-success btn-outline" on:click={$signedIn ? () => $steps_counter+=1 : () => $isSignInModalOpen = true}>Crear Reporte +</button>
+      <!-- <button class="btn btn-success btn-outline" on:click={$signedIn ? () => $steps_counter+=1 : () => $isSignInModalOpen = true}>Crear Reporte +</button> -->
+      <!-- Allowing users to create a report without an account -->
+      <button class="btn btn-success btn-outline" on:click={() => $steps_counter+=1}>Crear Reporte +</button>
     {:else if $steps_counter ===1}
       <button class="btn btn-sm" on:click={reset}>Cancel</button>
       <button class="btn btn-sm {$buttonNext ? '' : 'btn-disabled'}" on:click={forward}>Next</button>
