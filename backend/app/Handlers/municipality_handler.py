@@ -82,21 +82,28 @@ def updateAggregates():
         response = {
             'message': 'Aggregates updated successfully'
         }
+        municipality_dao.close()
         return jsonify(response), 200
 
     except Exception as e:
         error_message = str(e)
+        municipality_dao.close()
         return jsonify(error=error_message), 500
 
 # Load Map Data 
 @municipality_handler.route('/map', methods=['GET'])
 def load_map():
+    # Load necessary DAOs
     dao_factory = DAOFactory(get_connection())
     municipality_dao = dao_factory.get_municipality_dao()
     report_data_dao = dao_factory.get_report_data_dao()
     result = municipality_dao.getAggregates()
     pr_stats = municipality_dao.getAggregateNational()
     pr_cat = report_data_dao.getCommonCategoryNational()
+    # Close DAO connection
+    municipality_dao.close()
+    report_data_dao.close()
+    # Map output data
     output = {}
     for row in result:
         output[str(row[0])] = {
