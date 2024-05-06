@@ -6,8 +6,9 @@
   import type { PageData } from './$types';
   
 	export let data: PageData;
+  console.log(data);
 
-  if (data.access) {
+  if (data.session?.user) {
     signedIn.set(true)
   }
   else if (data.failedAuth) {
