@@ -2,10 +2,15 @@
   import { invalidAuth, isSignInModalOpen} from "$lib/stores";
   import axios from "axios";
   import { createEventDispatcher } from 'svelte';
+  import { signIn, signOut } from "@auth/sveltekit/client"
 
   const dispatch = createEventDispatcher();
 
   let message="";
+  let credentials = {
+    email: "",
+    password: ""
+  }
 
   function openForgotModal() {
     dispatch('handleOpenForgotModal');
@@ -60,7 +65,7 @@
             } else {
                 console.error('Error:', error);
             }
-    });
+        });
     }
 
 </script>
@@ -75,16 +80,16 @@
             </form>
             <form id="formu" class="card-body" method="POST">
                 <div class="form-control">
-                    <label class="label">
+                    <label class="label" for="Email">
                         <span class="label-text">Email</span>
                     </label>
-                    <input type="email" name ="Email" placeholder="email" class="input input-bordered" required />
+                    <input type="email" name ="Email" placeholder="email" class="input input-bordered" bind:value={credentials.email} required />
                 </div>
                 <div class="form-control">
-                    <label class="label">
+                    <label class="label" for="Password">
                         <span class="label-text">Contraseña</span>
                     </label>
-                    <input type="password" name= "Password" placeholder="contraseña" class="input input-bordered" required />
+                    <input type="password" name="Password" placeholder="contraseña" class="input input-bordered" bind:value={credentials.password} required />
                     <form method="dialog">
                         <button class="label-text-alt link link-hover" on:click={openForgotModal}>¿Has olvidado tu contraseña?</button>
                     </form>
@@ -93,7 +98,9 @@
                     <p class="text-error font-semibold ml-2 mt-2">{message}</p>
                 {/if}
                 <div class="form-control mt-6">
-                    <button class="btn btn-primary" on:click|preventDefault={sendData}>Iniciar</button>
+                    <!-- <button class="btn btn-primary" on:click|preventDefault={sendData}>Iniciar</button> -->
+                    <!-- Using AuthJS for Sign In -->
+                    <button class="btn btn-primary" on:click|preventDefault={() => signIn('credentials', credentials)}>Iniciar</button>
                 </div>
                 <label class="label" style="display: flex; justify-content: center;">
                     <button class="label-text-alt link link-hover" on:click={openCreateAccountModal}>Crear una cuenta</button>
