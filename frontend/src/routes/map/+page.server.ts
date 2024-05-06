@@ -5,26 +5,20 @@ Functions here are used to fetch the statistics data corresponding to the select
 // Imports
 import type { PageServerLoad, Actions } from './$types';
 import axios from 'axios';
+import { SERVER_URL_DATA, SERVER_URL_DEV } from '$env/static/private';
 
 // Map Data Fetching
-// API Server Link: https://averias-pr.onrender.com
+const dev_url: string = SERVER_URL_DEV;
+const prod_url: string = SERVER_URL_DATA;
+const mapData_route: string = '/averias/municipalities/map';
+
+
 export const load: PageServerLoad = (async () => {
     // Fetch map data
-    const mapDataResponse = await axios.get('https://averias-pr.onrender.com/averias/municipalities/map');
+    const mapDataResponse = await axios.get(dev_url + mapData_route);
     console.log(mapDataResponse.data);
     const mapData = mapDataResponse.data;
-    console.log(mapData.key);
-    // const mapDataArray = [];
-    // for (i =  of mapData[mapData.key]) {
-    //     mapDataArray[item.municipality_name] = {
-    //         population: item.population,
-    //         total_reports: item.total_reports,
-    //         common_cat: item.common_cat,
-    //         resolved_reports: item.resolved_reports
-    //     };
-    //     console.log(mapDataArray)
     
-    // }
         return {
             props: {
                 mapStatistics: mapData
