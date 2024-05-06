@@ -143,6 +143,8 @@ def login():
 
     try:
         user = user_dao.get_user_by_email(user_email)
+        print(user[2])
+        print(user_pass)
         if user is None:
             return jsonify(error='User not found'), 404
         if str(user[2]) != str(user_pass):
@@ -153,7 +155,9 @@ def login():
             reports = []
             
         response = {
-            'UserID': user[0],
+            'user_id': str(user[0]),
+            'email': user[1],
+            'name': user[3],
             'report_count': report_count[1],
             'user_reports': reports
         }
