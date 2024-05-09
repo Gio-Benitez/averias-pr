@@ -69,3 +69,12 @@ class municipalityDAO(BaseDAO):
         result = cur.fetchall()
         self.commit()
         return result
+    
+    def getCategoryAggregatesNational(self):
+        query = """
+        SELECT category_name, COUNT(data_id) as num_reports  
+        FROM report_data natural inner join category GROUP BY 1;"""
+        cur = self.execute_query(query)
+        result = cur.fetchall()
+        self.commit()
+        return result
