@@ -51,12 +51,13 @@ def create_report_data():
         category_id = category_dao.get_category_id_by_name(category)
 
         report = report_data_dao.create_report_data(user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src, formatted_date, status)
-        # Update Municipality Aggregates
+        # Calculate Municipality Aggregates
         num_reports = report_data_dao.getTotalReportsMuni(mun_id)
         most_common_category = report_data_dao.getCommonCategory(mun_id)
         if most_common_category is None:
             most_common_category = "Ninguna"
         resolved_reports = report_data_dao.getResolvedReportsMuni(mun_id)
+        # Update Municipality Aggregates
         municipality_dao.updateAggregates(mun_id, num_reports, most_common_category, resolved_reports)
 
         report_count = report_data_dao.get_report_count_by_user_id(user_id) # Update Report count in front end
