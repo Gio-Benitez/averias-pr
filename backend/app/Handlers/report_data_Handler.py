@@ -59,6 +59,10 @@ def create_report_data():
         resolved_reports = report_data_dao.getResolvedReportsMuni(mun_id)
         # Update Municipality Aggregates
         municipality_dao.updateAggregates(mun_id, num_reports, most_common_category, resolved_reports)
+        # Get National Aggregates
+        updated_nat = municipality_dao.getAggregateNational()
+        common_nat = report_data_dao.getCommonCategoryNational()
+        municipality_dao.updateAggregatesNational(updated_nat[1], common_nat, updated_nat[2], 79)
 
         report_count = report_data_dao.get_report_count_by_user_id(user_id) # Update Report count in front end
         reports = report_data_dao.get_users_reports(user_id)
@@ -68,6 +72,8 @@ def create_report_data():
             'report_count': report_count[1],
             'user_reports': reports
         }
+        municipality_dao.close()
+        report_data_dao.close()
         return jsonify(response), 201
 
     except Exception as e:
