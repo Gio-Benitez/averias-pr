@@ -1,8 +1,8 @@
 import type { PageServerLoad, Actions } from './$types';
 import axios from 'axios';
-import { SERVER_URL, SERVER_URL_DEV } from '$env/static/private';
+import { SERVER_URL } from '$env/static/private';
 
-const dev_url: string = SERVER_URL_DEV;
+
 const prod_url: string = SERVER_URL;
 const form_route: string = '/averias/report_data';
 const prod_form_route: string = prod_url + form_route;

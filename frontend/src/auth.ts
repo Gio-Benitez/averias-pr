@@ -2,9 +2,8 @@ import { SvelteKitAuth } from '@auth/sveltekit'
 import GitHub from '@auth/sveltekit/providers/github'
 import Credentials from '@auth/sveltekit/providers/credentials'
 import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '$env/static/private'
-import bcrypt from 'bcrypt';
 import axios from 'axios';
-import { SERVER_URL, SERVER_URL_DEV } from '$env/static/private';
+import { SERVER_URL } from '$env/static/private';
 
 const auth_login = SERVER_URL + '/averias/users/login';
 
