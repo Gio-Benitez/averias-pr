@@ -5,17 +5,17 @@ Functions here are used to fetch the statistics data corresponding to the select
 // Imports
 import type { PageServerLoad, Actions } from './$types';
 import axios from 'axios';
-import { SERVER_URL_DATA, SERVER_URL_DEV } from '$env/static/private';
+import { SERVER_URL, SERVER_URL_DEV } from '$env/static/private';
 
 // Map Data Fetching
 const dev_url: string = SERVER_URL_DEV;
-const prod_url: string = SERVER_URL_DATA;
+const prod_url: string = SERVER_URL;
 const mapData_route: string = '/averias/municipalities/map';
 
 
 export const load: PageServerLoad = (async () => {
     // Fetch map data
-    const mapDataResponse = await axios.get(dev_url + mapData_route);
+    const mapDataResponse = await axios.get(prod_url + mapData_route);
     console.log(mapDataResponse.data);
     const mapData = mapDataResponse.data;
     

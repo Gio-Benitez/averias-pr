@@ -4,9 +4,9 @@ import Credentials from '@auth/sveltekit/providers/credentials'
 import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '$env/static/private'
 import bcrypt from 'bcrypt';
 import axios from 'axios';
-import { SERVER_URL_DATA, SERVER_URL_DEV } from '$env/static/private';
+import { SERVER_URL, SERVER_URL_DEV } from '$env/static/private';
 
-const auth_login_dev = SERVER_URL_DEV + '/averias/users/login';
+const auth_login = SERVER_URL + '/averias/users/login';
 
 export const { signIn, signOut, handle } = SvelteKitAuth({
     providers: 
@@ -32,7 +32,7 @@ export const { signIn, signOut, handle } = SvelteKitAuth({
                         Email: credentials.email,
                         Password: credentials.password
                     };
-                    await axios.post(auth_login_dev, userCredentials)
+                    await axios.post(auth_login, userCredentials)
                     .then((res) => {
                         user.id = res.data.user_id;
                         user.name = res.data.name;

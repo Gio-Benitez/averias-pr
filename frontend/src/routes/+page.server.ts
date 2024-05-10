@@ -1,13 +1,13 @@
 import type { PageServerLoad, Actions } from './$types';
 import axios from 'axios';
-import { SERVER_URL_DATA, SERVER_URL_DEV } from '$env/static/private';
+import { SERVER_URL, SERVER_URL_DEV } from '$env/static/private';
 
 const dev_url: string = SERVER_URL_DEV;
-const prod_url: string = SERVER_URL_DATA;
+const prod_url: string = SERVER_URL;
 const form_route: string = '/averias/report_data';
-const dev_form_route: string = dev_url + form_route;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const prod_form_route: string = prod_url + form_route;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 
 export const load: PageServerLoad = async (events) => {
 
@@ -49,7 +49,7 @@ export const actions: Actions = {
         const reportData = Object.fromEntries(formData);
         // Send a POST request to the server to submit the report
         let message = '';
-        await axios.post(dev_form_route, reportData)
+        await axios.post(prod_form_route, reportData)
         .then(res=> {
             console.log(res.data);
             message = res.data.message;
