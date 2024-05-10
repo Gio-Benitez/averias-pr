@@ -12,17 +12,23 @@ report_data_handler = Blueprint('report_data_handler', __name__)
 @report_data_handler.route('/', methods=['POST'])
 def create_report_data():
     data = request.get_json()
-    if data.get('municipality') == '' or data.get('category') == '' or data.get('location').get('coordinates') == [0, 0] or data.get('image') is None:
+    if data.get('municipality') == '' or data.get('category') == '' or data.get('location') == [0, 0] or data.get('image') is None:
         print(data)
         return jsonify('Error: Missing data'), 400
-    user_id = data.get('userID') # Get current user here
+    # Set anonymous user_id of 0 if user_id is undefined
+    if data.get('userID') == 'undefined':
+        user_id = 0
+    else:
+        user_id = data.get('userID') # Get current user here
+        
     municipality = data.get('municipality') # Get mun id from municipality name
     category = data.get('category') # Get category id from category name
     location = data.get('location')
     current_date = datetime.now()
     formatted_date = current_date.strftime('%Y-%m-%d')
     status = "No"
-    [geo_data_lat,geo_data_long] = location.get('coordinates')
+    print(location.split(','))
+    geo_data_lat, geo_data_long = location.split(',')[0], location.split(',')[1]
     # Google Maps Coordinates are inverted from the ones provided by the geolocate function
     reverse_geocode_result = gmaps.reverse_geocode((geo_data_long, geo_data_lat))
     print(reverse_geocode_result)
@@ -45,13 +51,18 @@ def create_report_data():
         category_id = category_dao.get_category_id_by_name(category)
 
         report = report_data_dao.create_report_data(user_id, mun_id, category_id, geo_data_lat, geo_data_long, img_src, formatted_date, status)
-        # Update Municipality Aggregates
+        # Calculate Municipality Aggregates
         num_reports = report_data_dao.getTotalReportsMuni(mun_id)
         most_common_category = report_data_dao.getCommonCategory(mun_id)
         if most_common_category is None:
             most_common_category = "Ninguna"
         resolved_reports = report_data_dao.getResolvedReportsMuni(mun_id)
+        # Update Municipality Aggregates
         municipality_dao.updateAggregates(mun_id, num_reports, most_common_category, resolved_reports)
+        # Get National Aggregates
+        updated_nat = municipality_dao.getAggregateNational()
+        common_nat = report_data_dao.getCommonCategoryNational()
+        municipality_dao.updateAggregatesNational(updated_nat[1], common_nat, updated_nat[2], 79)
 
         report_count = report_data_dao.get_report_count_by_user_id(user_id) # Update Report count in front end
         reports = report_data_dao.get_users_reports(user_id)
@@ -61,10 +72,13 @@ def create_report_data():
             'report_count': report_count[1],
             'user_reports': reports
         }
+        municipality_dao.close()
+        report_data_dao.close()
         return jsonify(response), 201
 
     except Exception as e:
         error_message = str(e)
+        print(error_message)
         return jsonify(error=error_message), 500
 
 @report_data_handler.route('/reportcount', methods=['POST'])

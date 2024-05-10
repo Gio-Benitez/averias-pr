@@ -4,7 +4,8 @@
     import CreateAccount from './CreateAccount.svelte';
     import ForgotPassword from './ForgotPassword.svelte';
     import SignIn from './SignIn.svelte';
-
+    import { signIn, signOut } from "@auth/sveltekit/client"
+    
     function handleOpenForgotModal (){
         $isSignInModalOpen = false; 
         $isForgotPasswordModalOpen = true;
@@ -23,12 +24,12 @@
         $invalidAuth = false;
     }
 
-    function signOut() {
-        document.cookie = 'access' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = 'UserData' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        $signedIn = false;
-        window.location.reload();
-    }
+    // function signOut() {
+    //     document.cookie = 'access' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    //     document.cookie = 'UserData' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    //     $signedIn = false;
+    //     window.location.reload();
+    // }
 
 </script>
 
@@ -56,7 +57,7 @@
             </button>
         </div>
     {#if $signedIn}
-        <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+        <ul class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
             <li>
             <a class="justify-between">
                 Mis Reportes
@@ -64,11 +65,12 @@
             </a>
             </li>
             <li><a>Ajustes</a></li>
-            <li><a on:click={signOut}>Cerrar Sesión</a></li>
+            <li><button on:click={() => signOut()}>Cerrar Sesión</button></li>
+            
         </ul>
         
     {:else}
-        <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+        <ul class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
             <li><button class="justify-between" on:click={()=>$isCreateAccountModalOpen = true}>Crear una cuenta</button></li>
             <li><button class="justify-between" on:click={()=>$isSignInModalOpen =true}>Iniciar Sesión</button></li>
             <!-- <li><a>Logout</a></li> -->

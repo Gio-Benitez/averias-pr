@@ -15,6 +15,7 @@ from flask_cors import CORS, cross_origin
 # current module (__name__) as argument.
 app = Flask(__name__)
 CORS(app)
+app.config['JSON_AS_ASCII'] = False
 
 
 app.register_blueprint(user_handler, url_prefix='/averias/users')

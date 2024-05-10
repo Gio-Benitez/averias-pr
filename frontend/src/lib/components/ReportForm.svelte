@@ -6,9 +6,8 @@
     import { municipalities, buttonNext, steps_counter,reset} from '$lib/stores';
     import { onMount } from 'svelte';
     import CategoryIconCloud from './CategoryIconCloud.svelte';
-    import axios from 'axios';
     import { CldUploadButton } from 'svelte-cloudinary';
-
+    import { enhance } from '$app/forms';
     
     // Define type for GeoJSON Point
     interface GeoJSONPoint {
@@ -25,12 +24,12 @@
     });
 
     let selectedMunicipality = '¿En qué municipio se encuentra?';
-    let success = false; // Measures if the user's location was obtained successfully
+    let success: boolean = false; // Measures if the user's location was obtained successfully
     let errorMessage: string | null = null;  
 
     let formData = {
         userID: 0,
-        location: { type: "Point", coordinates: [0, 0] },
+        location: [0, 0],
         municipality: '',
         category: '',
         image: ''
@@ -56,10 +55,18 @@
             errorMessage = null; // Reset error message on success
             console.log("User location retrieved successfully");
 
-            formData.location = userLocation;
+            formData.location = userLocation.coordinates;
+            console.log(formData.location);
             // @ts-ignore
             let cookie_parse = JSON.parse(getCookie('UserData'));
-            formData.userID = cookie_parse.UserID; 
+            console.log(cookie_parse);
+            if (cookie_parse === null || cookie_parse.UserID === undefined) {
+                // If user is not signed in, set userID to default value of 0
+                formData.userID = 0;
+            }else {
+                // If user is signed in, set userID to the value stored in the cookie
+                formData.userID = cookie_parse.UserID;
+            }
             success = true;
 
         } catch (error) {
@@ -81,48 +88,50 @@
     }
 
     let message ="";
-    const sendData = () => {
-        const jsonData = JSON.stringify(formData);
+    // const sendData = () => {
+    //     const jsonData = JSON.stringify(formData);
     
-        axios.post('https://averias-pr.onrender.com/averias/report_data/', jsonData, {
-        headers: {
-                'Content-Type': 'application/json'
-        }
-        })
-        .then(res=> {
-            console.log(res.data);
-            let userData = {
-                UserID: 0,
-                user_report_count: 0,
-                user_reports: []
-            }
-            // @ts-ignore
-            userData.UserID = getCookie('UserData').UserID;
-            userData.user_report_count = res.data.report_count;
-            userData.user_reports = res.data.user_reports;
-            document.cookie = 'UserData' + "=" + (JSON.stringify(userData) || "") + "; path=/";
-            reset()
-            window.location.reload();
-        })
-        .catch(error => {
-            // Handle error response here
-            if (error.response) {
-                console.error('Error:', error.response.data.error); // Log the error message
-                // Handle the error message here (e.g., display it on the UI)
-                message = error.response.data.error;
-            } else {
-                console.error('Error:', error);
-            }
-     });
-    }
-    function handleUpload(result) {
+    //     axios.post('https://averias-pr.onrender.com/averias/report_data/', jsonData, {
+    //     headers: {
+    //             'Content-Type': 'application/json'
+    //     }
+    //     })
+    //     .then(res=> {
+    //         console.log(res.data);
+    //         let userData = {
+    //             UserID: 0,
+    //             user_report_count: 0,
+    //             user_reports: []
+    //         }
+    //         // @ts-ignore
+    //         userData.UserID = getCookie('UserData').UserID;
+    //         userData.user_report_count = res.data.report_count;
+    //         userData.user_reports = res.data.user_reports;
+    //         document.cookie = 'UserData' + "=" + (JSON.stringify(userData) || "") + "; path=/";
+    //         reset()
+    //         window.location.reload();
+    //     })
+    //     .catch(error => {
+    //         // Handle error response here
+    //         if (error.response) {
+    //             console.error('Error:', error.response.data.error); // Log the error message
+    //             // Handle the error message here (e.g., display it on the UI)
+    //             message = error.response.data.error;
+    //         } else {
+    //             console.error('Error:', error);
+    //         }
+    //  });
+    // }
+
+    // Result type is any because it is the result of the Cloudinary upload, it is guaranteed to have an info object
+    function handleUpload(result: any) {
         formData.image = result.info.url;
         console.log(formData.image);
         $buttonNext=true;
     }
 </script>
 
-<form class="form-container flex justify-center" method="POST">
+<form class="form-container flex justify-center" action="?/submitReport" method="POST">
     {#if $steps_counter === 1}
         <form method="dialog" class="flex flex-col justify-center w-1/2">
             <div class="flex justify-center">
@@ -172,19 +181,19 @@
                     bind:value={formData.image}
                 />
             </div>
-            
-        <!--  Original file upload input
-            <input type="file" bind:value={formData.image} on:change={() => $buttonNext=true} class="file-input file-input-bordered file-input-primary w-7/8 max-w-xs file-input-sm mb-9"/>
-        </label>
-        -->
-        
     {/if}
     {#if $steps_counter===4}
         <div class="flex flex-col">
             <div class="label mb-10">
                 <span class="label-text font-semibold" style="font-size: 1.5rem;">¿Todo listo?</span>
             </div>
-            <button class="btn btn-success btn-lg mb-10" on:click|preventDefault={sendData}>Crear</button>
+            <!-- Map FormData variable values to FormData of actual form using hidden inputs -->
+            <input type="hidden" name="userID" value={formData.userID} />
+            <input type="hidden" name="location" value={formData.location} />
+            <input type="hidden" name="municipality" value={formData.municipality} />
+            <input type="hidden" name="category" value={formData.category} />
+            <input type="hidden" name="image" value={formData.image} />
+            <button type="submit" class="btn btn-success btn-lg mb-10">Crear</button>
         </div>
     {/if}
 </form>    
