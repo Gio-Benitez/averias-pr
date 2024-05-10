@@ -37,7 +37,7 @@ class UserDAO(BaseDAO):
         return cur.fetchone()
 
     def get_user_by_email(self, user_email):
-        query = """SELECT user_id, user_email, user_pass FROM "user" WHERE "user_email" = %s;"""
+        query = """SELECT user_id, user_email, user_pass, user_fname FROM "user" WHERE "user_email" = %s;"""
         cur = self.execute_query(query, (user_email,))
         self.commit()
         return cur.fetchone()

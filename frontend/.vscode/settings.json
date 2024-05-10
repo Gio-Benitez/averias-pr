@@ -15,6 +15,8 @@
     "node_modules": true
   },
   "prettier.documentSelectors": ["**/*.svelte"],
-  // "prettier.prettierPath": "./node_modules/prettier",
-  "workbench.editor.labelFormat": "short"
+  //"prettier.prettierPath": "./node_modules/prettier",
+  "workbench.editor.labelFormat": "short",
+  "svelte.enable-ts-plugin": true,
+  
 }

@@ -82,34 +82,83 @@ def updateAggregates():
         response = {
             'message': 'Aggregates updated successfully'
         }
+        municipality_dao.close()
         return jsonify(response), 200
 
     except Exception as e:
         error_message = str(e)
+        municipality_dao.close()
         return jsonify(error=error_message), 500
 
 # Load Map Data 
 @municipality_handler.route('/map', methods=['GET'])
 def load_map():
+    # Load necessary DAOs
     dao_factory = DAOFactory(get_connection())
     municipality_dao = dao_factory.get_municipality_dao()
     report_data_dao = dao_factory.get_report_data_dao()
+    # Get general aggregates
     result = municipality_dao.getAggregates()
-    pr_stats = municipality_dao.getAggregateNational()
-    pr_cat = report_data_dao.getCommonCategoryNational()
+    
+    # Get aggregates by category
+    cats = municipality_dao.getCategoryAggregates()
+    cats_national = municipality_dao.getCategoryAggregatesNational()
+    
+    cat_dict = {}
+    # Map municipal categories to dictionary
+    for row in cats:
+        if row[0] not in cat_dict:
+            cat_dict[row[0]] = {}
+        cat_dict[row[0]][row[1]] = {}
+        cat_dict[row[0]][row[1]]['total'] = row[2]
+        if row[3] is None:
+            cat_dict[row[0]][row[1]]['resolved'] = 0
+        else:
+            cat_dict[row[0]][row[1]]['resolved'] = row[3]
+            
+    # Map national categories to dictionary
+    for row in cats_national:
+        if 'Puerto Rico' not in cat_dict:
+            cat_dict['Puerto Rico'] = {}
+        cat_dict['Puerto Rico'][row[0]] = {}
+        cat_dict['Puerto Rico'][row[0]]['total'] = row[1]
+        if row[2] is None:
+            cat_dict['Puerto Rico'][row[0]]['resolved'] = 0
+        else:
+            cat_dict['Puerto Rico'][row[0]]['resolved'] = row[2]
+    
+    
+    # Default Aggregates for Empty Categories
+    default_cats = {
+        'Carretera Dañada': {'total': 0, 'resolved': 0},
+        'Poste Caido': {'total': 0, 'resolved': 0},
+        'Deslizamiento': {'total': 0, 'resolved': 0},
+        'Peligro de Deslizamiento': {'total': 0, 'resolved': 0},
+        'Servicio de Agua': {'total': 0, 'resolved': 0},
+        'Servicio de Luz': {'total': 0, 'resolved': 0}
+    }
+
+    # Close DAO connection
+    municipality_dao.close()
+    report_data_dao.close()
+
+    # Map output data to dictionary
     output = {}
     for row in result:
         output[str(row[0])] = {
             'population': row[1],
             'num_reports': row[2],
             'most_common_category': row[3],
-            'resolved_reports': row[4]
+            'resolved_reports': row[4],
+            'categories': default_cats if str(row[0]) not in cat_dict else {
+                'Carretera Dañada': cat_dict[str(row[0])].get('Carretera Dañada') if 'Carretera Dañada' in cat_dict[str(row[0])] else {'total': 0, 'resolved': 0},
+                'Poste Caido': cat_dict[str(row[0])].get('Poste Caido') if 'Poste Caido' in cat_dict[str(row[0])] else {'total': 0, 'resolved': 0},
+                'Deslizamiento': cat_dict[str(row[0])].get('Deslizamiento') if 'Deslizamiento' in cat_dict[str(row[0])] else {'total': 0, 'resolved': 0},
+                'Peligro de Deslizamiento': cat_dict[str(row[0])].get('Peligro de Deslizamiento') if 'Peligro de Deslizamiento' in cat_dict[str(row[0])] else {'total': 0, 'resolved': 0},
+                'Servicio de Agua': cat_dict[str(row[0])].get('Servicio de Agua') if 'Servicio de Agua' in cat_dict[str(row[0])] else {'total': 0, 'resolved': 0},
+                'Servicio de Luz': cat_dict[str(row[0])].get('Servicio de energía eléctrica') if 'Servicio de energía eléctrica' in cat_dict[str(row[0])] else {'total': 0, 'resolved': 0}
+                }
         }
-    output['Puerto Rico'] = {
-        'population': pr_stats[0],
-        'num_reports': pr_stats[1],
-        'most_common_category': pr_cat[0],
-        'resolved_reports': pr_stats[2]
-    }
-    
+
+    #print(output)
     return jsonify(output), 200

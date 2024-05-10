@@ -50,9 +50,56 @@ class municipalityDAO(BaseDAO):
     def getAggregates(self):
         query = """SELECT mun_name, mun_population, num_reports, most_common_category, resolved_reports FROM municipality;"""
         cur = self.execute_query(query)
-        return cur.fetchall()
+        result = cur.fetchall()
+        self.commit()
+        return result
     
     def getAggregateNational(self):
-        query = """SELECT  SUM(mun_population), SUM(num_reports), SUM(resolved_reports)  FROM municipality;"""
+        query = """SELECT SUM(mun_population), SUM(num_reports), SUM(resolved_reports) FROM municipality where mun_id != '79';"""
         cur = self.execute_query(query)
-        return cur.fetchone()
+        result = cur.fetchone()
+        self.commit()
+        return result
+    
+    def getCategoryAggregates(self):
+        query = """
+        WITH resolved as (
+        SELECT mun_name, category_name, COUNT(*) as resolved_reports
+        FROM municipality natural inner join report_data natural inner join category
+        WHERE report_status = 'Resolved'
+        GROUP BY 1, 2),
+        total as (
+        SELECT mun_name, category_name, COUNT(data_id) as total_reports
+        FROM municipality natural inner join report_data natural inner join category
+        GROUP BY 1, 2)
+        SELECT mun_name, category_name, total_reports, resolved_reports
+        FROM total natural left join resolved;"""
+
+        cur = self.execute_query(query)
+        result = cur.fetchall()
+        self.commit()
+        return result
+    
+    def getCategoryAggregatesNational(self):
+        query = """
+        WITH resolved as (
+        SELECT category_name, COUNT(*) as resolved_reports
+        FROM report_data natural inner join category
+        WHERE report_status = 'Resolved'
+        GROUP BY 1),
+        total as (
+        SELECT category_name, COUNT(data_id) as total_reports  
+        FROM report_data natural inner join category GROUP BY 1)
+        SELECT category_name, total_reports, resolved_reports
+        FROM total natural left join resolved;"""
+        cur = self.execute_query(query)
+        result = cur.fetchall()
+        self.commit()
+        return result
+    
+    def updateAggregatesNational(self, num_reports, most_common_category, resolved_reports, mun_id):
+        params = (num_reports, most_common_category, resolved_reports, mun_id)
+        query = """UPDATE municipality SET "num_reports" = %s, "most_common_category" = %s, "resolved_reports" = %s
+                WHERE "mun_id" = %s;"""
+        self.execute_query(query, params)
+        self.commit()
