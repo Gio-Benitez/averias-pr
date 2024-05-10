@@ -50,7 +50,7 @@
     </div>
     <!--Map Data Panel Segment-->
     <div id="dataPane" class="min-w-72 my-12 min-h-[697px] col-start-8 col-end-10">
-        <div class="flex flex-row flex-wrap gap-4  w-full h-full bg-primary px-8 py-2 rounded-2xl">
+        <div class="flex flex-row flex-wrap gap-4 min-w-[320px] w-full h-full bg-primary px-8 py-2 rounded-2xl">
             <div class="flex flex-col w-full text-center">
                 
                 <h1>{$mapDataStore.dataRegion}</h1>
@@ -72,7 +72,7 @@
                 <div class="divider divider-neutral"></div>
             </div>
             {#if !catSelected}
-            <div class="flex flex-col flex-wrap text-center gap-0">
+            <div class="flex flex-col w-full text-center gap-0">
                 <div class="stats stats-vertical shadow">
                     <div class="stat shadow-lg">
                         <div class="stat-title   lg:text-lg">Población</div>
@@ -93,7 +93,7 @@
                 </div>
             </div>
             {:else if catSelected}
-            <div class="flex flex-col flex-wrap w-min text-center gap-0">
+            <div class="flex flex-col w-full text-center gap-0">
                 <div class="stats stats-vertical shadow">
                     <div class="stat shadow-lg">
                         <div class="stat-title lg:text-lg">Población</div>
