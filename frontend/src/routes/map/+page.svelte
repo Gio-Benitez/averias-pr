@@ -64,8 +64,8 @@
                             {/each}    
                         </select>
                         <button name="reset" on:click={panelReset}>Restaurar</button>
-                        
                     </div>
+
             </div>
             <div class="flex flex-col w-full text-center">
                 <h1>Statistics</h1>
