@@ -8,17 +8,22 @@
     
     export let data: PageData;
     export let form: ActionData; 
-    //$mapDataStore.populationData = data.item[1][1];
-    let selectedTab = 'map';
-    let selected = 'Adjuntas';
-    
-    // Selectg Category function for map data pane
+
+    // Select Category function for map data pane
     const mapStats = data.props.mapStatistics;
+    console.log(mapStats);
     let category:string;
+    let catSelected = false;
+    let panelValues:string;
+
     function selectCat (event: any) {
         category = event.target.value;
+        catSelected = true;
+        panelValues = mapStats[$mapDataStore.dataRegion].categories[category];
         console.log(category);
+        console.log(mapStats[$mapDataStore.dataRegion].categories[category]);
     }
+
     function updateWithForm (event: any) {
         $mapDataStore.dataRegion = form?.props.mapData.dataRegion as string;
     } 
@@ -46,25 +51,20 @@
                 <h1>{$mapDataStore.dataRegion}</h1>
                 
                 <div class="divider divider-neutral"></div>
-                <form action="?/mapCategorySelection" method="POST" class="flex flex-col" use:enhance>
-                    <!-- Region input -->
-                    <input type="hidden" name="region" value={$mapDataStore.dataRegion}>
-                    <!-- Category Select -->
-                    <select name="category" class="select text-lg font-medium select-secondary w-full">
+                    <select name="category" on:change={selectCat} class="select text-lg font-medium select-secondary w-full">
                         <option disabled selected >Seleccione Categoría</option>
                         {#each $filterCategoriesStore as category}
                         <option value={category}>{category}</option>
                         {/each}    
                     </select>
                     <!-- Submit Button -->
-                    <button type="submit" class="btn">Filtrar</button>
-                </form>
+                    
             </div>
             <div class="flex flex-col w-full text-center">
                 <h1>Statistics</h1>
                 <div class="divider divider-neutral"></div>
             </div>
-            {#if !form && data}
+            {#if !catSelected}
             <div class="flex flex-col flex-wrap w-full text-center gap-0">
                 <div class="stats stats-vertical shadow">
                     <div class="stat shadow-lg">
@@ -85,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            {:else if form}
+            {:else if catSelected}
             <div class="flex flex-col flex-wrap w-full text-center gap-2">
                 <div class="stats stats-vertical shadow">
                     <div class="stat shadow-lg">
@@ -94,15 +94,15 @@
                     </div>
                     <div class="stat shadow-lg">
                         <div class="stat-title">Categoría Seleccionada</div>
-                        <div class="stat-value">{form.props.mapData.reportCategory}</div>
+                        <div class="stat-value">{category}</div>
                     </div>
                     <div class="stat shadow-lg">
                         <div class="stat-title">Averías Reportadas</div>
-                        <div class="stat-value">{form.props.mapData.numOfReports}</div>
+                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion].categories[category]}</div>
                     </div>
                     <div class="stat shadow-lg">
-                        <div class="stat-title">Averías Resueltas</div>
-                        <div class="stat-value">{form.props.mapData.resolved}</div>
+                        <div class="stat-title">Reportes en las Últimas 24 Horas</div>
+                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion]['categories'][category]}</div>
                     </div>
                 </div>
             </div>
