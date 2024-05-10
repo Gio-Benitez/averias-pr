@@ -86,7 +86,7 @@
                 </div>
             </div>
             {:else if catSelected}
-            <div class="flex flex-col flex-wrap w-full text-center gap-2">
+            <div class="flex flex-col flex-wrap w-full text-center gap-0">
                 <div class="stats stats-vertical shadow">
                     <div class="stat shadow-lg">
                         <div class="stat-title">Población</div>
@@ -98,11 +98,11 @@
                     </div>
                     <div class="stat shadow-lg">
                         <div class="stat-title">Averías Reportadas</div>
-                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion].categories[category]}</div>
+                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion].categories[category].total}</div>
                     </div>
                     <div class="stat shadow-lg">
-                        <div class="stat-title">Reportes en las Últimas 24 Horas</div>
-                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion]['categories'][category]}</div>
+                        <div class="stat-title">Averías Resueltas</div>
+                        <div class="stat-value">{mapStats[$mapDataStore.dataRegion].categories[category].resolved}</div>
                     </div>
                 </div>
             </div>
