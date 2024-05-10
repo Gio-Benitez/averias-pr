@@ -126,16 +126,16 @@ def load_map():
             cat_dict['Puerto Rico'][row[0]]['resolved'] = 0
         else:
             cat_dict['Puerto Rico'][row[0]]['resolved'] = row[2]
-    print(cat_dict)
+    
     
     # Default Aggregates for Empty Categories
     default_cats = {
-        'Carretera Dañada': 0,
-        'Poste Caido': 0,
-        'Deslizamiento': 0,
-        'Peligro de Deslizamiento': 0,
-        'Servicio de Agua': 0,
-        'Servicio de Luz': 0
+        'Carretera Dañada': {'total': 0, 'resolved': 0},
+        'Poste Caido': {'total': 0, 'resolved': 0},
+        'Deslizamiento': {'total': 0, 'resolved': 0},
+        'Peligro de Deslizamiento': {'total': 0, 'resolved': 0},
+        'Servicio de Agua': {'total': 0, 'resolved': 0},
+        'Servicio de Luz': {'total': 0, 'resolved': 0}
     }
 
     # Close DAO connection
@@ -151,12 +151,12 @@ def load_map():
             'most_common_category': row[3],
             'resolved_reports': row[4],
             'categories': default_cats if str(row[0]) not in cat_dict else {
-                'Carretera Dañada': cat_dict[str(row[0])].get('Carretera Dañada') if 'Carretera Dañada' in cat_dict[str(row[0])] else 0,
-                'Poste Caido': cat_dict[str(row[0])].get('Poste Caido') if 'Poste Caido' in cat_dict[str(row[0])] else 0,
-                'Deslizamiento': cat_dict[str(row[0])].get('Deslizamiento') if 'Deslizamiento' in cat_dict[str(row[0])] else 0,
-                'Peligro de Deslizamiento': cat_dict[str(row[0])].get('Peligro de Deslizamiento') if 'Peligro de Deslizamiento' in cat_dict[str(row[0])] else 0,
-                'Servicio de Agua': cat_dict[str(row[0])].get('Servicio de Agua') if 'Servicio de Agua' in cat_dict[str(row[0])] else 0,
-                'Servicio de Luz': cat_dict[str(row[0])].get('Servicio de energía eléctrica') if 'Servicio de energía eléctrica' in cat_dict[str(row[0])] else 0
+                'Carretera Dañada': cat_dict[str(row[0])].get('Carretera Dañada') if 'Carretera Dañada' in cat_dict[str(row[0])] else {'total': 0, 'resolved': 0},
+                'Poste Caido': cat_dict[str(row[0])].get('Poste Caido') if 'Poste Caido' in cat_dict[str(row[0])] else {'total': 0, 'resolved': 0},
+                'Deslizamiento': cat_dict[str(row[0])].get('Deslizamiento') if 'Deslizamiento' in cat_dict[str(row[0])] else {'total': 0, 'resolved': 0},
+                'Peligro de Deslizamiento': cat_dict[str(row[0])].get('Peligro de Deslizamiento') if 'Peligro de Deslizamiento' in cat_dict[str(row[0])] else {'total': 0, 'resolved': 0},
+                'Servicio de Agua': cat_dict[str(row[0])].get('Servicio de Agua') if 'Servicio de Agua' in cat_dict[str(row[0])] else {'total': 0, 'resolved': 0},
+                'Servicio de Luz': cat_dict[str(row[0])].get('Servicio de energía eléctrica') if 'Servicio de energía eléctrica' in cat_dict[str(row[0])] else {'total': 0, 'resolved': 0}
                 }
         }
 
