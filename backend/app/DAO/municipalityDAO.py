@@ -63,8 +63,18 @@ class municipalityDAO(BaseDAO):
     
     def getCategoryAggregates(self):
         query = """
-        SELECT mun_name, category_name, COUNT(data_id) as num_reports  
-        FROM municipality natural inner join report_data natural inner join category GROUP BY 1, 2;"""
+        WITH resolved as (
+        SELECT mun_name, category_name, COUNT(*) as resolved_reports
+        FROM municipality natural inner join report_data natural inner join category
+        WHERE report_status = 'Resolved'
+        GROUP BY 1, 2),
+        total as (
+        SELECT mun_name, category_name, COUNT(data_id) as total_reports
+        FROM municipality natural inner join report_data natural inner join category
+        GROUP BY 1, 2)
+        SELECT mun_name, category_name, total_reports, resolved_reports
+        FROM total natural left join resolved;"""
+
         cur = self.execute_query(query)
         result = cur.fetchall()
         self.commit()
@@ -72,9 +82,18 @@ class municipalityDAO(BaseDAO):
     
     def getCategoryAggregatesNational(self):
         query = """
-        SELECT category_name, COUNT(data_id) as num_reports  
-        FROM report_data natural inner join category GROUP BY 1;"""
+        WITH resolved as (
+        SELECT category_name, COUNT(*) as resolved_reports
+        FROM report_data natural inner join category
+        WHERE report_status = 'Resolved'
+        GROUP BY 1),
+        total as (
+        SELECT category_name, COUNT(data_id) as total_reports  
+        FROM report_data natural inner join category GROUP BY 1)
+        SELECT category_name, total_reports, resolved_reports
+        FROM total natural left join resolved;"""
         cur = self.execute_query(query)
         result = cur.fetchall()
         self.commit()
         return result
+    

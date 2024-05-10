@@ -109,13 +109,25 @@ def load_map():
     for row in cats:
         if row[0] not in cat_dict:
             cat_dict[row[0]] = {}
-        cat_dict[row[0]][row[1]] = row[2]
+        cat_dict[row[0]][row[1]] = {}
+        cat_dict[row[0]][row[1]]['total'] = row[2]
+        if row[3] is None:
+            cat_dict[row[0]][row[1]]['resolved'] = 0
+        else:
+            cat_dict[row[0]][row[1]]['resolved'] = row[3]
+            
     # Map national categories to dictionary
     for row in cats_national:
         if 'Puerto Rico' not in cat_dict:
             cat_dict['Puerto Rico'] = {}
-        cat_dict['Puerto Rico'][row[0]] = row[1]
-
+        cat_dict['Puerto Rico'][row[0]] = {}
+        cat_dict['Puerto Rico'][row[0]]['total'] = row[1]
+        if row[2] is None:
+            cat_dict['Puerto Rico'][row[0]]['resolved'] = 0
+        else:
+            cat_dict['Puerto Rico'][row[0]]['resolved'] = row[2]
+    print(cat_dict)
+    
     # Default Aggregates for Empty Categories
     default_cats = {
         'Carretera Dañada': 0,
@@ -148,5 +160,5 @@ def load_map():
                 }
         }
 
-    print(output)
+    #print(output)
     return jsonify(output), 200
