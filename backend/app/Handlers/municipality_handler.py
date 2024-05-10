@@ -147,14 +147,6 @@ def load_map():
                 'Servicio de Luz': cat_dict[str(row[0])].get('Servicio de energía eléctrica') if 'Servicio de energía eléctrica' in cat_dict[str(row[0])] else 0
                 }
         }
-    output['Puerto Rico']['categories'] = {
-        'Carretera Dañada': cats_national[0][1] if cats_national[0][0] == 'Carretera Dañada' else 0,
-        'Poste Caido': 0,
-        'Deslizamiento': 0,
-        'Peligro de Deslizamiento': 0,
-        'Servicio de Agua': 0,
-        'Servicio de Luz': 0
-    }
 
     print(output)
     return jsonify(output), 200
