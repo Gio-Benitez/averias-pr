@@ -21,7 +21,6 @@
       invalidAuth.set(true);
     }
     else {
-      isSignInModalOpen.set(true);
       invalidAuth.set(true);
     }
   }

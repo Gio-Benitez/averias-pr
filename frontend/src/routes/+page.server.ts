@@ -11,7 +11,8 @@ const prod_form_route: string = prod_url + form_route;
 
 export const load: PageServerLoad = async (events) => {
 
-    const session = await events.locals.auth()
+    ///const session = await events.locals.auth()
+    const session = null;
     // if (cookies.get("access")==="true") {
     //     const user_data = JSON.parse(cookies.get("UserData"));
     //     return {
