@@ -73,7 +73,7 @@
             </div>
             {#if !catSelected}
             <div class="flex flex-col w-full text-center gap-0">
-                <div class="stats stats-vertical shadow">
+                <div class="stats stats-vertical shadow fixed-width-div justify-center">
                     <div class="stat shadow-lg">
                         <div class="stat-title   lg:text-lg">Población</div>
                         <div class="stat-value   lg:text-xl">{mapStats[$mapDataStore.dataRegion].population}</div>
@@ -94,7 +94,7 @@
             </div>
             {:else if catSelected}
             <div class="flex flex-col w-full text-center gap-0">
-                <div class="stats stats-vertical shadow">
+                <div class="stats stats-vertical shadow fixed-width-div">
                     <div class="stat shadow-lg">
                         <div class="stat-title lg:text-lg">Población</div>
                         <div class="stat-value lg:text-xl">{mapStats[$mapDataStore.dataRegion].population}</div>
@@ -148,4 +148,10 @@
         @apply w-min;
     }
     
+    .fixed-width-div {
+        width: 256px; /* Set your desired width here */
+        min-width: 200px; /* Ensure the width doesn't go below this */
+        max-width: 100%; /* Prevent the width from exceeding its container */
+        /* You can add other styles like padding, border, etc. */
+    }
 </style>
